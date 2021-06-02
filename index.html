@@ -6,37 +6,87 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link href="css/mdui.min.css" rel="stylesheet" />
         <script src="js/mdui.min.js"></script>
+		<script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
         <title>歪比巴卜论坛</title>
         <style>
             *{
                 margin:0;
                 padding: 0;
             }
+			body{
+				background-color: rgb(198,230,232);
+			}
+			.icon{
+			  width: 1em;
+			  height: 1em;
+			  vertical-align: -0.15em;
+			  fill: currentColor;
+			  overflow: hidden;
+			}
+			header{
+				background-color: #c3d7df;
+				border-bottom-left-radius: 19px;
+				border-bottom-right-radius: 19px;
+			}
             .title-logo{
-                width: 100px;
+                width: 310px;
+				line-height: 35px;
                 display: inline-block;
+				padding-left: 35px;
+				font-family: BROADW;
+				font-size: 26px;
             }
             header .serch{
                 float: right;
             }
+			.serch input{
+				height: 25px;
+				width: 275px;
+				margin-left: 10px;
+			}
             .logo{
-                height: 300px;
+                height: 180px;
+				width: 580px;
+				background-image: url(images/background01.png);
+				background-repeat: no-repeat;
+				margin: 0 auto;
+				
             }
             .type td{
                 text-align: center;
                 padding: 4px 12px;
+				width: 100px;
+				font-family: SONG;
+				font-size: 18px;
             }
+			.type td:hover{
+				background-color: #63bbd0;
+				cursor: pointer;
+			}
+			@font-face {
+				font-family: BROADW;
+				src: url(./fonts/BROADW.TTF);
+			}
+			@font-face {
+				font-family: SONG;
+				src: url(./fonts/STZHONGS.TTF);
+			}
         </style>
     </head>
     <body>
         <div class="mdui-container">
             <!-- 顶部导航条 -->
             <header class="mdui-container-fluid">
-                <div class="title-logo">歪比巴卜论坛</div>
+                <div class="title-logo">Wabby Wabbo</div>
                 <!-- 搜索框 -->
                 <div class="serch">
+					搜索栏
                     <input type="search"/>
-                    <button class="mdui-btn">搜索</button>
+                    <button class="mdui-btn">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-sousuo"></use>
+						</svg>
+					</button>
                 </div>
             </header>
             <div class="logo">
@@ -45,10 +95,13 @@
                 <!-- 分类 -->
                 <table class="type" border="1" cellspacing="0">
                     <tr>
-                        <td>娱乐</td>
-                        <td>新闻</td>
+                        <td>情感</td>
+                        <td>学习</td>
                         <td>游戏</td>
                         <td>编程</td>
+						<td>娱乐</td>
+						<td>考研</td>
+						<td>找工作</td>
                     </tr>
                 </table>
                 <!-- 帖子 -->

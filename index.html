@@ -7,27 +7,71 @@
         <link href="css/mdui.min.css" rel="stylesheet" />
         <script src="js/mdui.min.js"></script>
         <title>歪比巴卜论坛</title>
+        <style>
+            *{
+                margin:0;
+                padding: 0;
+            }
+            .title-logo{
+                width: 100px;
+                display: inline-block;
+            }
+            header .serch{
+                float: right;
+            }
+            .logo{
+                height: 300px;
+            }
+            .type td{
+                text-align: center;
+                padding: 4px 12px;
+            }
+        </style>
     </head>
     <body>
         <div class="mdui-container">
+            <!-- 顶部导航条 -->
             <header class="mdui-container-fluid">
-                <div class="title_logo"></div>
-                <div class="serch"></div>
+                <div class="title-logo">歪比巴卜论坛</div>
+                <!-- 搜索框 -->
+                <div class="serch">
+                    <input type="search"/>
+                    <button class="mdui-btn">搜索</button>
+                </div>
             </header>
-            <div class="logo"></div>
+            <div class="logo">
+            </div>
             <div class="content">
-                <table class="type"></table>
-                <table class="tips"></table>
+                <!-- 分类 -->
+                <table class="type" border="1" cellspacing="0">
+                    <tr>
+                        <td>娱乐</td>
+                        <td>新闻</td>
+                        <td>游戏</td>
+                        <td>编程</td>
+                    </tr>
+                </table>
+                <!-- 帖子 -->
+                <table class="tips">
+                    <div class="tips-content">
+                        <div>dsfadfadfasdfasf</div>
+                    </div>
+                    <div>点赞 100</div>
+                </table>
             </div>
-            <div class="right_label">
-                <div class="func_area"></div>
-                <table class="hot_tips"></table>
+            <div class="right-label">
+                <!-- 右侧功能区 -->
+                <div class="func-area"></div>
+                <!-- 热贴区 -->
+                <table class="hot-tips"></table>
             </div>
+            <!-- 友情链接 -->
             <div class="link">
                 <div class="github"></div>
                 <div class="wechat"></div>
                 <div class="donate"></div>
             </div>
+            <!-- 预留的底部区域 -->
             <footer></footer>
         </div>
     </body>

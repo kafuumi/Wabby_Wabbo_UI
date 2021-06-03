@@ -5,8 +5,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<link href="css/mdui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/swiper-bundle.min.css" />
 		<script src="js/mdui.min.js"></script>
 		<script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/swiper-bundle.min.js" type="text/javascript" charset="utf-8"></script>
 		<title>歪比巴卜论坛</title>
 		<style>
 			* {
@@ -66,25 +68,24 @@
 				font-family: SONG;
 				font-size: 18px;
 			}
-			
+
 			.type td:hover {
 				background-color: #63bbd0;
 				cursor: pointer;
 			}
-			
-			.link div{
-				display: inline-block;
-				width: 200px;
-				height: 200px;
-				border: 1px solid #000000;
+
+			.swiper-slide:hover {
+				transform: translateY(-3px);
+				box-shadow: 0 0 6px #999;
+				transition: all .5s ease-out;
 			}
 			
-			.arrow {
-				height: 120px !important;
-				width: 50px !important;
-				vertical-align: bottom;
-				text-align: center;
-				border: none !important;
+			.tips-content {
+				border: 1px solid #000;
+				border-radius: 1rem;
+				width: 885px;
+				height: 130px;
+				margin-top: 30px;
 			}
 
 			@font-face {
@@ -134,11 +135,6 @@
 					<div class="tips-content">
 						<div>dsfadfadfasdfasf</div>
 					</div>
-					<div>
-						<svg class="icon" aria-hidden="true">
-							<use xlink:href="#icon-dianzan"></use>
-						</svg>
-					</div>
 				</table>
 			</div>
 			<div class="right-label">
@@ -149,22 +145,30 @@
 			</div>
 			<!-- 友情链接 -->
 			<div class="link">
-				<div class="arrow">
-					<svg class="icon" aria-hidden="true" style="transform: rotate(180deg);">
-						<use xlink:href="#icon-jiantou"></use>
-					</svg>
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">s1</div>
+						<div class="swiper-slide">s2</div>
+						<div class="swiper-slide">s3</div>
+						<div class="swiper-slide">s4</div>
+					</div>
 				</div>
-				<div class="github">1</div>
-				<div class="wechat">2</div>
-				<div class="donate">3</div>
-				<div class="arrow">
-					<svg class="icon" aria-hidden="true">
-						<use xlink:href="#icon-jiantou"></use>
-					</svg>
-				</div>
+				<div class="swiper-button-prev"></div>
+				<div class="swiper-button-next"></div>
 			</div>
 			<!-- 预留的底部区域 -->
 			<footer></footer>
 		</div>
+		<script type="text/javascript">
+			var mySwiper = new Swiper('.swiper-container', {
+				slidesPerView: 3, //默认页面显示个数
+
+				// 前进后退按钮
+				navigation: {
+					nextEl: '.swiper-button-next',
+					prevEl: '.swiper-button-prev',
+				}
+			})
+		</script>
 	</body>
 </html>

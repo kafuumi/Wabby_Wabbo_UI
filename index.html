@@ -17,7 +17,7 @@
 			}
 
             body {
-                background-color: rgb(198, 230, 232);
+				background-color: #fffef9;
             }
 
             .icon {
@@ -33,7 +33,19 @@
                 border-bottom-left-radius: 19px;
                 border-bottom-right-radius: 19px;
             }
-
+			
+			.swiper-slide {
+				margin-left: 60px;
+				box-shadow: 0 0 6px #bbb;
+			}
+			
+			.swiper-container {
+			    width: 600px;
+			    height: 200px;
+				margin-left: 0;
+				margin-bottom: 50px;
+			}
+			
             .title-logo {
                 width: 310px;
                 line-height: 35px;
@@ -86,6 +98,7 @@
 				width: 885px;
 				height: 130px;
 				margin-top: 30px;
+				margin-bottom: 20px;
 			}
 
             .type td:hover {
@@ -98,30 +111,17 @@
                 margin: 0 auto;
             }
 
-            /* .link div {
-                display: inline-block;
-                width: 200px;
-                height: 200px;
-                border: 1px solid #000000;
-            } */
-            
             h2{
                 text-align: center;
                 margin: 30px 0;
             }
 
-            .arrow {
-                height: 120px !important;
-                width: 50px !important;
-                vertical-align: bottom;
-                text-align: center;
-                border: none !important;
-            }
             .right-label{
-                width: 100px;
-                height: 100px;
-                float:right;
+                width: 300px;
+                height: 200px;
                 border: 1px solid black;
+				border-radius: 1rem;
+				margin-left: 210px;
             }
 
             @font-face {
@@ -168,11 +168,11 @@
                         </tr>
                     </table>
                     <!-- 帖子 -->
-                    <table class="tips">
+                    <div class="tips">
                         <div class="tips-content">
                             <div>dsfadfadfasdfasf</div>
                         </div>
-                    </table>
+                    </div>
                 </div>
                 <div class="right-label mdui-col-xs-3">
                     <!-- 右侧功能区 -->
@@ -191,14 +191,14 @@
             <div class="link">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">s1</div>
-                        <div class="swiper-slide">s2</div>
-                        <div class="swiper-slide">s3</div>
-                        <div class="swiper-slide">s4</div>
+                        <div class="swiper-slide"><img src="images/github.png" ></div>
+                        <div class="swiper-slide"><img src="images/weixin.png" ></div>
+                        <div class="swiper-slide"><img src="images/dashang.png" ></div>
+                        <div class="swiper-slide"></div>
                     </div>
                 </div>
-               <!-- <div class="swiper-button-prev"></div>
-               <div class="swiper-button-next"></div> -->
+               <div class="swiper-button-prev" style="top: 85%; left: 160px;"></div>
+               <div class="swiper-button-next" style="top: 85%; right: 160px;"></div>
             </div>
              
             <!-- 预留的底部区域 -->

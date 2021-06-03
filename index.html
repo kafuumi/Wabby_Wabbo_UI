@@ -17,7 +17,7 @@
             }
 
             body {
-                background-color: rgb(198, 230, 232);
+				background-color: #fffef9;
             }
 
             .icon {
@@ -33,7 +33,19 @@
                 border-bottom-left-radius: 19px;
                 border-bottom-right-radius: 19px;
             }
-
+			
+			.swiper-slide {
+				margin-left: 60px;
+				box-shadow: 0 0 6px #bbb;
+			}
+			
+			.swiper-container {
+			    width: 600px;
+			    height: 200px;
+				margin-left: 0;
+				margin-bottom: 50px;
+			}
+			
             .title-logo {
                 width: 310px;
                 line-height: 35px;
@@ -264,15 +276,14 @@
             <div class="link">
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">s1</div>
-                        <div class="swiper-slide">s2</div>
-                        <div class="swiper-slide">s
-                        </div>
-                        <div class="swiper-slide">s4</div>
+                        <div class="swiper-slide"><img src="images/github.png" ></div>
+                        <div class="swiper-slide"><img src="images/weixin.png" ></div>
+                        <div class="swiper-slide"><img src="images/dashang.png" ></div>
+                        <div class="swiper-slide"></div>
                     </div>
                 </div>
-                <!-- <div class="swiper-button-prev"></div>
-               <div class="swiper-button-next"></div> -->
+               <div class="swiper-button-prev" style="top: 85%; left: 160px;"></div>
+               <div class="swiper-button-next" style="top: 85%; right: 160px;"></div>
             </div>
 
             <!-- 预留的底部区域 -->

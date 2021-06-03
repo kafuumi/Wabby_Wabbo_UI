@@ -17,7 +17,7 @@
             }
 
             body {
-				background-color: #fffef9;
+                background-color: #fffef9;
             }
 
             .icon {
@@ -33,19 +33,18 @@
                 border-bottom-left-radius: 19px;
                 border-bottom-right-radius: 19px;
             }
-			
-			.swiper-slide {
-				margin-left: 60px;
-				box-shadow: 0 0 6px #bbb;
-			}
-			
-			.swiper-container {
-			    width: 600px;
-			    height: 200px;
-				margin-left: 0;
-				margin-bottom: 50px;
-			}
-			
+
+            .swiper-slide {
+                margin-left: 60px;
+                box-shadow: 0 0 6px #bbb;
+            }
+
+            .swiper-container {
+                width: 600px;
+                height: 200px;
+                margin-left: 0;
+            }
+
             .title-logo {
                 width: 310px;
                 line-height: 35px;
@@ -130,11 +129,13 @@
                 line-height: 46px;
                 height: 46px;
             }
-            .func-area{
-                text-align: center; 
+
+            .func-area {
+                text-align: center;
                 border-radius: 8px;
             }
-            .hot-tips{
+
+            .hot-tips {
                 border-radius: 8px;
                 margin-top: 8px;
             }
@@ -147,19 +148,33 @@
                 border-bottom: 1px solid #eee;
                 list-style-type: none;
             }
-            .hot-tips li div::before{
+
+            .hot-tips li div::before {
                 content: url(images/hot.png);
             }
-            .hot-tips li div:hover{
+
+            .hot-tips li div:hover {
                 text-decoration: underline;
             }
-            footer{
+
+            footer {
                 height: 120px;
             }
 
             @font-face {
                 font-family: BROADW;
                 src: url(./fonts/BROADW.TTF);
+            }
+
+            .swiper-button-next{
+                right: 160px;
+            }
+            .swiper-button-prev {
+                left: 160px;
+            }
+            .swiper-button-next,
+            .swiper-button-prev{
+                top: unset;
             }
 
             @font-face {
@@ -273,17 +288,17 @@
             <!-- 友情链接 -->
             <hr>
             <h2>友情链接</h2>
-            <div class="link">
-                <div class="swiper-container">
+            <div class="link mdui-row">
+                <div class="swiper-container mdui-col-xs-8">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img src="images/github.png" ></div>
-                        <div class="swiper-slide"><img src="images/weixin.png" ></div>
-                        <div class="swiper-slide"><img src="images/dashang.png" ></div>
+                        <div class="swiper-slide"><img src="images/github.png"></div>
+                        <div class="swiper-slide"><img src="images/weixin.png"></div>
+                        <div class="swiper-slide"><img src="images/dashang.png"></div>
                         <div class="swiper-slide"></div>
                     </div>
                 </div>
-               <div class="swiper-button-prev" style="top: 85%; left: 160px;"></div>
-               <div class="swiper-button-next" style="top: 85%; right: 160px;"></div>
+                <div class="swiper-button-prev mdui-col-xs-2"></div>
+                <div class="swiper-button-next mdui-col-xs-2"></div>
             </div>
 
             <!-- 预留的底部区域 -->

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<link href="css/mdui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="css/swiper-bundle.min.css" />
-		<script src="js/mdui.min.js"></script>
-		<script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/swiper-bundle.min.js" type="text/javascript" charset="utf-8"></script>
-		<title>歪比巴卜论坛</title>
-		<style>
-			* {
-				margin: 0;
-				padding: 0;
-			}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link href="css/mdui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="css/swiper-bundle.min.css" />
+        <script src="js/mdui.min.js"></script>
+        <script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/swiper-bundle.min.js" type="text/javascript" charset="utf-8"></script>
+        <title>歪比巴卜论坛</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
 
             body {
                 background-color: rgb(198, 230, 232);
@@ -61,32 +61,35 @@
                 margin: 0 auto;
             }
 
-			.type td {
-				text-align: center;
-				padding: 4px 12px;
-				width: 100px;
-				font-family: SONG;
-				font-size: 18px;
-			}
+            .type {
+                width: 100%;
+                margin-bottom: 30px;
+            }
 
-			.type td:hover {
-				background-color: #63bbd0;
-				cursor: pointer;
-			}
+            .type td {
+                text-align: center;
+                padding: 4px 12px;
+                font-family: SONG;
+                font-size: 18px;
+            }
 
-			.swiper-slide:hover {
-				transform: translateY(-3px);
-				box-shadow: 0 0 6px #999;
-				transition: all .5s ease-out;
-			}
-			
-			.tips-content {
-				border: 1px solid #000;
-				border-radius: 1rem;
-				width: 885px;
-				height: 130px;
-				margin-top: 30px;
-			}
+            .type td:hover {
+                background-color: #63bbd0;
+                cursor: pointer;
+            }
+
+            .swiper-slide:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 0 6px #999;
+                transition: all .5s ease-out;
+            }
+
+            .tips-content {
+                border-radius: 1rem;
+                height: 130px;
+                margin-bottom: 8px;
+                padding: 20px 20px;
+            }
 
             .type td:hover {
                 background-color: #63bbd0;
@@ -98,30 +101,48 @@
                 margin: 0 auto;
             }
 
-            /* .link div {
-                display: inline-block;
-                width: 200px;
-                height: 200px;
-                border: 1px solid #000000;
-            } */
-            
-            h2{
+            hr {
+                margin: 30px 0;
+            }
+
+            h2 {
                 text-align: center;
                 margin: 30px 0;
             }
 
-            .arrow {
-                height: 120px !important;
-                width: 50px !important;
-                vertical-align: bottom;
-                text-align: center;
-                border: none !important;
+            .right-label {
+                margin-left: 18px;
             }
-            .right-label{
-                width: 100px;
-                height: 100px;
-                float:right;
-                border: 1px solid black;
+
+            .post-tip-img {
+                line-height: 46px;
+                height: 46px;
+            }
+            .func-area{
+                text-align: center; 
+                border-radius: 8px;
+            }
+            .hot-tips{
+                border-radius: 8px;
+                margin-top: 8px;
+            }
+
+            .hot-tips li {
+                cursor: pointer;
+                font-size: 16px;
+                margin: 20px 0;
+                padding: 0 0 8px 16px;
+                border-bottom: 1px solid #eee;
+                list-style-type: none;
+            }
+            .hot-tips li div::before{
+                content: url(images/hot.png);
+            }
+            .hot-tips li div:hover{
+                text-decoration: underline;
+            }
+            footer{
+                height: 120px;
             }
 
             @font-face {
@@ -154,7 +175,7 @@
             <div class="logo">
             </div>
             <div class="mdui-row">
-                <div class="content mdui-col-xs-7">
+                <div class="content mdui-col-xs-8">
                     <!-- 分类 -->
                     <table class="type" border="1" cellspacing="0">
                         <tr>
@@ -168,21 +189,73 @@
                         </tr>
                     </table>
                     <!-- 帖子 -->
-                    <table class="tips">
-                        <div class="tips-content">
+                    <div class="tips">
+                        <div class="tips-content mdui-card">
                             <div>dsfadfadfasdfasf</div>
                         </div>
-                    </table>
+                        <div class="tips-content mdui-card">
+                            <div>dsfadfadfasdfasf</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="right-label mdui-col-xs-3">
+                <div class="right-label mdui-col-xs-2">
                     <!-- 右侧功能区 -->
-                    <div class="func-area">
+                    <div class="func-area mdui-card">
+                        <div class="post-tip-img">
+                            img
+                        </div>
                         <div class="post-tip">
-                            
+                            发贴
                         </div>
                     </div>
                     <!-- 热贴区 -->
-                    <table class="hot-tips"></table>
+                    <ul class="hot-tips mdui-card">
+                        <li>
+                            <div>
+                                今天天气真好
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                今天天气真好
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                今天天气真好
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                今天天气真好
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                今天天气真好
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                今天天气真好
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                今天天气真好
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                今天天气真好
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                今天天气真好
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <!-- 友情链接 -->
@@ -193,27 +266,28 @@
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">s1</div>
                         <div class="swiper-slide">s2</div>
-                        <div class="swiper-slide">s3</div>
+                        <div class="swiper-slide">s
+                        </div>
                         <div class="swiper-slide">s4</div>
                     </div>
                 </div>
-               <!-- <div class="swiper-button-prev"></div>
+                <!-- <div class="swiper-button-prev"></div>
                <div class="swiper-button-next"></div> -->
             </div>
-             
+
             <!-- 预留的底部区域 -->
             <footer></footer>
-            </div>
-            <script type="text/javascript">
-                var mySwiper = new Swiper('.swiper-container', {
-                    slidesPerView: 3, //默认页面显示个数
+        </div>
+        <script type="text/javascript">
+            var mySwiper = new Swiper('.swiper-container', {
+                slidesPerView: 3, //默认页面显示个数
 
-                    // 前进后退按钮
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    }
-                })
-            </script>
+                // 前进后退按钮
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                }
+            })
+        </script>
     </body>
 </html>

@@ -1,170 +1,194 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<link href="css/mdui.min.css" rel="stylesheet" />
-		<script src="js/mdui.min.js"></script>
-		<script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
-		<title>歪比巴卜论坛</title>
-		<style>
-			* {
-				margin: 0;
-				padding: 0;
-			}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link href="css/mdui.min.css" rel="stylesheet" />
+        <script src="js/mdui.min.js"></script>
+        <script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
+        <title>歪比巴卜论坛</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
 
-			body {
-				background-color: rgb(198, 230, 232);
-			}
+            body {
+                background-color: rgb(198, 230, 232);
+            }
 
-			.icon {
-				width: 1.5em;
-				height: 2em;
-				vertical-align: -0.15em;
-				fill: currentColor;
-				overflow: hidden;
-			}
+            .icon {
+                width: 1.5em;
+                height: 2em;
+                vertical-align: -0.15em;
+                fill: currentColor;
+                overflow: hidden;
+            }
 
-			header {
-				background-color: #c3d7df;
-				border-bottom-left-radius: 19px;
-				border-bottom-right-radius: 19px;
-			}
+            header {
+                background-color: #c3d7df;
+                border-bottom-left-radius: 19px;
+                border-bottom-right-radius: 19px;
+            }
 
-			.title-logo {
-				width: 310px;
-				line-height: 35px;
-				display: inline-block;
-				padding-left: 35px;
-				font-family: BROADW;
-				font-size: 26px;
-			}
+            .title-logo {
+                width: 310px;
+                line-height: 35px;
+                display: inline-block;
+                padding-left: 35px;
+                font-family: BROADW;
+                font-size: 26px;
+            }
 
-			header .serch {
-				float: right;
-			}
+            header .serch {
+                float: right;
+            }
 
-			.serch input {
-				height: 25px;
-				width: 275px;
-				margin-left: 10px;
-			}
+            .serch input {
+                height: 25px;
+                width: 275px;
+                margin-left: 10px;
+            }
 
-			.logo {
-				height: 180px;
-				width: 580px;
-				background-image: url(images/background01.png);
-				background-repeat: no-repeat;
-				margin: 0 auto;
-			}
+            .logo {
+                height: 180px;
+                width: 580px;
+                background-image: url(images/background01.png);
+                background-repeat: no-repeat;
+                margin: 0 auto;
+            }
 
-			.type td {
-				text-align: center;
-				padding: 4px 12px;
-				width: 100px;
-				font-family: SONG;
-				font-size: 18px;
-			}
-			
-			.type td:hover {
-				background-color: #63bbd0;
-				cursor: pointer;
-			}
-			
-			.link div{
-				display: inline-block;
-				width: 200px;
-				height: 200px;
-				border: 1px solid #000000;
-			}
-			
-			.arrow {
-				height: 120px !important;
-				width: 50px !important;
-				vertical-align: bottom;
-				text-align: center;
-				border: none !important;
-			}
+            .type td {
+                text-align: center;
+                padding: 4px 12px;
+                width: 100px;
+                font-family: SONG;
+                font-size: 18px;
+            }
 
-			@font-face {
-				font-family: BROADW;
-				src: url(./fonts/BROADW.TTF);
-			}
+            .type td:hover {
+                background-color: #63bbd0;
+                cursor: pointer;
+            }
 
-			@font-face {
-				font-family: SONG;
-				src: url(./fonts/STZHONGS.TTF);
-			}
-		</style>
-	</head>
-	<body>
-		<div class="mdui-container">
-			<!-- 顶部导航条 -->
-			<header class="mdui-container-fluid">
-				<div class="title-logo">Wabby Wabbo</div>
-				<!-- 搜索框 -->
-				<div class="serch">
-					搜索栏
-					<input type="search" />
-					<button class="mdui-btn">
-						<svg class="icon" aria-hidden="true">
-							<use xlink:href="#icon-sousuo"></use>
-						</svg>
-					</button>
-				</div>
-			</header>
-			<div class="logo">
-			</div>
-			<div class="content">
-				<!-- 分类 -->
-				<table class="type" border="1" cellspacing="0">
-					<tr>
-						<td>情感</td>
-						<td>学习</td>
-						<td>游戏</td>
-						<td>编程</td>
-						<td>娱乐</td>
-						<td>考研</td>
-						<td>找工作</td>
-					</tr>
-				</table>
-				<!-- 帖子 -->
-				<table class="tips">
-					<div class="tips-content">
-						<div>dsfadfadfasdfasf</div>
-					</div>
-					<div>
-						<svg class="icon" aria-hidden="true">
-							<use xlink:href="#icon-dianzan"></use>
-						</svg>
-					</div>
-				</table>
-			</div>
-			<div class="right-label">
-				<!-- 右侧功能区 -->
-				<div class="func-area"></div>
-				<!-- 热贴区 -->
-				<table class="hot-tips"></table>
-			</div>
-			<!-- 友情链接 -->
-			<div class="link">
-				<div class="arrow">
-					<svg class="icon" aria-hidden="true" style="transform: rotate(180deg);">
-						<use xlink:href="#icon-jiantou"></use>
-					</svg>
-				</div>
-				<div class="github">1</div>
-				<div class="wechat">2</div>
-				<div class="donate">3</div>
-				<div class="arrow">
-					<svg class="icon" aria-hidden="true">
-						<use xlink:href="#icon-jiantou"></use>
-					</svg>
-				</div>
-			</div>
-			<!-- 预留的底部区域 -->
-			<footer></footer>
-		</div>
-	</body>
+            .link {
+                width: 730px;
+                margin: 0 auto;
+            }
+
+            .link div {
+                display: inline-block;
+                width: 200px;
+                height: 200px;
+                border: 1px solid #000000;
+            }
+            
+            h2{
+                text-align: center;
+                margin: 30px 0;
+            }
+
+            .arrow {
+                height: 120px !important;
+                width: 50px !important;
+                vertical-align: bottom;
+                text-align: center;
+                border: none !important;
+            }
+            .right-label{
+                width: 100px;
+                height: 100px;
+                float:right;
+                border: 1px solid black;
+            }
+
+            @font-face {
+                font-family: BROADW;
+                src: url(./fonts/BROADW.TTF);
+            }
+
+            @font-face {
+                font-family: SONG;
+                src: url(./fonts/STZHONGS.TTF);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="mdui-container">
+            <!-- 顶部导航条 -->
+            <header class="mdui-container-fluid">
+                <div class="title-logo">Wabby Wabbo</div>
+                <!-- 搜索框 -->
+                <div class="serch">
+                    搜索栏
+                    <input type="search" />
+                    <button class="mdui-btn">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-sousuo"></use>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+            <div class="logo">
+            </div>
+            <div class="mdui-row">
+                <div class="content mdui-col-xs-7">
+                    <!-- 分类 -->
+                    <table class="type" border="1" cellspacing="0">
+                        <tr>
+                            <td>情感</td>
+                            <td>学习</td>
+                            <td>游戏</td>
+                            <td>编程</td>
+                            <td>娱乐</td>
+                            <td>考研</td>
+                            <td>找工作</td>
+                        </tr>
+                    </table>
+                    <!-- 帖子 -->
+                    <table class="tips">
+                        <div class="tips-content">
+                            <div>dsfadfadfasdfasf</div>
+                        </div>
+                        <div>
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-dianzan"></use>
+                            </svg>
+                        </div>
+                    </table>
+                </div>
+                <div class="right-label mdui-col-xs-3">
+                    <!-- 右侧功能区 -->
+                    <div class="func-area">
+                        <div class="post-tip">
+                            
+                        </div>
+                    </div>
+                    <!-- 热贴区 -->
+                    <table class="hot-tips"></table>
+                </div>
+            </div>
+            <!-- 友情链接 -->
+            <hr>
+            <h2>友情链接</h2>
+            <div class="link">
+                <div class="arrow">
+                    <svg class="icon" aria-hidden="true" style="transform: rotate(180deg);">
+                        <use xlink:href="#icon-jiantou"></use>
+                    </svg>
+                </div>
+                <div class="github">1</div>
+                <div class="wechat">2</div>
+                <div class="donate">3</div>
+                <div class="arrow">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-jiantou"></use>
+                    </svg>
+                </div>
+            </div>
+            <!-- 预留的底部区域 -->
+            <footer></footer>
+        </div>
+    </body>
 </html>

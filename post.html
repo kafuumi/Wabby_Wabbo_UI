@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link href="css/mdui.min.css" rel="stylesheet" />
+        <script src="js/mdui.min.js"></script>
+        <script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
+        <title>发布</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                background-color: rgb(198, 230, 232);
+            }
+
+            .icon {
+                width: 1em;
+                height: 1em;
+                vertical-align: -0.15em;
+                fill: currentColor;
+                overflow: hidden;
+            }
+
+            header {
+                background-color: #c3d7df;
+                border-bottom-left-radius: 19px;
+                border-bottom-right-radius: 19px;
+            }
+
+            .title-logo {
+                width: 310px;
+                line-height: 35px;
+                display: inline-block;
+                padding-left: 35px;
+                font-family: BROADW;
+                font-size: 26px;
+            }
+
+            header .serch {
+                float: right;
+            }
+
+            .serch input {
+                height: 25px;
+                width: 275px;
+                margin-left: 10px;
+            }
+
+            .container {
+                width: 660px;
+                margin: 0 auto;
+            }
+
+            .page-container {
+                margin-top: 80px;
+                margin-bottom: 60px;
+                font-size: 18px;
+                line-height: 1.8;
+                width: 100%;
+                overflow-y: initial;
+            }
+
+            .type-label span {
+                font-size: 12px;
+                padding: 4px 6px;
+                border: 1px solid black;
+                border-radius: 100px;
+            }
+
+            hr {
+                margin: 18px 0;
+            }
+
+            @font-face {
+                font-family: BROADW;
+                src: url(./fonts/BROADW.TTF);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="mdui-container">
+            <header class="mdui-container-fluid">
+                <div class="title-logo">Wabby Wabbo</div>
+                <!-- 搜索框 -->
+                <div class="serch">
+                    搜索栏
+                    <input type="search" />
+                    <button class="mdui-btn">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-sousuo"></use>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+            <div class="container">
+                <!-- 展示文本的区域 -->
+                <div class="page-container">
+                    <p>正文之前，首先需要道个歉。虽然和往常一样获得了宝贵的售前体验机会，
+                        但个人时间因素，没有能够在第一时间分享《生化危机 村庄》的这篇体验报告。
+                        与此相对的，以“游戏已经发售数日”为前提，让我在本文中可以更肆无忌惮的讨论一些更细节、
+                        更具体的部分，对我这种写惯了售前评测的人来说，倒也不失为是的一种解脱——这一次终于可以不当谜语人了。
+                        不过不用担心，涉及剧透的部分依然会进行保护，以便读者可以选择性阅读。
+                    </p>
+                </div>
+                <div class="type-label">
+                    <span>游戏厅博</span>
+                </div>
+                <hr />
+                <div class="page-action">
+                    点赞
+                </div>
+                <div class="hot-comments">
+                    <div>
+                        学业繁忙，朝五晚十，尚无更多时间着力编写《青梅恋爱喜剧》长评，
+                        遂以纯文字短长评形式粗略概括。由于手头并无可靠的检索设备，
+                        短长评内容只能凭借笔者的个人印象来编写。待时间恢复后，
+                    </div>
+                    <i>5-19</i>
+                </div>
+                <div class="comments">
+                    <ul>
+                        <li>
+                            <div class="comment">
+                                <div class="comment-content">
+                                    笔者将不断扩充专栏文字数量，以分析更多有价值的信息。
+                                </div>
+                                <div class="comment-action">
+                                    点赞<i>100</i>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

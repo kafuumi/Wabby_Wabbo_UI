@@ -1,115 +1,92 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link href="css/mdui.min.css" rel="stylesheet" />
-        <script src="js/mdui.min.js"></script>
-        <script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
-        <title>帖子详情</title>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-            }
-
-            body {
-                background-color: #fffef9;
-            }
-
-			.icon {
-			    width: 1em;
-			    height: 1em;
-			    vertical-align: -0.15em;
-			    fill: currentColor;
-			    overflow: hidden;
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<link href="css/mdui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/navigation.css" />
+		<script src="js/mdui.min.js"></script>
+		<script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
+		<title>帖子详情</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
 			}
-			
+
+			body {
+				background-color: #fffef9;
+			}
+
+			/* 点赞图标（svg格式） */
+			.icon {
+				width: 1em;
+				height: 1em;
+				vertical-align: -0.15em;
+				fill: currentColor;
+				overflow: hidden;
+			}
+
 			#zan:hover {
 				cursor: pointer;
 			}
 
-            header {
-                background-color: #c3d7df;
-                border-bottom-left-radius: 19px;
-                border-bottom-right-radius: 19px;
-            }
+			/* 帖子文本内容 */
+			.container {
+				width: 660px;
+				margin: 0 auto;
+			}
 
-            .title-logo {
-                width: 310px;
-                line-height: 35px;
-                display: inline-block;
-                padding-left: 35px;
-                font-family: BROADW;
-                font-size: 26px;
-            }
-
-            header .serch {
-                float: right;
-            }
-
-            .serch input {
-                height: 25px;
-                width: 275px;
-                margin-left: 10px;
-            }
-
-            .container {
-                width: 660px;
-                margin: 0 auto;
-            }
-
-            .page-container {
-                margin-top: 80px;
-                margin-bottom: 30px;
-                font-size: 18px;
-                line-height: 1.8;
-                width: 100%;
-                overflow-y: initial;
+			.page-container {
+				margin-top: 80px;
+				margin-bottom: 30px;
+				font-size: 18px;
+				line-height: 1.8;
+				width: 100%;
+				overflow-y: initial;
 				padding: 5%;
-            }
-
-            .type-label span {
-                font-size: 12px;
-                border: 2px solid #000000;
-                border-radius: 12px;
-                padding: 5px;
-            }
-
-            hr {
-                margin: 18px 0;
-				clear: both;
-            }
-			
-			#com {
-				list-style: none;
 			}
-			
-			.time {
-				position: absolute;
-				left: 80%;
-			}
-			
-			.page-action i{
+
+			.page-action i {
 				border: 2px solid #000000;
 				border-radius: 12px;
 				padding: 5px;
 				font-size: 12px;
 				background-color: #ede3e7;
 			}
-			
+
 			.page-action {
 				margin-bottom: 10px;
 				margin-top: 10px;
 				display: inline;
-				margin-left: 540px;
+				position: relative;
+				left: 78%;
 			}
-			
+
 			.type-label {
 				display: inline;
+				font-size: 12px;
+				border: 2px solid #000000;
+				border-radius: 12px;
+				padding: 5px;
+				font-weight: bold;
+				position: relative;
+				left: 2%;
 			}
-			
+
+			/* 分隔线 */
+			hr {
+				margin: 18px 0;
+				clear: both;
+			}
+
+			.time {
+				position: absolute;
+				left: 80%;
+			}
+
+			/* 热门评论 */
 			.hot-comments div {
 				float: left;
 				border: 2px solid #616161;
@@ -121,11 +98,12 @@
 				margin-right: 26px;
 				line-height: 20px;
 			}
-			
+
 			#hotCom1 {
 				margin-left: 34px;
 			}
-			
+
+			/* 普通评论 */
 			.comments {
 				clear: both;
 				border: 2px solid #616161;
@@ -133,7 +111,7 @@
 				padding: 4px 4px 10px 4px;
 				margin-bottom: 50px;
 			}
-			
+
 			.comments i {
 				border: 0px solid #000000;
 				border-radius: 12px;
@@ -141,95 +119,89 @@
 				padding: 5px;
 				font-size: 12px;
 			}
-			
+
 			.comment {
 				position: relative;
 			}
-			
+
 			.comment-action {
 				position: relative;
 				left: 90%;
 				bottom: 10%;
 			}
 
-            @font-face {
-                font-family: BROADW;
-                src: url(./fonts/BROADW.TTF);
-            }
-        </style>
-    </head>
-    <body>
-        <div class="mdui-container">
-            <header class="mdui-container-fluid">
-                <div class="title-logo">Wabby Wabbo</div>
-                <!-- 搜索框 -->
-                <div class="serch">
-                    搜索栏
-                    <input type="search" />
-                    <button class="mdui-btn">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-sousuo"></use>
-                        </svg>
-                    </button>
-                </div>
-            </header>
-            <div class="container">
-                <!-- 展示文本的区域 -->
-                <div class="page-container mdui-card">
-                    <p>正文之前，首先需要道个歉。虽然和往常一样获得了宝贵的售前体验机会，
-                        但个人时间因素，没有能够在第一时间分享《生化危机 村庄》的这篇体验报告。
-                        与此相对的，以“游戏已经发售数日”为前提，让我在本文中可以更肆无忌惮的讨论一些更细节、
-                        更具体的部分，对我这种写惯了售前评测的人来说，倒也不失为是的一种解脱——这一次终于可以不当谜语人了。
-                        不过不用担心，涉及剧透的部分依然会进行保护，以便读者可以选择性阅读。
-                    </p>
-                </div>
-                <div class="mdui-row">
-                	<div class="type-label">
-                	    <span>游戏厅博</span>
-                	</div>
-                	<div class="page-action">
-                	    <svg class="icon" aria-hidden="true" id="zan">
-                	    	<use xlink:href="#icon-dianzan"></use>
-                	    </svg>
-                		<i>赞 100</i>
-                	</div>
-                </div>
+			#com {
+				list-style: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mdui-container">
+			<header class="mdui-container-fluid">
+				<div class="title-logo">Wabby Wabbo</div>
+				<!-- 搜索框 -->
+				<div class="serch mdui-row">
+					<input type="text" class="mdui-col-xs-10 serch-input" placeholder="搜索" />
+					<div class="iconfont mdui-col-xs-2">&#xe605;</div>
+				</div>
+			</header>
+			<div class="container">
+				<!-- 展示文本的区域 -->
+				<div class="page-container mdui-card">
+					<p>正文之前，首先需要道个歉。虽然和往常一样获得了宝贵的售前体验机会，
+						但个人时间因素，没有能够在第一时间分享《生化危机 村庄》的这篇体验报告。
+						与此相对的，以“游戏已经发售数日”为前提，让我在本文中可以更肆无忌惮的讨论一些更细节、
+						更具体的部分，对我这种写惯了售前评测的人来说，倒也不失为是的一种解脱——这一次终于可以不当谜语人了。
+						不过不用担心，涉及剧透的部分依然会进行保护，以便读者可以选择性阅读。
+					</p>
+				</div>
+				<div class="mdui-row">
+					<div class="type-label">
+						<span>游戏厅博</span>
+					</div>
+					<div class="page-action">
+						<svg class="icon" aria-hidden="true" id="zan">
+							<use xlink:href="#icon-dianzan"></use>
+						</svg>
+						<i>赞 100</i>
+					</div>
+				</div>
 				<hr />
-                <div class="hot-comments">
-                    <div id="hotCom1" class="mdui-card">
-                        <p>学业繁忙，朝五晚十，尚无更多时间着力编写《青梅恋爱喜剧》长评，
-                        遂以纯文字短长评形式粗略概括。由于手头并无可靠的检索设备，
-                        短长评内容只能凭借笔者的个人印象来编写。待时间恢复后，</p>
+				<div class="hot-comments">
+					<div id="hotCom1" class="mdui-card">
+						<p>学业繁忙，朝五晚十，尚无更多时间着力编写《青梅恋爱喜剧》长评，
+							遂以纯文字短长评形式粗略概括。由于手头并无可靠的检索设备，
+							短长评内容只能凭借笔者的个人印象来编写。待时间恢复后，</p>
 						<i class="time">5-19</i>
-                    </div>
+					</div>
 					<div id="hotCom2" class="mdui-card"></div>
 					<div id="hotCom3" class="mdui-card"></div>
-                </div>
+				</div>
 				<hr />
-                <div class="comments mdui-card">
-                    <ul>
-                        <li id="com">
-                            <div class="comment">
-                                <div class="comment-content">
-                                    <p>你好吗的睡觉哦大家iOS京东i叫司机都i佳松加哦京东i阿散井当代节省空间大绿卡就是
-									三对焦卡酵素都建瓯爱睡觉哦大家哦i啊是基督教哦i叫阿三的哦i加送京东i偶爱睡觉哦i就打死哦觉得i偶就阿松i就dij
-									爱神的箭哦案件送到家哦啊是就
+				<div class="comments mdui-card">
+					<ul>
+						<li id="com">
+							<div class="comment">
+								<div class="comment-content">
+									<p>你好吗的睡觉哦大家iOS京东i叫司机都i佳松加哦京东i阿散井当代节省空间大绿卡就是
+										三对焦卡酵素都建瓯爱睡觉哦大家哦i啊是基督教哦i叫阿三的哦i加送京东i偶爱睡觉哦i就打死哦觉得i偶就阿松i就dij
+										爱神的箭哦案件送到家哦啊是就
 									</p>
-                                </div>
+								</div>
 								<div class="time">
 									5-16
 								</div>
-                                <div class="comment-action">
-                                    <svg class="icon" aria-hidden="true">
-                                    	<use xlink:href="#icon-dianzan"></use>
-                                    </svg>
+								<div class="comment-action">
+									<svg class="icon" aria-hidden="true">
+										<use xlink:href="#icon-dianzan"></use>
+									</svg>
 									<i>赞 100</i>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </body>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

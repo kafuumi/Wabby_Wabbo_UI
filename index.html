@@ -1,116 +1,53 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link href="css/mdui.min.css" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css" href="css/swiper-bundle.min.css" />
-        <script src="js/mdui.min.js"></script>
-        <!-- <script src="//at.alicdn.com/t/font_2587192_2chnea6m04h.js"></script> -->
-        <script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/swiper-bundle.min.js" type="text/javascript" charset="utf-8"></script>
-        <title>歪比巴卜论坛</title>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-            }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<link href="css/mdui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/swiper-bundle.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/navigation.css" />
+		<script src="js/mdui.min.js"></script>
+		<!-- <script src="//at.alicdn.com/t/font_2587192_2chnea6m04h.js"></script> -->
+		<script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/swiper-bundle.min.js" type="text/javascript" charset="utf-8"></script>
+		<title>歪比巴卜论坛</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
 
-            body {
-                background-color: #fffef9;
-            }
+			body {
+				background-color: #fffef9;
+			}
 
-            .icon {
-                width: 2.5em;
-                height: 2em;
-                vertical-align: -0.15em;
-                fill: currentColor;
-                overflow: hidden;
-            }
+			.icon {
+				width: 2.5em;
+				height: 2em;
+				vertical-align: -0.15em;
+				fill: currentColor;
+				overflow: hidden;
+			}
 
-            @font-face {
-                font-family: BROADW;
-                src: url(./fonts/BROADW.TTF);
-            }
+			@font-face {
+				font-family: SONG;
+				src: url(./fonts/STZHONGS.TTF);
+			}
 
-            @font-face {
-                font-family: SONG;
-                src: url(./fonts/STZHONGS.TTF);
-            }
+			@font-face {
+				font-family: 'iconfont';
+				src: url('./iconfont/iconfont.woff2?t=1622784814432') format('woff2'),
+					url('./iconfont/iconfont.woff?t=1622784814432') format('woff'),
+					url('./iconfont/iconfont.ttf?t=1622784814432') format('truetype');
+			}
 
-            @font-face {
-                font-family: 'iconfont';
-                src: url('./iconfont/iconfont.woff2?t=1622784814432') format('woff2'),
-                    url('./iconfont/iconfont.woff?t=1622784814432') format('woff'),
-                    url('./iconfont/iconfont.ttf?t=1622784814432') format('truetype');
-            }
-
-            /* @font-face {
+			/* @font-face {
                 font-family: 'iconfont';
                 src: url('//at.alicdn.com/t/font_2587192_9etdsvjtqz.woff2?t=1622789973469') format('woff2'),
                     url('//at.alicdn.com/t/font_2587192_9etdsvjtqz.woff?t=1622789973469') format('woff'),
                     url('//at.alicdn.com/t/font_2587192_9etdsvjtqz.ttf?t=1622789973469') format('truetype');
             } */
-
-            .iconfont {
-                font-family: "iconfont" !important;
-                font-size: 16px;
-                font-style: normal;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-            }
-
-            /* 导航栏 */
-            header {
-                background-color: #c3d7df;
-                height: 56px;
-                border-bottom-left-radius: 16px;
-                border-bottom-right-radius: 16px;
-                box-shadow: 0 0 8px #bbb;
-            }
-
-            .title-logo {
-                width: 310px;
-                line-height: 56px;
-                cursor: pointer;
-                display: inline-block;
-                padding-left: 35px;
-                font-family: BROADW;
-                font-size: 26px;
-            }
-
-            header .serch {
-                float: right;
-                height: 36px;
-                font-size: 18px;
-                margin: 10px 35px;
-            }
-
-            .serch input {
-                font-size: 16px;
-                outline: none;
-                border: none;
-                height: 100%;
-                width: 280px;
-                border-radius: 4px 0 0 4px;
-            }
-
-            .serch div {
-                line-height: 36px;
-                width: 36px;
-                text-indent: 0;
-                text-align: center;
-                background-color: #eee;
-                border-radius: 0 4px 4px 0;
-                font-size: 18px;
-                font-weight: bold;
-                cursor: pointer;
-            }
-
-            .serch div:hover {
-                color: #007AFF
-            }
 
             /* logo */
             .logo {

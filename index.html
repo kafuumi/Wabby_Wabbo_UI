@@ -45,6 +45,7 @@
                     url('./iconfont/iconfont.woff?t=1622784814432') format('woff'),
                     url('./iconfont/iconfont.ttf?t=1622784814432') format('truetype');
             }
+
             /* @font-face {
                 font-family: 'iconfont';
                 src: url('//at.alicdn.com/t/font_2587192_9etdsvjtqz.woff2?t=1622789973469') format('woff2'),
@@ -122,23 +123,21 @@
 
             /* 分类 */
             .type {
+                border-radius: 0.5rem;
                 width: 100%;
                 margin-bottom: 30px;
             }
 
-            .type td {
+            .type a {
                 text-align: center;
-                padding: 4px 12px;
                 font-family: SONG;
                 font-size: 18px;
             }
 
-            .type td:hover {
-                background-color: #63bbd0;
-                cursor: pointer;
-            }
-
             /* 帖子区域 */
+            #tips-content{
+                margin-left: 38px;
+            }
             .tips-content {
                 cursor: pointer;
                 border-radius: 1rem;
@@ -157,14 +156,10 @@
                 -webkit-box-orient: vertical;
             }
 
-            .type td:hover {
-                background-color: #63bbd0;
-                cursor: pointer;
-            }
-
             /* 帖子的右侧区域 */
             .right-label {
-                margin-left: 18px;
+                float: right;
+                margin-right: 38px;
             }
 
             .func-area {
@@ -238,6 +233,7 @@
             }
 
             hr {
+                clear: both;
                 margin: 30px 0;
             }
 
@@ -247,8 +243,8 @@
             }
 
             .swiper-slide:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 0 6px #999;
+                transform: translateY(-5px);
+                box-shadow: 0 0 8px #999;
                 transition: all .5s ease-out;
             }
 
@@ -299,20 +295,17 @@
             </header>
             <div class="logo">
             </div>
-            <div class="mdui-row">
-                <div class="content mdui-col-xs-8">
+            <div class="mdui-row" id="tips-content">
+                <div class="content mdui-col-xs-9">
                     <!-- 分类 -->
-                    <table class="type mdui-card" border="1" cellspacing="0">
-                        <tr>
-                            <td>情感</td>
-                            <td>学习</td>
-                            <td>游戏</td>
-                            <td>编程</td>
-                            <td>娱乐</td>
-                            <td>考研</td>
-                            <td>找工作</td>
-                        </tr>
-                    </table>
+                    <div class="type mdui-tab mdui-card mdui-tab-full-width" mdui-tab>
+                        <a class="mdui-ripple">情感</a>
+                        <a class="mdui-ripple">学习</a>
+                        <a class="mdui-ripple">游戏</a>
+                        <a class="mdui-ripple">编程</a>
+                        <a class="mdui-ripple">娱乐</a>
+                        <a class="mdui-ripple">找工作</a>
+                    </div>
                     <!-- 帖子 -->
                     <div class="tips">
                         <div class="tips-content mdui-card">

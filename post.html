@@ -15,10 +15,18 @@
             }
 
             body {
-                background-color: rgb(198, 230, 232);
+                background-color: #fffef9;
             }
 
-            .icon {
+			.icon {
+			    width: 2em;
+			    height: 2em;
+			    vertical-align: -0.15em;
+			    fill: currentColor;
+			    overflow: hidden;
+			}
+			
+            .smallicon {
                 width: 1em;
                 height: 1em;
                 vertical-align: -0.15em;
@@ -63,6 +71,7 @@
                 line-height: 1.8;
                 width: 100%;
                 overflow-y: initial;
+				padding: 5%;
             }
 
             .type-label span {
@@ -99,7 +108,7 @@
             </header>
             <div class="container">
                 <!-- 展示文本的区域 -->
-                <div class="page-container">
+                <div class="page-container mdui-card">
                     <p>正文之前，首先需要道个歉。虽然和往常一样获得了宝贵的售前体验机会，
                         但个人时间因素，没有能够在第一时间分享《生化危机 村庄》的这篇体验报告。
                         与此相对的，以“游戏已经发售数日”为前提，让我在本文中可以更肆无忌惮的讨论一些更细节、
@@ -112,7 +121,10 @@
                 </div>
                 <hr />
                 <div class="page-action">
-                    点赞
+                    <svg class="icon" aria-hidden="true">
+                    	<use xlink:href="#icon-dianzan"></use>
+                    </svg>
+					<i>100</i>
                 </div>
                 <div class="hot-comments">
                     <div>
@@ -130,7 +142,10 @@
                                     笔者将不断扩充专栏文字数量，以分析更多有价值的信息。
                                 </div>
                                 <div class="comment-action">
-                                    点赞<i>100</i>
+                                    <svg class="smallicon" aria-hidden="true">
+                                    	<use xlink:href="#icon-dianzan"></use>
+                                    </svg>
+									<i>100</i>
                                 </div>
                             </div>
                         </li>

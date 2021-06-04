@@ -1,319 +1,331 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link href="css/mdui.min.css" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css" href="css/swiper-bundle.min.css" />
-        <script src="js/mdui.min.js"></script>
-        <script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/swiper-bundle.min.js" type="text/javascript" charset="utf-8"></script>
-        <title>歪比巴卜论坛</title>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-            }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<link href="css/mdui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/swiper-bundle.min.css" />
+		<script src="js/mdui.min.js"></script>
+		<script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/swiper-bundle.min.js" type="text/javascript" charset="utf-8"></script>
+		<title>歪比巴卜论坛</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
 
-            body {
-                background-color: #fffef9;
-            }
+			body {
+				background-color: #fffef9;
+			}
 
-            .icon {
-                width: 1.5em;
-                height: 2em;
-                vertical-align: -0.15em;
-                fill: currentColor;
-                overflow: hidden;
-            }
+			.icon {
+				width: 2.5em;
+				height: 2em;
+				vertical-align: -0.15em;
+				fill: currentColor;
+				overflow: hidden;
+			}
 
-            header {
-                background-color: #c3d7df;
-                border-bottom-left-radius: 19px;
-                border-bottom-right-radius: 19px;
-            }
+			header {
+				background-color: #c3d7df;
+				border-bottom-left-radius: 19px;
+				border-bottom-right-radius: 19px;
+			}
 
-            .swiper-slide {
-                margin-left: 60px;
-                box-shadow: 0 0 6px #bbb;
-            }
+			.swiper-slide {
+				box-shadow: 0 0 6px #bbb;
+			}
 
-            .swiper-container {
-                width: 600px;
-                height: 200px;
-                margin-left: 0;
+			.swiper-container {
+                width: 800px;
+                height: auto;
             }
+			
+			img {
+				margin-left: 15px;
+			}
 
-            .title-logo {
-                width: 310px;
-                line-height: 35px;
-                display: inline-block;
-                padding-left: 35px;
-                font-family: BROADW;
-                font-size: 26px;
-            }
+			.title-logo {
+				width: 310px;
+				line-height: 35px;
+				display: inline-block;
+				padding-left: 35px;
+				font-family: BROADW;
+				font-size: 26px;
+			}
 
-            header .serch {
-                float: right;
-            }
+			header .serch {
+				float: right;
+			}
 
-            .serch input {
-                height: 25px;
-                width: 275px;
-                margin-left: 10px;
-            }
+			.serch input {
+				height: 25px;
+				width: 275px;
+				margin-left: 10px;
+			}
 
-            .logo {
-                height: 180px;
-                width: 580px;
-                background-image: url(images/background01.png);
-                background-repeat: no-repeat;
-                margin: 0 auto;
-            }
+			.logo {
+				height: 180px;
+				width: 580px;
+				background-image: url(images/background01.png);
+				background-repeat: no-repeat;
+				margin: 0 auto;
+			}
 
-            .type {
-                width: 100%;
-                margin-bottom: 30px;
-            }
+			.type {
+				width: 100%;
+				margin-bottom: 30px;
+			}
 
-            .type td {
-                text-align: center;
-                padding: 4px 12px;
-                font-family: SONG;
-                font-size: 18px;
-            }
+			.type td {
+				text-align: center;
+				padding: 4px 12px;
+				font-family: SONG;
+				font-size: 18px;
+			}
 
-            .type td:hover {
-                background-color: #63bbd0;
-                cursor: pointer;
-            }
+			.type td:hover {
+				background-color: #63bbd0;
+				cursor: pointer;
+			}
 
-            .swiper-slide:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 0 6px #999;
-                transition: all .5s ease-out;
-            }
+			.swiper-slide:hover {
+				transform: translateY(-3px);
+				box-shadow: 0 0 6px #999;
+				transition: all .5s ease-out;
+			}
 
-            .tips-content {
-                border-radius: 1rem;
-                height: 130px;
-                margin-bottom: 8px;
-                padding: 20px 20px;
-            }
+			.tips-content {
+				border-radius: 1rem;
+				height: 130px;
+				margin-bottom: 8px;
+				padding: 20px 20px;
+			}
 
-            .type td:hover {
-                background-color: #63bbd0;
-                cursor: pointer;
-            }
+			.type td:hover {
+				background-color: #63bbd0;
+				cursor: pointer;
+			}
 
-            .link {
-                width: 730px;
-                margin: 0 auto;
-            }
+			.link {
+				width: 730px;
+				margin: 0 auto;
+			}
 
-            hr {
-                margin: 30px 0;
-            }
+			hr {
+				margin: 30px 0;
+			}
 
-            h2 {
-                text-align: center;
-                margin: 30px 0;
-            }
+			h2 {
+				text-align: center;
+				margin: 30px 0;
+			}
 
-            .right-label {
-                margin-left: 18px;
-            }
+			.right-label {
+				margin-left: 18px;
+			}
 
-            .post-tip-img {
-                line-height: 46px;
-                height: 46px;
-            }
+			.post-tip-img {
+				line-height: 46px;
+				height: 36px;
+			}
 
-            .func-area {
-                text-align: center;
-                border-radius: 8px;
-            }
+			.post-tip {
+				margin-bottom: 10px;
+			}
 
-            .hot-tips {
-                border-radius: 8px;
-                margin-top: 8px;
-            }
+			.func-area {
+				text-align: center;
+				border-radius: 8px;
+			}
 
-            .hot-tips li {
-                cursor: pointer;
-                font-size: 16px;
-                margin: 20px 0;
-                padding: 0 0 8px 16px;
-                border-bottom: 1px solid #eee;
-                list-style-type: none;
-            }
+			.hot-tips {
+				border-radius: 8px;
+				margin-top: 8px;
+			}
 
-            .hot-tips li div::before {
-                content: url(images/hot.png);
-            }
+			.hot-tips li {
+				cursor: pointer;
+				font-size: 16px;
+				margin: 20px 0;
+				padding: 0 0 8px 16px;
+				border-bottom: 1px solid #eee;
+				list-style-type: none;
+			}
 
-            .hot-tips li div:hover {
-                text-decoration: underline;
-            }
+			.hot-tips li div::before {
+				content: url(images/hot.png);
+			}
 
-            footer {
-                height: 120px;
-            }
+			.hot-tips li div:hover {
+				text-decoration: underline;
+			}
 
-            @font-face {
-                font-family: BROADW;
-                src: url(./fonts/BROADW.TTF);
-            }
+			footer {
+				height: 120px;
+			}
 
-            .swiper-button-next{
-                right: 160px;
-            }
-            .swiper-button-prev {
-                left: 160px;
-            }
-            .swiper-button-next,
-            .swiper-button-prev{
-                top: unset;
-            }
+			@font-face {
+				font-family: BROADW;
+				src: url(./fonts/BROADW.TTF);
+			}
 
-            @font-face {
-                font-family: SONG;
-                src: url(./fonts/STZHONGS.TTF);
-            }
-        </style>
-    </head>
-    <body>
-        <div class="mdui-container">
-            <!-- 顶部导航条 -->
-            <header class="mdui-container-fluid">
-                <div class="title-logo">Wabby Wabbo</div>
-                <!-- 搜索框 -->
-                <div class="serch">
-                    搜索栏
-                    <input type="search" />
-                    <button class="mdui-btn">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-sousuo"></use>
-                        </svg>
-                    </button>
-                </div>
-            </header>
-            <div class="logo">
-            </div>
-            <div class="mdui-row">
-                <div class="content mdui-col-xs-8">
-                    <!-- 分类 -->
-                    <table class="type" border="1" cellspacing="0">
-                        <tr>
-                            <td>情感</td>
-                            <td>学习</td>
-                            <td>游戏</td>
-                            <td>编程</td>
-                            <td>娱乐</td>
-                            <td>考研</td>
-                            <td>找工作</td>
-                        </tr>
-                    </table>
-                    <!-- 帖子 -->
-                    <div class="tips">
-                        <div class="tips-content mdui-card">
-                            <div>dsfadfadfasdfasf</div>
-                        </div>
-                        <div class="tips-content mdui-card">
-                            <div>dsfadfadfasdfasf</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="right-label mdui-col-xs-2">
-                    <!-- 右侧功能区 -->
-                    <div class="func-area mdui-card">
-                        <div class="post-tip-img">
-                            img
-                        </div>
-                        <div class="post-tip">
-                            发贴
-                        </div>
-                    </div>
-                    <!-- 热贴区 -->
-                    <ul class="hot-tips mdui-card">
-                        <li>
-                            <div>
-                                今天天气真好
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                今天天气真好
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                今天天气真好
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                今天天气真好
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                今天天气真好
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                今天天气真好
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                今天天气真好
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                今天天气真好
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                今天天气真好
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- 友情链接 -->
-            <hr>
-            <h2>友情链接</h2>
-            <div class="link mdui-row">
-                <div class="swiper-container mdui-col-xs-8">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img src="images/github.png"></div>
-                        <div class="swiper-slide"><img src="images/weixin.png"></div>
-                        <div class="swiper-slide"><img src="images/dashang.png"></div>
-                        <div class="swiper-slide"></div>
-                    </div>
-                </div>
-                <div class="swiper-button-prev mdui-col-xs-2"></div>
-                <div class="swiper-button-next mdui-col-xs-2"></div>
-            </div>
+			@font-face {
+				font-family: SONG;
+				src: url(./fonts/STZHONGS.TTF);
+			}
 
-            <!-- 预留的底部区域 -->
-            <footer></footer>
-        </div>
-        <script type="text/javascript">
-            var mySwiper = new Swiper('.swiper-container', {
-                slidesPerView: 3, //默认页面显示个数
+			.swiper-button-next {
+				right: 160px;
+			}
 
-                // 前进后退按钮
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                }
-            })
-        </script>
-    </body>
+			.swiper-button-prev {
+				left: 160px;
+			}
+
+			.swiper-button-next,
+			.swiper-button-prev {
+				top: unset;
+				height: 200px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mdui-container">
+			<!-- 顶部导航条 -->
+			<header class="mdui-container-fluid">
+				<div class="title-logo">Wabby Wabbo</div>
+				<!-- 搜索框 -->
+				<div class="serch">
+					搜索栏
+					<input type="search" />
+					<button class="mdui-btn">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-sousuo"></use>
+						</svg>
+					</button>
+				</div>
+			</header>
+			<div class="logo">
+			</div>
+			<div class="mdui-row">
+				<div class="content mdui-col-xs-8">
+					<!-- 分类 -->
+					<table class="type mdui-card" border="1" cellspacing="0">
+						<tr>
+							<td>情感</td>
+							<td>学习</td>
+							<td>游戏</td>
+							<td>编程</td>
+							<td>娱乐</td>
+							<td>考研</td>
+							<td>找工作</td>
+						</tr>
+					</table>
+					<!-- 帖子 -->
+					<div class="tips">
+						<div class="tips-content mdui-card">
+							<div>dsfadfadfasdfasf</div>
+						</div>
+						<div class="tips-content mdui-card">
+							<div>dsfadfadfasdfasf</div>
+						</div>
+					</div>
+				</div>
+				<div class="right-label mdui-col-xs-2">
+					<!-- 右侧功能区 -->
+					<div class="func-area mdui-card">
+						<div class="post-tip-img">
+							<svg class="icon fabu" aria-hidden="true">
+								<use xlink:href="#icon-fabu"></use>
+							</svg>
+						</div>
+						<div class="post-tip">
+							发贴
+						</div>
+					</div>
+					<!-- 热贴区 -->
+					<ul class="hot-tips mdui-card">
+						<li>
+							<div>
+								今天天气真好
+							</div>
+						</li>
+						<li>
+							<div>
+								今天天气真好
+							</div>
+						</li>
+						<li>
+							<div>
+								今天天气真好
+							</div>
+						</li>
+						<li>
+							<div>
+								今天天气真好
+							</div>
+						</li>
+						<li>
+							<div>
+								今天天气真好
+							</div>
+						</li>
+						<li>
+							<div>
+								今天天气真好
+							</div>
+						</li>
+						<li>
+							<div>
+								今天天气真好
+							</div>
+						</li>
+						<li>
+							<div>
+								今天天气真好
+							</div>
+						</li>
+						<li>
+							<div>
+								今天天气真好
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- 友情链接 -->
+			<hr>
+			<h2>友情链接</h2>
+			<div class="link mdui-row">
+				<div class="swiper-container mdui-col-xs-8">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide"><img src="images/github.png"></div>
+						<div class="swiper-slide"><img src="images/weixin.png"></div>
+						<div class="swiper-slide"><img src="images/dashang.png"></div>
+						<div class="swiper-slide"></div>
+					</div>
+				</div>
+				<div class="swiper-button-prev mdui-col-xs-2"></div>
+				<div class="swiper-button-next mdui-col-xs-2"></div>
+			</div>
+
+			<!-- 预留的底部区域 -->
+			<footer></footer>
+		</div>
+		<script type="text/javascript">
+			var mySwiper = new Swiper('.swiper-container', {
+				slidesPerView: 3, //默认页面显示个数
+				autoHeight: true, //页面高度自适应
+				spaceBetween: 50, //slide间距离
+				// 前进后退按钮
+				navigation: {
+					nextEl: '.swiper-button-next',
+					prevEl: '.swiper-button-prev',
+				}
+			})
+		</script>
+	</body>
 </html>

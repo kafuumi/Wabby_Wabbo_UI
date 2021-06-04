@@ -1,4 +1,14 @@
 /* 导航栏 */
+@font-face {
+	font-family: 'iconfont';
+	src: url('../iconfont/iconfont.woff2?t=1622784814432') format('woff2'),
+		url('../iconfont/iconfont.woff?t=1622784814432') format('woff'),
+		url('../iconfont/iconfont.ttf?t=1622784814432') format('truetype');
+}
+@font-face {
+	font-family: BROADW;
+	src: url(../fonts/BROADW.TTF);
+}
 header {
 	background-color: #c3d7df;
 	height: 56px;
@@ -15,11 +25,6 @@ header {
 	padding-left: 35px;
 	font-family: BROADW;
 	font-size: 26px;
-}
-
-@font-face {
-	font-family: BROADW;
-	src: url(../fonts/BROADW.TTF);
 }
 
 header .serch {
@@ -60,11 +65,4 @@ header .serch {
 	font-style: normal;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-}
-
-@font-face {
-	font-family: 'iconfont';
-	src: url('../iconfont/iconfont.woff2?t=1622784814432') format('woff2'),
-		url('../iconfont/iconfont.woff?t=1622784814432') format('woff'),
-		url('../iconfont/iconfont.ttf?t=1622784814432') format('truetype');
 }

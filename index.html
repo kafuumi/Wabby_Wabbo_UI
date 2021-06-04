@@ -1,468 +1,414 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link href="css/mdui.min.css" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css" href="css/swiper-bundle.min.css" />
-        <script src="js/mdui.min.js"></script>
-        <!-- <script src="//at.alicdn.com/t/font_2587192_2chnea6m04h.js"></script> -->
-        <script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/swiper-bundle.min.js" type="text/javascript" charset="utf-8"></script>
-        <title>歪比巴卜论坛</title>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-            }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<link href="css/mdui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/swiper-bundle.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/navigation.css" />
+		<script src="js/mdui.min.js"></script>
+		<!-- <script src="//at.alicdn.com/t/font_2587192_2chnea6m04h.js"></script> -->
+		<script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/swiper-bundle.min.js" type="text/javascript" charset="utf-8"></script>
+		<title>歪比巴卜论坛</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
 
-            body {
-                background-color: #fffef9;
-            }
+			body {
+				background-color: #fffef9;
+			}
 
-            .icon {
-                width: 2.5em;
-                height: 2em;
-                vertical-align: -0.15em;
-                fill: currentColor;
-                overflow: hidden;
-            }
+			.icon {
+				width: 2.5em;
+				height: 2em;
+				vertical-align: -0.15em;
+				fill: currentColor;
+				overflow: hidden;
+			}
 
-            @font-face {
-                font-family: BROADW;
-                src: url(./fonts/BROADW.TTF);
-            }
+			@font-face {
+				font-family: SONG;
+				src: url(./fonts/STZHONGS.TTF);
+			}
 
-            @font-face {
-                font-family: SONG;
-                src: url(./fonts/STZHONGS.TTF);
-            }
+			@font-face {
+				font-family: 'iconfont';
+				src: url('./iconfont/iconfont.woff2?t=1622784814432') format('woff2'),
+					url('./iconfont/iconfont.woff?t=1622784814432') format('woff'),
+					url('./iconfont/iconfont.ttf?t=1622784814432') format('truetype');
+			}
 
-            @font-face {
-                font-family: 'iconfont';
-                src: url('./iconfont/iconfont.woff2?t=1622784814432') format('woff2'),
-                    url('./iconfont/iconfont.woff?t=1622784814432') format('woff'),
-                    url('./iconfont/iconfont.ttf?t=1622784814432') format('truetype');
-            }
-            /* @font-face {
+			/* @font-face {
                 font-family: 'iconfont';
                 src: url('//at.alicdn.com/t/font_2587192_9etdsvjtqz.woff2?t=1622789973469') format('woff2'),
                     url('//at.alicdn.com/t/font_2587192_9etdsvjtqz.woff?t=1622789973469') format('woff'),
                     url('//at.alicdn.com/t/font_2587192_9etdsvjtqz.ttf?t=1622789973469') format('truetype');
             } */
 
-            .iconfont {
-                font-family: "iconfont" !important;
-                font-size: 16px;
-                font-style: normal;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-            }
+			.iconfont {
+				font-family: "iconfont" !important;
+				font-size: 16px;
+				font-style: normal;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
 
-            /* 导航栏 */
-            header {
-                background-color: #c3d7df;
-                height: 56px;
-                border-bottom-left-radius: 16px;
-                border-bottom-right-radius: 16px;
-                box-shadow: 0 0 8px #bbb;
-            }
+			/* logo */
+			.logo {
+				height: 180px;
+				width: 580px;
+				background-image: url(images/background01.png);
+				background-repeat: no-repeat;
+				margin: 0 auto;
+			}
 
-            .title-logo {
-                width: 310px;
-                line-height: 56px;
-                cursor: pointer;
-                display: inline-block;
-                padding-left: 35px;
-                font-family: BROADW;
-                font-size: 26px;
-            }
+			/* 分类 */
+			.type {
+				width: 100%;
+				margin-bottom: 30px;
+			}
 
-            header .serch {
-                float: right;
-                height: 36px;
-                font-size: 18px;
-                margin: 10px 35px;
-            }
+			.type td {
+				text-align: center;
+				padding: 4px 12px;
+				font-family: SONG;
+				font-size: 18px;
+			}
 
-            .serch input {
-                font-size: 16px;
-                outline: none;
-                border: none;
-                height: 100%;
-                width: 280px;
-                border-radius: 4px 0 0 4px;
-            }
+			.type td:hover {
+				background-color: #63bbd0;
+				cursor: pointer;
+			}
 
-            .serch div {
-                line-height: 36px;
-                width: 36px;
-                text-indent: 0;
-                text-align: center;
-                background-color: #eee;
-                border-radius: 0 4px 4px 0;
-                font-size: 18px;
-                font-weight: bold;
-                cursor: pointer;
-            }
+			/* 帖子区域 */
+			.tips-content {
+				cursor: pointer;
+				border-radius: 1rem;
+				height: 130px;
+				margin-bottom: 8px;
+				padding: 16px 20px;
+			}
 
-            .serch div:hover {
-                color: #007AFF
-            }
+			.tips-content div {
+				text-indent: 2em;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				font-size: 16px;
+				-webkit-line-clamp: 5;
+				-webkit-box-orient: vertical;
+			}
 
-            /* logo */
-            .logo {
-                height: 180px;
-                width: 580px;
-                background-image: url(images/background01.png);
-                background-repeat: no-repeat;
-                margin: 0 auto;
-            }
+			.type td:hover {
+				background-color: #63bbd0;
+				cursor: pointer;
+			}
 
-            /* 分类 */
-            .type {
-                width: 100%;
-                margin-bottom: 30px;
-            }
+			/* 帖子的右侧区域 */
+			.right-label {
+				margin-left: 18px;
+			}
 
-            .type td {
-                text-align: center;
-                padding: 4px 12px;
-                font-family: SONG;
-                font-size: 18px;
-            }
+			.func-area {
+				padding: 6px 26px;
+				text-align: center;
+				border-radius: 8px;
+			}
 
-            .type td:hover {
-                background-color: #63bbd0;
-                cursor: pointer;
-            }
+			.func-item .icon,
+			.func-item .text {
+				cursor: pointer;
+				color: #2177b8;
+				font-size: 24px;
+				text-align: center;
+				height: 36px;
+				line-height: 36px;
+			}
 
-            /* 帖子区域 */
-            .tips-content {
-                cursor: pointer;
-                border-radius: 1rem;
-                height: 130px;
-                margin-bottom: 8px;
-                padding: 16px 20px;
-            }
+			.func-item .text {
+				color: #000;
+				font-size: 16px;
+			}
 
-            .tips-content div {
-                text-indent: 2em;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                font-size: 16px;
-                -webkit-line-clamp: 5;
-                -webkit-box-orient: vertical;
-            }
+			/* 热贴 */
+			.hot-tips {
+				border-radius: 8px;
+				margin-top: 16px;
+			}
 
-            .type td:hover {
-                background-color: #63bbd0;
-                cursor: pointer;
-            }
+			.hot-tips li {
+				cursor: default;
+				font-size: 16px;
+				height: 36px;
+				line-height: 36px;
+				text-indent: 1em;
+				border-bottom: 1px solid #eee;
+				padding-top: 6px;
+				list-style-type: none;
+			}
 
-            /* 帖子的右侧区域 */
-            .right-label {
-                margin-left: 18px;
-            }
+			.hot-tips li div {
+				cursor: pointer;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
 
-            .func-area {
-                padding: 6px 26px;
-                text-align: center;
-                border-radius: 8px;
-            }
+			.hot-tips i {
+				color: #f00;
+				font-size: 18px;
+			}
 
-            .func-item .icon,
-            .func-item .text {
-                cursor: pointer;
-                color: #2177b8;
-                font-size: 24px;
-                text-align: center;
-                height: 36px;
-                line-height: 36px;
-            }
+			.hot-tips li:nth-child(1),
+			.hot-tips li:nth-child(2),
+			.hot-tips li:nth-child(3) {
+				color: #ef3473;
+			}
 
-            .func-item .text {
-                color: #000;
-                font-size: 16px;
-            }
+			.hot-tips li:last-of-type {
+				border: none;
+			}
 
-            /* 热贴 */
-            .hot-tips {
-                border-radius: 8px;
-                margin-top: 16px;
-            }
+			.hot-tips li div:hover {
+				text-decoration: underline;
+			}
 
-            .hot-tips li {
-                cursor: default;
-                font-size: 16px;
-                height: 36px;
-                line-height: 36px;
-                text-indent: 1em;
-                border-bottom: 1px solid #eee;
-                padding-top: 6px;
-                list-style-type: none;
-            }
+			/* 友情链接区域 */
+			.link {
+				width: 730px;
+				margin: 0 auto;
+			}
 
-            .hot-tips li div {
-                cursor: pointer;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-            }
+			hr {
+				margin: 30px 0;
+			}
 
-            .hot-tips i {
-                color: #f00;
-                font-size: 18px;
-            }
+			h2 {
+				text-align: center;
+				margin: 30px 0;
+			}
 
-            .hot-tips li:nth-child(1),
-            .hot-tips li:nth-child(2),
-            .hot-tips li:nth-child(3) {
-                color: #ef3473;
-            }
+			.swiper-slide:hover {
+				transform: translateY(-3px);
+				box-shadow: 0 0 6px #999;
+				transition: all .5s ease-out;
+			}
 
-            .hot-tips li:last-of-type {
-                border: none;
-            }
+			.swiper-container {
+				width: 700px;
+				height: auto;
+			}
 
-            .hot-tips li div:hover {
-                text-decoration: underline;
-            }
+			.swiper-slide svg {
+				width: 100px;
+				height: 200px;
+			}
 
-            /* 友情链接区域 */
-            .link {
-                width: 730px;
-                margin: 0 auto;
-            }
+			.swiper-button-next {
+				right: 10%;
+			}
 
-            hr {
-                margin: 30px 0;
-            }
+			.swiper-button-prev {
+				left: 10%;
+			}
 
-            h2 {
-                text-align: center;
-                margin: 30px 0;
-            }
+			.swiper-slide {
+				text-align: center;
+			}
 
-            .swiper-slide:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 0 6px #999;
-                transition: all .5s ease-out;
-            }
+			.swiper-button-next,
+			.swiper-button-prev {
+				top: unset;
+				margin: 0;
+				height: 200px;
+			}
 
-            .swiper-container {
-                width: 700px;
-                height: auto;
-            }
+			footer {
+				height: 120px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="mdui-container">
+			<!-- 顶部导航条 -->
+			<header class="mdui-container-fluid">
+				<div class="title-logo">Wabby Wabbo</div>
+				<!-- 搜索框 -->
+				<div class="serch mdui-row">
+					<input type="text" class="mdui-col-xs-10 serch-input" placeholder="搜索" />
+					<div class="iconfont mdui-col-xs-2">&#xe605;</div>
+				</div>
+			</header>
+			<div class="logo">
+			</div>
+			<div class="mdui-row">
+				<div class="content mdui-col-xs-8">
+					<!-- 分类 -->
+					<table class="type mdui-card" border="1" cellspacing="0">
+						<tr>
+							<td>情感</td>
+							<td>学习</td>
+							<td>游戏</td>
+							<td>编程</td>
+							<td>娱乐</td>
+							<td>考研</td>
+							<td>找工作</td>
+						</tr>
+					</table>
+					<!-- 帖子 -->
+					<div class="tips">
+						<div class="tips-content mdui-card">
+							<div>在当今这个时代，将时间这个概念引入到游戏中，已经不再是什么新鲜事。
 
-            .swiper-slide svg {
-                width: 100px;
-                height: 200px;
-            }
+								例如《塞尔达传说：旷野之息》、《异度神剑1/2》、《勇者斗恶龙11》、《勇气默示录2》
 
-            .swiper-button-next {
-                right: 10%;
-            }
+								这些游戏都巧妙地利用了白天与黑夜，无论是光照，还是怪物类型，或者是居民的行为逻辑。在昼夜交替中，都有极为写实的变化。有时候还是触发特殊任务的重要要素之一。
 
-            .swiper-button-prev {
-                left: 10%;
-            }
+								但这些作品中的时间，与《武林群侠传》里的时间，可绝不是一个概念——虽然这款快20年的老游戏没有那些昼夜明暗的光影变化，但它的时间，却是更为真实的。
+								作者：无月白熊
+								https://www.bilibili.com/read/cv11376008?from=category_0
+								出处： bilibili</div>
+						</div>
+						<div class="tips-content mdui-card">
+							<div>在当今这个时代，将时间这个概念引入到游戏中，已经不再是什么新鲜事。
 
-            .swiper-slide {
-                text-align: center;
-            }
+								例如《塞尔达传说：旷野之息》、《异度神剑1/2》、《勇者斗恶龙11》、《勇气默示录2》
 
-            .swiper-button-next,
-            .swiper-button-prev {
-                top: unset;
-                margin: 0;
-                height: 200px;
-            }
+								这些游戏都巧妙地利用了白天与黑夜，无论是光照，还是怪物类型，或者是居民的行为逻辑。在昼夜交替中，都有极为写实的变化。有时候还是触发特殊任务的重要要素之一。
 
-            footer {
-                height: 120px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="mdui-container">
-            <!-- 顶部导航条 -->
-            <header class="mdui-container-fluid">
-                <div class="title-logo">Wabby Wabbo</div>
-                <!-- 搜索框 -->
-                <div class="serch mdui-row">
-                    <input type="text" class="mdui-col-xs-10 serch-input" placeholder="搜索" />
-                    <div class="iconfont mdui-col-xs-2">&#xe605;</div>
-                </div>
-            </header>
-            <div class="logo">
-            </div>
-            <div class="mdui-row">
-                <div class="content mdui-col-xs-8">
-                    <!-- 分类 -->
-                    <table class="type mdui-card" border="1" cellspacing="0">
-                        <tr>
-                            <td>情感</td>
-                            <td>学习</td>
-                            <td>游戏</td>
-                            <td>编程</td>
-                            <td>娱乐</td>
-                            <td>考研</td>
-                            <td>找工作</td>
-                        </tr>
-                    </table>
-                    <!-- 帖子 -->
-                    <div class="tips">
-                        <div class="tips-content mdui-card">
-                            <div>在当今这个时代，将时间这个概念引入到游戏中，已经不再是什么新鲜事。
+								但这些作品中的时间，与《武林群侠传》里的时间，可绝不是一个概念——虽然这款快20年的老游戏没有那些昼夜明暗的光影变化，但它的时间，却是更为真实的。
+								作者：无月白熊
+								https://www.bilibili.com/read/cv11376008?from=category_0
+								出处： bilibili在当今这个时代，将时间这个概念引入到游戏中，已经不再是什么新鲜事。
 
-                                例如《塞尔达传说：旷野之息》、《异度神剑1/2》、《勇者斗恶龙11》、《勇气默示录2》
+								例如《塞尔达传说：旷野之息》、《异度神剑1/2》、《勇者斗恶龙11》、《勇气默示录2》
 
-                                这些游戏都巧妙地利用了白天与黑夜，无论是光照，还是怪物类型，或者是居民的行为逻辑。在昼夜交替中，都有极为写实的变化。有时候还是触发特殊任务的重要要素之一。
+								这些游戏都巧妙地利用了白天与黑夜，无论是光照，还是怪物类型，或者是居民的行为逻辑。在昼夜交替中，都有极为写实的变化。有时候还是触发特殊任务的重要要素之一。
 
-                                但这些作品中的时间，与《武林群侠传》里的时间，可绝不是一个概念——虽然这款快20年的老游戏没有那些昼夜明暗的光影变化，但它的时间，却是更为真实的。
-                                作者：无月白熊
-                                https://www.bilibili.com/read/cv11376008?from=category_0
-                                出处： bilibili</div>
-                        </div>
-                        <div class="tips-content mdui-card">
-                            <div>在当今这个时代，将时间这个概念引入到游戏中，已经不再是什么新鲜事。
+								但这些作品中的时间，与《武林群侠传》里的时间，可绝不是一个概念——虽然这款快20年的老游戏没有那些昼夜明暗的光影变化，但它的时间，却是更为真实的。
+								作者：无月白熊
+								https://www.bilibili.com/read/cv11376008?from=category_0
+								出处： bilibili</div>
+						</div>
+					</div>
+				</div>
+				<div class="right-label mdui-col-xs-2">
+					<!-- 右侧功能区 -->
+					<div class="func-area mdui-card">
+						<div class="mdui-row">
+							<div class="func-item mdui-col-xs-6">
+								<div class="post-tip icon iconfont">&#xe602;</div>
+								<div class="text">发贴</div>
+							</div>
+							<div class="func-item mdui-col-xs-6">
+								<div class="icon refresh iconfont">&#xe600;</div>
+								<div class="text">刷新</div>
+							</div>
+						</div>
 
-                                例如《塞尔达传说：旷野之息》、《异度神剑1/2》、《勇者斗恶龙11》、《勇气默示录2》
+					</div>
+					<!-- 热贴区 -->
+					<ul class="hot-tips mdui-card">
+						<li class="mdui-row">
+							<i class="iconfont mdui-col-xs-2">&#xe61a;</i>
+							<div class="mdui-col-xs-10">
+								今天天气真好
+							</div>
+						</li>
+						<li class="mdui-row">
+							<i class="iconfont mdui-col-xs-2">&#xe61a;</i>
+							<div class="mdui-col-xs-10">
+								今天天气真好厅厅在要城佣我夺睦回应渡国辘灾
+							</div>
+						</li>
+						<li class="mdui-row">
+							<i class="iconfont mdui-col-xs-2">&#xe61a;</i>
+							<div class="mdui-col-xs-10">
+								今天天气真好
+							</div>
+						</li>
+						<li class="mdui-row">
+							<i class="iconfont mdui-col-xs-2">&#xe61a;</i>
+							<div class="mdui-col-xs-10">
+								今天天气真好
+							</div>
+						</li>
+						<li class="mdui-row">
+							<i class="iconfont mdui-col-xs-2">&#xe61a;</i>
+							<div class="mdui-col-xs-10">
+								今天天气真好厅厅在要城佣我夺睦回应渡国辘灾
+							</div>
+						</li>
+						<li class="mdui-row">
+							<i class="iconfont mdui-col-xs-2">&#xe61a;</i>
+							<div class="mdui-col-xs-10">
+								今天天气真好
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- 友情链接 -->
+			<hr>
+			<h2>友情链接</h2>
+			<div class="link mdui-row">
+				<div class="swiper-container mdui-col-xs-8">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide mdui-card">
+							<div class="mdui-card-media">
+								<svg class="icon" aria-hidden="true">
+									<use xlink:href="#icon-git"></use>
+								</svg>
+							</div>
+							<!-- <div class="mdui-card-content">和我们一起完善这个页面</div> -->
+						</div>
+						<div class="swiper-slide mdui-card">
+							<div class="mdui-card-media">
+								<svg class="icon" aria-hidden="true">
+									<use xlink:href="#icon-weixin"></use>
+								</svg>
+							</div>
+							<!-- <div class="mdui-card-content">关注我们的公众号获取更多信息</div> -->
+						</div>
+						<div class="swiper-slide mdui-card">
+							<div class="mdui-car-media">
+								<svg class="icon" aria-hidden="true">
+									<use xlink:href="#icon-dashang-copy"></use>
+								</svg>
+							</div>
+							<!-- <div class="mdui-card-content">你的捐赠将是对我们的最大激励</div> -->
+						</div>
+						<div class="swiper-slide mdui-card">
+							<div class="mdui-card-media">
+								<svg class="icon" aria-hidden="true">
+									<use xlink:href="#icon-lujingbeifen13"></use>
+								</svg>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="swiper-button-prev mdui-col-xs-2"></div>
+				<div class="swiper-button-next mdui-col-xs-2"></div>
+			</div>
 
-                                这些游戏都巧妙地利用了白天与黑夜，无论是光照，还是怪物类型，或者是居民的行为逻辑。在昼夜交替中，都有极为写实的变化。有时候还是触发特殊任务的重要要素之一。
-
-                                但这些作品中的时间，与《武林群侠传》里的时间，可绝不是一个概念——虽然这款快20年的老游戏没有那些昼夜明暗的光影变化，但它的时间，却是更为真实的。
-                                作者：无月白熊
-                                https://www.bilibili.com/read/cv11376008?from=category_0
-                                出处： bilibili在当今这个时代，将时间这个概念引入到游戏中，已经不再是什么新鲜事。
-
-                                例如《塞尔达传说：旷野之息》、《异度神剑1/2》、《勇者斗恶龙11》、《勇气默示录2》
-
-                                这些游戏都巧妙地利用了白天与黑夜，无论是光照，还是怪物类型，或者是居民的行为逻辑。在昼夜交替中，都有极为写实的变化。有时候还是触发特殊任务的重要要素之一。
-
-                                但这些作品中的时间，与《武林群侠传》里的时间，可绝不是一个概念——虽然这款快20年的老游戏没有那些昼夜明暗的光影变化，但它的时间，却是更为真实的。
-                                作者：无月白熊
-                                https://www.bilibili.com/read/cv11376008?from=category_0
-                                出处： bilibili</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="right-label mdui-col-xs-2">
-                    <!-- 右侧功能区 -->
-                    <div class="func-area mdui-card">
-                        <div class="mdui-row">
-                            <div class="func-item mdui-col-xs-6">
-                                <div class="post-tip icon iconfont">&#xe602;</div>
-                                <div class="text">发贴</div>
-                            </div>
-                            <div class="func-item mdui-col-xs-6">
-                                <div class="icon refresh iconfont">&#xe600;</div>
-                                <div class="text">刷新</div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- 热贴区 -->
-                    <ul class="hot-tips mdui-card">
-                        <li class="mdui-row">
-                            <i class="iconfont mdui-col-xs-2">&#xe61a;</i>
-                            <div class="mdui-col-xs-10">
-                                今天天气真好
-                            </div>
-                        </li>
-                        <li class="mdui-row">
-                            <i class="iconfont mdui-col-xs-2">&#xe61a;</i>
-                            <div class="mdui-col-xs-10">
-                                今天天气真好厅厅在要城佣我夺睦回应渡国辘灾
-                            </div>
-                        </li>
-                        <li class="mdui-row">
-                            <i class="iconfont mdui-col-xs-2">&#xe61a;</i>
-                            <div class="mdui-col-xs-10">
-                                今天天气真好
-                            </div>
-                        </li>
-                        <li class="mdui-row">
-                            <i class="iconfont mdui-col-xs-2">&#xe61a;</i>
-                            <div class="mdui-col-xs-10">
-                                今天天气真好
-                            </div>
-                        </li>
-                        <li class="mdui-row">
-                            <i class="iconfont mdui-col-xs-2">&#xe61a;</i>
-                            <div class="mdui-col-xs-10">
-                                今天天气真好厅厅在要城佣我夺睦回应渡国辘灾
-                            </div>
-                        </li>
-                        <li class="mdui-row">
-                            <i class="iconfont mdui-col-xs-2">&#xe61a;</i>
-                            <div class="mdui-col-xs-10">
-                                今天天气真好
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- 友情链接 -->
-            <hr>
-            <h2>友情链接</h2>
-            <div class="link mdui-row">
-                <div class="swiper-container mdui-col-xs-8">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide mdui-card">
-                            <div class="mdui-card-media">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#icon-git"></use>
-                                </svg>
-                            </div>
-                            <!-- <div class="mdui-card-content">和我们一起完善这个页面</div> -->
-                        </div>
-                        <div class="swiper-slide mdui-card">
-                            <div class="mdui-card-media">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#icon-weixin"></use>
-                                </svg>
-                            </div>
-                            <!-- <div class="mdui-card-content">关注我们的公众号获取更多信息</div> -->
-                        </div>
-                        <div class="swiper-slide mdui-card">
-                            <div class="mdui-car-media">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#icon-dashang-copy"></use>
-                                </svg>
-                            </div>
-                            <!-- <div class="mdui-card-content">你的捐赠将是对我们的最大激励</div> -->
-                        </div>
-                        <div class="swiper-slide mdui-card">
-                            <div class="mdui-card-media">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#icon-lujingbeifen13"></use>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-button-prev mdui-col-xs-2"></div>
-                <div class="swiper-button-next mdui-col-xs-2"></div>
-            </div>
-
-            <!-- 预留的底部区域 -->
-            <footer></footer>
-        </div>
-        <script type="text/javascript">
-            var mySwiper = new Swiper('.swiper-container', {
-                slidesPerView: 3, //默认页面显示个数
-                autoHeight: true, //页面高度自适应
-                spaceBetween: 50, //slide间距离
-                // 前进后退按钮
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                }
-            })
-        </script>
-    </body>
+			<!-- 预留的底部区域 -->
+			<footer></footer>
+		</div>
+		<script type="text/javascript">
+			var mySwiper = new Swiper('.swiper-container', {
+				slidesPerView: 3, //默认页面显示个数
+				autoHeight: true, //页面高度自适应
+				spaceBetween: 50, //slide间距离
+				// 前进后退按钮
+				navigation: {
+					nextEl: '.swiper-button-next',
+					prevEl: '.swiper-button-prev',
+				}
+			})
+		</script>
+	</body>
 </html>

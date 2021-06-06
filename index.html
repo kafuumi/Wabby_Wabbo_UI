@@ -12,6 +12,7 @@
 		<script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/swiper-bundle.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/communicate.js" type="text/javascript" charset="utf-8"></script>
 		<title>歪比巴卜论坛</title>
 		<style>
 			* {
@@ -215,6 +216,7 @@
 				margin: 0;
 				height: 200px;
 			}
+
 			/* 发布遮罩 */
 			.shade {
 				position: fixed;
@@ -222,12 +224,12 @@
 				top: 0;
 				width: 100%;
 				height: 100%;
-				background-color: rgba(0,0,0,0.5);
+				background-color: rgba(0, 0, 0, 0.5);
 				z-index: 1000;
 				/* display: none; */
 			}
-			
-			.shade .Mydialog{
+
+			.shade .Mydialog {
 				border-radius: 12px;
 				width: 65%;
 				max-height: 85%;
@@ -236,15 +238,15 @@
 				top: 40%;
 				left: 10%;
 			}
-			
+
 			.mdui-dialog-title {
 				text-align: center;
 			}
-			
+
 			form {
 				margin-left: 12px;
 			}
-			
+
 			.mdui-radio {
 				padding-left: 24px;
 				margin-left: 20px;
@@ -320,11 +322,11 @@
 					<!-- 右侧功能区 -->
 					<div class="func-area mdui-card">
 						<div class="mdui-row">
-							<div class="func-item mdui-col-xs-6" id="btn_post" v-on:click="openDialog()">
+							<div class="func-item mdui-col-xs-6" id="btn_post" v-on:click="openDialog">
 								<div class="post-tip icon iconfont">&#xe602;</div>
 								<div class="text">发贴</div>
 							</div>
-							<div class="func-item mdui-col-xs-6" id="btn_refresh" v-on:click="refresh()">
+							<div class="func-item mdui-col-xs-6" id="btn_refresh" v-on:click="refresh">
 								<div class="icon refresh iconfont">&#xe600;</div>
 								<div class="text">刷新</div>
 							</div>
@@ -332,43 +334,15 @@
 
 					</div>
 					<!-- 热贴区 -->
-					<ul class="hot-tips mdui-card">
-						<li class="mdui-row">
-							<i class="iconfont mdui-col-xs-2">&#xe61a;</i>
-							<div class="mdui-col-xs-10">
-								今天天气真好
-							</div>
-						</li>
-						<li class="mdui-row">
-							<i class="iconfont mdui-col-xs-2">&#xe61a;</i>
-							<div class="mdui-col-xs-10">
-								今天天气真好厅厅在要城佣我夺睦回应渡国辘灾
-							</div>
-						</li>
-						<li class="mdui-row">
-							<i class="iconfont mdui-col-xs-2">&#xe61a;</i>
-							<div class="mdui-col-xs-10">
-								今天天气真好
-							</div>
-						</li>
-						<li class="mdui-row">
-							<i class="iconfont mdui-col-xs-2">&#xe61a;</i>
-							<div class="mdui-col-xs-10">
-								今天天气真好
-							</div>
-						</li>
-						<li class="mdui-row">
-							<i class="iconfont mdui-col-xs-2">&#xe61a;</i>
-							<div class="mdui-col-xs-10">
-								今天天气真好厅厅在要城佣我夺睦回应渡国辘灾
-							</div>
-						</li>
-						<li class="mdui-row">
-							<i class="iconfont mdui-col-xs-2">&#xe61a;</i>
-							<div class="mdui-col-xs-10">
-								今天天气真好
-							</div>
-						</li>
+					<ul class="hot-tips mdui-card" id="hot_tips">
+						<template v-for="(item,id) in tip_object">
+							<li class="mdui-row" v-bind:tips_id="item.id">
+								<i class="iconfont mdui-col-xs-2">&#xe61a;</i>
+								<div class="mdui-col-xs-10" v-on:click="toContent">
+									{{item.content}}
+								</div>
+							</li>
+						</template>
 					</ul>
 				</div>
 			</div>
@@ -429,33 +403,33 @@
 					</div>
 				</div>
 				<form>
-				
-				  <label class="mdui-radio">
-				    <input type="radio" name="group1" v-model="picked" value="娱乐"/>
-				    <i class="mdui-radio-icon"></i>
-					娱乐
-				  </label>
-				
-				  <label class="mdui-radio">
-				    <input type="radio" name="group1" v-model="picked" value="知识"/>
-				    <i class="mdui-radio-icon"></i>
-				    知识
-				  </label>
-				
-				  <label class="mdui-radio">
-				    <input type="radio" name="group1" v-model="picked" value="工作"/>
-				    <i class="mdui-radio-icon"></i>
-					工作
-				  </label>
-		
+
+					<label class="mdui-radio">
+						<input type="radio" name="group1" v-model="picked" value="娱乐" />
+						<i class="mdui-radio-icon"></i>
+						娱乐
+					</label>
+
+					<label class="mdui-radio">
+						<input type="radio" name="group1" v-model="picked" value="知识" />
+						<i class="mdui-radio-icon"></i>
+						知识
+					</label>
+
+					<label class="mdui-radio">
+						<input type="radio" name="group1" v-model="picked" value="工作" />
+						<i class="mdui-radio-icon"></i>
+						工作
+					</label>
+
 				</form>
 				<div class="mdui-dialog-actions">
-					<button class="mdui-btn mdui-ripple" v-on:click="cancel()">取消</button>
-					<button class="mdui-btn mdui-ripple" v-on:click="confirm()">确认</button>
+					<button class="mdui-btn mdui-ripple" v-on:click="cancel">取消</button>
+					<button class="mdui-btn mdui-ripple" v-on:click="confirm">确认</button>
 				</div>
 			</div>
 		</div>
-		
+
 		<script type="text/javascript">
 			let console_pic = " __      __       ___.  ___.            __      __       ___.  ___.           \n" +
 				"/  \\    /  \\_____ \\_ |__\\_ |__ ___.__. /  \\    /  \\_____ \\_ |__\\_ |__   ____  \n" +
@@ -475,9 +449,9 @@
 					prevEl: '.swiper-button-prev',
 				}
 			})
-			
+
 			var postpage = new Vue({
-				el:"#postpage",
+				el: "#postpage",
 				data: {
 					isVisible: false, //遮罩不可见
 					post_msg: "", //表单信息
@@ -492,25 +466,39 @@
 						postpage.isVisible = false;
 						postpage.post_msg = "";
 						postpage.picked = "";
-						
+
 					},
 				}
 			})
-			
+
 			var btn_post = new Vue({
-				el:"#btn_post",
+				el: "#btn_post",
 				methods: {
 					openDialog: function() {
 						postpage.isVisible = true; //遮罩可见
 					}
 				}
 			})
-			
+
 			var btn_refresh = new Vue({
-				el:"#btn_refresh",
+				el: "#btn_refresh",
 				methods: {
 					refresh: function() {
 						console.log("refresh");
+					}
+				}
+			})
+
+			var hot_tips = new Vue({
+				el: "#hot_tips",
+				data: {
+					tip_object: getHotTips()
+				},
+				methods: {
+					toContent: function(event) {
+						console.log(event.target.parentNode.getAttribute("tips_id"));
+						var id = event.target.parentNode.getAttribute("tips_id");
+						window.location.href = "./content.html?tips_id="+id;
 					}
 				}
 			})

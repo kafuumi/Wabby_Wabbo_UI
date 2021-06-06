@@ -215,8 +215,8 @@
 				margin: 0;
 				height: 200px;
 			}
-			
-			#shade {
+			/* 发布遮罩 */
+			.shade {
 				position: fixed;
 				left: 0;
 				top: 0;
@@ -224,8 +224,10 @@
 				height: 100%;
 				background-color: rgba(0,0,0,0.5);
 				z-index: 1000;
+				/* display: none; */
 			}
-			#shade .Mydialog{
+			
+			.shade .Mydialog{
 				border-radius: 12px;
 				width: 65%;
 				max-height: 85%;
@@ -318,11 +320,11 @@
 					<!-- 右侧功能区 -->
 					<div class="func-area mdui-card">
 						<div class="mdui-row">
-							<div class="func-item mdui-col-xs-6" id="btn_post">
+							<div class="func-item mdui-col-xs-6" id="btn_post" v-on:click="openDialog()">
 								<div class="post-tip icon iconfont">&#xe602;</div>
 								<div class="text">发贴</div>
 							</div>
-							<div class="func-item mdui-col-xs-6">
+							<div class="func-item mdui-col-xs-6" id="btn_refresh" v-on:click="refresh()">
 								<div class="icon refresh iconfont">&#xe600;</div>
 								<div class="text">刷新</div>
 							</div>
@@ -416,9 +418,9 @@
 			<!-- 预留的底部区域 -->
 			<footer></footer>
 		</div>
-		
-		<div id="shade">
-			<div class="Mydialog mdui-card" id="postpage">
+		<!-- 条件渲染(一块内容)控制发帖弹窗 -->
+		<div v-if="isVisible" id="postpage" class="shade">
+			<div class="Mydialog mdui-card">
 				<div class="mdui-dialog-title">发布</div>
 				<div class="mdui-dialog-content">
 					<div class="mdui-textfield mdui-textfield-floating-label">
@@ -429,28 +431,27 @@
 				<form>
 				
 				  <label class="mdui-radio">
-				    <input type="radio" name="group1"/>
+				    <input type="radio" name="group1" v-model="picked" value="娱乐"/>
 				    <i class="mdui-radio-icon"></i>
 					娱乐
 				  </label>
 				
 				  <label class="mdui-radio">
-				    <input type="radio" name="group1"/>
+				    <input type="radio" name="group1" v-model="picked" value="知识"/>
 				    <i class="mdui-radio-icon"></i>
 				    知识
 				  </label>
 				
 				  <label class="mdui-radio">
-				    <input type="radio" name="group1" />
+				    <input type="radio" name="group1" v-model="picked" value="工作"/>
 				    <i class="mdui-radio-icon"></i>
 					工作
 				  </label>
 		
 				</form>
 				<div class="mdui-dialog-actions">
-					<button class="mdui-btn mdui-ripple">取消</button>
-					<button class="mdui-btn mdui-ripple">确认</button>
-					<p>{{post_msg}}</p>
+					<button class="mdui-btn mdui-ripple" v-on:click="cancel()">取消</button>
+					<button class="mdui-btn mdui-ripple" v-on:click="confirm()">确认</button>
 				</div>
 			</div>
 		</div>
@@ -474,19 +475,42 @@
 					prevEl: '.swiper-button-prev',
 				}
 			})
-
-			document.getElementById("btn_post").onclick = function() {
-				
-			}
-
-			var btn_confirm = new Vue({
-				el: "#postpage",
+			
+			var postpage = new Vue({
+				el:"#postpage",
 				data: {
-					post_msg: "",
+					isVisible: false, //遮罩不可见
+					post_msg: "", //表单信息
+					picked: "",
 				},
 				methods: {
-					destory: function() {
+					cancel: function() {
+						postpage.isVisible = false;
+					},
+					//提交表单
+					confirm: function() {
+						postpage.isVisible = false;
+						postpage.post_msg = "";
+						postpage.picked = "";
 						
+					},
+				}
+			})
+			
+			var btn_post = new Vue({
+				el:"#btn_post",
+				methods: {
+					openDialog: function() {
+						postpage.isVisible = true; //遮罩可见
+					}
+				}
+			})
+			
+			var btn_refresh = new Vue({
+				el:"#btn_refresh",
+				methods: {
+					refresh: function() {
+						console.log("refresh");
 					}
 				}
 			})

@@ -8,6 +8,8 @@
 		<link rel="stylesheet" type="text/css" href="css/navigation.css" />
 		<script src="js/mdui.min.js"></script>
 		<script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/communicate.js" type="text/javascript" charset="utf-8"></script>
 		<title>帖子详情</title>
 		<style>
 			* {
@@ -147,38 +149,34 @@
 			</header>
 			<div class="container">
 				<!-- 展示文本的区域 -->
-				<div class="page-container mdui-card">
-					<p>正文之前，首先需要道个歉。虽然和往常一样获得了宝贵的售前体验机会，
-						但个人时间因素，没有能够在第一时间分享《生化危机 村庄》的这篇体验报告。
-						与此相对的，以“游戏已经发售数日”为前提，让我在本文中可以更肆无忌惮的讨论一些更细节、
-						更具体的部分，对我这种写惯了售前评测的人来说，倒也不失为是的一种解脱——这一次终于可以不当谜语人了。
-						不过不用担心，涉及剧透的部分依然会进行保护，以便读者可以选择性阅读。
-					</p>
-				</div>
-				<div class="mdui-row">
-					<div class="type-label">
-						<span>游戏厅博</span>
+				<div id="message">
+					<div class="page-container mdui-card">
+						<p v-if="tip.code==200">{{tip.data.content}}</p>
+						<p v-else>tip.data.msg</p>
 					</div>
-					<div class="page-action">
-						<svg class="icon" aria-hidden="true" id="zan">
-							<use xlink:href="#icon-dianzan"></use>
-						</svg>
-						<i>赞 100</i>
+					<div class="mdui-row">
+						<div class="type-label">
+							<span>{{tip.data.type}}</span>
+						</div>
+						<div class="page-action">
+							<svg class="icon" aria-hidden="true" id="zan">
+								<use xlink:href="#icon-dianzan"></use>
+							</svg>
+							<i>赞 {{tip.data.starNum}}</i>
+						</div>
 					</div>
 				</div>
 				<hr />
-				<div class="hot-comments">
-					<div id="hotCom1" class="mdui-card">
-						<p>学业繁忙，朝五晚十，尚无更多时间着力编写《青梅恋爱喜剧》长评，
-							遂以纯文字短长评形式粗略概括。由于手头并无可靠的检索设备，
-							短长评内容只能凭借笔者的个人印象来编写。待时间恢复后，</p>
-						<i class="time">5-19</i>
-					</div>
-					<div id="hotCom2" class="mdui-card"></div>
-					<div id="hotCom3" class="mdui-card"></div>
+				<div class="hot-comments" id="hot_comments">
+					<template v-for="comment in comments">
+						<div id="hotCom1" class="mdui-card">
+							<p>{{comment.content}}</p>
+							<i class="time">{{comment.date}}</i>
+						</div>
+					</template>
 				</div>
 				<hr />
-				<div class="comments mdui-card">
+				<div class="comments mdui-card" id="">
 					<ul>
 						<li id="com">
 							<div class="comment">
@@ -204,4 +202,24 @@
 			</div>
 		</div>
 	</body>
+	<script type="text/javascript">
+		// 获取url参数
+		var url = window.location.search;
+		var str = url.split("=");
+		var tips_id = str[1];
+		
+		var message = new Vue({
+			el: "#message",
+			data: {
+				tip: getTipsById(tips_id),
+			},
+		})
+		
+		var hot_comments = new Vue({
+			el: "#hot_comments",
+			data: {
+				comments: getHotComments(tips_id),
+			},
+		})
+	</script>
 </html>

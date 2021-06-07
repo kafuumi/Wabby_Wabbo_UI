@@ -1,128 +1,89 @@
 /* 与后端通信 */
-let host = "http://localhost:8080/Wabby_Wabbo/";
-let tips_data = {
-    id: 1,
-    date: "2020-02-02 12:12:22",
-    type: "知识",
-    starNum: 7,
-    content: "demofasdf"
-};
-let comments_data = {
-    id: 1,
-    content: "你好",
-    starNum: 10,
-    date: "2020-02-02 23:12:39",
-    tips_id: 1
-};
+let host = "http://39.107.39.204:8080/Wabby_Wabbo";
 
-/* 发布帖子 */
-function postTips(data) {
+/* 发布帖子
+@param data: 发布的帖子数据
+@param callBack: 回调函数 function(data){} data即为服务器返回的数据
+postTips({}, function(data){
+    console.log(data);
+})              
+ */
+function postTips(data, callBack) {
     let url = host + "/posttips";
-    let r = {
-        code: 200,
-        msg: "ok"
-    }
-    return r;
+    axios.post(url, data)
+        .then(function(response) {
+            callBack(response.data);
+        })
+        .catch(function(error) {
+            alert("网络错误");
+        });
 }
 /* 获取帖子 */
-function getTips(type, page) {
-    let url = host + "/gettips?type=&page=";
-    let r = {
-        code: 200,
-        msg: "ok",
-        data: []
-    }
-    for (let i = 0; i < 10; i++) {
-        r.data.push({
-            id: i + 1,
-            content: "测试",
-            date: "2020-02-02 12:12:22",
-            type: "知识",
-            starNum: 7
+function getTips(type, page, callBack) {
+    let url = host + "/gettips";
+    axios.get(url, {
+            params: {
+                type: type,
+                page: page
+            }
         })
-    }
-    return r;
+        .then(function(response) {
+            callBack(response.data);
+        });
 }
 /* 根据id获取帖子 */
-function getTipsById(id) {
-    let url = host + "/getdetail?id=";
-
-    return {
-        code: 200,
-        msg: "",
-        data: {
-            id: id,
-            starNum: 2,
-            type: "demo",
-            content: "dsfsafa"
+function getTipsById(id, callBack) {
+    let url = host + "/getdetail";
+    axios.get(url, {
+        params: {
+            id: id
         }
-    };
+    }).then(function(response) {
+        callBack(response.data);
+    });
 }
 /* 发布评论 */
-function postComments(comments) {
+function postComments(comments, callBack) {
     let url = host + "/postcomment";
-    let r = {
-        code: 200,
-        msg: "ok",
-    }
-    return r;
+    axios.post(url, comments)
+        .then(function(response) {
+            callBack(response.data);
+        })
+        .catch(function(error) {
+            alert("网络错误");
+        });
 
 }
 /* 获取评论 */
-function getComments(tipsId, page) {
-    let url = host + "/getcomments?tid=&page=";
-    let r = {
-        code: 200,
-        msg: "ok",
-        data: []
-    }
-    for (let i = 0; i < 10; i++) {
-        r.data.push({
-            id: i + 1,
-            content: "你好",
-            starNum: 10,
-            date: "2020-02-02 23:12:39",
-            tips_id: 1
+function getComments(tipsId, page, callBack) {
+    let url = host + "/getcomment";
+    axios.get(url, {
+            params: {
+                tid: tipsId,
+                page: page
+            }
         })
-    }
-    return r;
-
+        .then(function(response) {
+            callBack(response.data);
+        });
 }
 /* 获取热贴 */
-function getHotTips() {
+function getHotTips(callBack) {
     let url = host + "/gethottips";
-    let r = {
-        code: 200,
-        msg: "ok",
-        data: []
-    }
-    for (let i = 0; i < 10; i++) {
-        r.data.push({
-            id: i + 1,
-            content: "测试",
-            date: "2020-02-02 12:12:22",
-            type: "知识",
-            starNum: 7
-        })
-    }
-    return r;
+    axios.get(url)
+        .then(function(response) {
+            callBack(response.data);
+        });
 }
 /* 获取热评 */
-function getHotComments(tipsId) {
-    let url = host + "/gethotcom?tid=";
-    let r = {
-        code: 200,
-        msg: "ok",
-        data: []
-    }
-    for (let i = 0; i < 3; i++) {
-        r.data.push({
-            id: i + 1,
-            content: "你好",
-            starNum: 10,
-            date: "2020-02-02 23:12:39",
-            tips_id: 1
+function getHotComments(tipsId, callBack) {
+    let url = host + "/gethotcom";
+    axios.get(url, {
+            params: {
+                tid: tipsId
+            }
         })
-    }
-    return r;
+        .then(function(response) {
+            callBack(response.data);
+        });
 }

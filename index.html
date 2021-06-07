@@ -1,583 +1,632 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<link href="css/mdui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="css/swiper-bundle.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/navigation.css" />
-		<script src="js/mdui.min.js"></script>
-		<!-- <script src="//at.alicdn.com/t/font_2587192_2chnea6m04h.js"></script> -->
-		<script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/swiper-bundle.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link href="css/mdui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="css/swiper-bundle.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/navigation.css" />
+        <script src="js/mdui.min.js"></script>
+        <!-- <script src="//at.alicdn.com/t/font_2587192_2chnea6m04h.js"></script> -->
+        <script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/swiper-bundle.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-		<script src="js/communicate.js" type="text/javascript" charset="utf-8"></script>
-		<title>歪比巴卜论坛</title>
-		<style>
-			* {
-				margin: 0;
-				padding: 0;
-			}
+        <script src="js/communicate.js" type="text/javascript" charset="utf-8"></script>
+        <title>歪比巴卜论坛</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
 
-			body {
-				background-color: #fffef9;
-			}
+            body {
+                background-color: #fffef9;
+            }
 
-			.icon {
-				width: 2.5em;
-				height: 2em;
-				vertical-align: -0.15em;
-				fill: currentColor;
-				overflow: hidden;
-			}
+            .icon {
+                width: 2.5em;
+                height: 2em;
+                vertical-align: -0.15em;
+                fill: currentColor;
+                overflow: hidden;
+            }
 
-			@font-face {
-				font-family: SONG;
-				src: url(./fonts/STZHONGS.TTF);
-			}
+            @font-face {
+                font-family: SONG;
+                src: url(./fonts/STZHONGS.TTF);
+            }
 
-			@font-face {
-				font-family: 'iconfont';
-				src: url('./iconfont/iconfont.woff2?t=1622784814432') format('woff2'),
-					url('./iconfont/iconfont.woff?t=1622784814432') format('woff'),
-					url('./iconfont/iconfont.ttf?t=1622784814432') format('truetype');
-			}
+            @font-face {
+                font-family: 'iconfont';
+                src: url('./iconfont/iconfont.woff2?t=1622784814432') format('woff2'),
+                    url('./iconfont/iconfont.woff?t=1622784814432') format('woff'),
+                    url('./iconfont/iconfont.ttf?t=1622784814432') format('truetype');
+            }
 
-			/* @font-face {
+            /* @font-face {
                 font-family: 'iconfont';
                 src: url('//at.alicdn.com/t/font_2587192_9etdsvjtqz.woff2?t=1622789973469') format('woff2'),
                     url('//at.alicdn.com/t/font_2587192_9etdsvjtqz.woff?t=1622789973469') format('woff'),
                     url('//at.alicdn.com/t/font_2587192_9etdsvjtqz.ttf?t=1622789973469') format('truetype');
             } */
 
-			/* logo */
-			.logo {
-				height: 180px;
-				width: 580px;
-				background-image: url(images/background01.png);
-				background-repeat: no-repeat;
-				margin: 0 auto;
-			}
+            /* logo */
+            .logo {
+                height: 180px;
+                width: 580px;
+                background-image: url(images/background01.png);
+                background-repeat: no-repeat;
+                margin: 0 auto;
+            }
 
-			/* 分类 */
-			.type {
-				border-radius: 0.5rem;
-				width: 100%;
-				margin-bottom: 30px;
-			}
+            /* 分类 */
+            .type {
+                border-radius: 0.5rem;
+                width: 100%;
+                margin-bottom: 30px;
+            }
 
-			.type a {
-				text-align: center;
-				font-family: SONG;
-				font-size: 18px;
-			}
+            .type a {
+                text-align: center;
+                font-family: SONG;
+                font-size: 18px;
+            }
 
-			/* 帖子区域 */
-			#tips-content {
-				margin-left: 38px;
-			}
+            /* 帖子区域 */
+            #tips-content {
+                margin-left: 38px;
+            }
 
-			.tips-content {
-				cursor: pointer;
-				border-radius: 1rem;
-				height: 130px;
-				margin-bottom: 8px;
-				padding: 16px 20px;
-			}
+            .tips-content {
+                cursor: pointer;
+                border-radius: 1rem;
+                height: 130px;
+                margin-bottom: 8px;
+                padding: 16px 20px;
+            }
 
-			.tips-content div {
-				text-indent: 2em;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				display: -webkit-box;
-				font-size: 16px;
-				-webkit-line-clamp: 5;
-				-webkit-box-orient: vertical;
-			}
+            .tips-content div {
+                text-indent: 2em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                font-size: 16px;
+                -webkit-line-clamp: 5;
+                -webkit-box-orient: vertical;
+            }
 
-			/* 帖子的右侧区域 */
-			.right-label {
-				float: right;
-				margin-right: 38px;
-			}
+            /* 帖子的右侧区域 */
+            .right-label {
+                float: right;
+                margin-right: 38px;
+            }
 
-			.func-area {
-				padding: 6px 26px;
-				text-align: center;
-				border-radius: 8px;
-			}
+            .func-area {
+                padding: 6px 26px;
+                text-align: center;
+                border-radius: 8px;
+            }
 
-			.func-item .icon,
-			.func-item .text {
-				cursor: pointer;
-				color: #2177b8;
-				font-size: 24px;
-				text-align: center;
-				height: 36px;
-				line-height: 36px;
-			}
+            .func-item .icon,
+            .func-item .text {
+                cursor: pointer;
+                color: #2177b8;
+                font-size: 24px;
+                text-align: center;
+                height: 36px;
+                line-height: 36px;
+            }
 
-			.func-item .text {
-				color: #000;
-				font-size: 16px;
-			}
+            .func-item .text {
+                color: #000;
+                font-size: 16px;
+            }
 
-			#func_option {
-				user-select: none;
-			}
+            #func_option {
+                user-select: none;
+            }
 
-			/* 热贴 */
-			.hot-tips {
-				border-radius: 8px;
-				margin-top: 16px;
-				user-select: none;
-			}
+            /* 热贴 */
+            .hot-tips {
+                border-radius: 8px;
+                margin-top: 16px;
+                user-select: none;
+            }
 
-			.hot-tips li {
-				cursor: default;
-				font-size: 16px;
-				height: 36px;
-				line-height: 36px;
-				text-indent: 1em;
-				border-bottom: 1px solid #eee;
-				padding-top: 6px;
-				list-style-type: none;
-			}
+            .hot-tips li {
+                cursor: default;
+                font-size: 16px;
+                height: 36px;
+                line-height: 36px;
+                text-indent: 1em;
+                border-bottom: 1px solid #eee;
+                padding-top: 6px;
+                list-style-type: none;
+            }
 
-			.hot-tips li div {
-				cursor: pointer;
-				overflow: hidden;
-				white-space: nowrap;
-				text-overflow: ellipsis;
-			}
+            .hot-tips li div {
+                cursor: pointer;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
 
-			.hot-tips i {
-				color: #f00;
-				font-size: 18px;
-			}
+            .hot-tips i {
+                color: #f00;
+                font-size: 18px;
+            }
 
-			.hot-tips li:nth-child(1),
-			.hot-tips li:nth-child(2),
-			.hot-tips li:nth-child(3) {
-				color: #ef3473;
-			}
+            .hot-tips li:nth-child(1),
+            .hot-tips li:nth-child(2),
+            .hot-tips li:nth-child(3) {
+                color: #ef3473;
+            }
 
-			.hot-tips li:last-of-type {
-				border: none;
-			}
+            .hot-tips li:last-of-type {
+                border: none;
+            }
 
-			.hot-tips li div:hover {
-				text-decoration: underline;
-			}
+            .hot-tips li div:hover {
+                text-decoration: underline;
+            }
 
-			/* 友情链接区域 */
-			.link {
-				width: 730px;
-				margin: 0 auto;
-			}
+            /* 友情链接区域 */
+            .link {
+                width: 730px;
+                margin: 0 auto;
+            }
 
-			hr {
-				clear: both;
-				margin: 30px 0;
-			}
+            hr {
+                clear: both;
+                margin: 30px 0;
+            }
 
-			h2 {
-				text-align: center;
-				margin: 30px 0;
-				user-select: none;
-			}
+            h2 {
+                text-align: center;
+                margin: 30px 0;
+                user-select: none;
+            }
 
-			.swiper-slide:hover {
-				transform: translateY(-5px);
-				box-shadow: 0 0 8px #999;
-				transition: all .5s ease-out;
-			}
+            .swiper-slide:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 0 8px #999;
+                transition: all .5s ease-out;
+            }
 
-			.swiper-container {
-				width: 700px;
-				height: auto;
-			}
+            .swiper-container {
+                width: 700px;
+                height: auto;
+            }
 
-			.swiper-slide svg {
-				width: 100px;
-				height: 200px;
-			}
+            .swiper-slide svg {
+                width: 100px;
+                height: 200px;
+            }
 
-			.swiper-button-next {
-				right: 10%;
-			}
+            .swiper-button-next {
+                right: 10%;
+            }
 
-			.swiper-button-prev {
-				left: 10%;
-			}
+            .swiper-button-prev {
+                left: 10%;
+            }
 
-			.swiper-slide {
-				text-align: center;
-			}
+            .swiper-slide {
+                text-align: center;
+            }
 
-			.swiper-button-next,
-			.swiper-button-prev {
-				top: unset;
-				margin: 0;
-				height: 200px;
-			}
+            .swiper-button-next,
+            .swiper-button-prev {
+                top: unset;
+                margin: 0;
+                height: 200px;
+            }
 
-			/* 发布遮罩 */
-			.shade {
-				position: fixed;
-				left: 0;
-				top: 0;
-				width: 100%;
-				height: 100%;
-				background-color: rgba(0, 0, 0, 0.5);
-				z-index: 1000;
-				/* display: none; */
-			}
+            /* 发布遮罩 */
+            .shade {
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1000;
+                /* display: none; */
+            }
 
-			.shade .Mydialog {
-				border-radius: 12px;
-				width: 65%;
-				max-height: 85%;
-				padding: 10px;
-				position: absolute;
-				top: 40%;
-				left: 10%;
-			}
+            .shade .Mydialog {
+                border-radius: 12px;
+                width: 65%;
+                max-height: 85%;
+                padding: 10px;
+                position: absolute;
+                top: 40%;
+                left: 10%;
+            }
 
-			.mdui-dialog-title {
-				text-align: center;
-			}
+            .mdui-dialog-title {
+                text-align: center;
+            }
 
-			form {
-				margin-left: 12px;
-			}
+            form {
+                margin-left: 12px;
+            }
 
-			.mdui-radio {
-				padding-left: 24px;
-				margin-left: 20px;
-			}
+            .mdui-radio {
+                padding-left: 24px;
+                margin-left: 20px;
+            }
 
-			/* 换页栏 */
-			.page_inner {
-				width: 80%;
-				height: 42.8px;
-				padding: 14px 0 14px 15px;
-				border-radius: 10px;
-				margin-top: 60px;
-				background-color: #c4d7d6;
-				user-select: none;
-			}
+            /* 换页栏 */
+            .page_inner {
+                width: 80%;
+                height: 42.8px;
+                padding: 14px 0 14px 15px;
+                border-radius: 10px;
+                margin-top: 60px;
+                background-color: #c4d7d6;
+                user-select: none;
+            }
 
-			.page_button {
-				width: 50px;
-				height: 42px;
-				line-height: 42px;
-				text-align: center;
-				border-radius: 12px;
-				display: inline-block;
-				font-weight: 2000;
-				font-size: 14px;
-				color: royalblue;
-				background-color: #fffef9;
-				margin-left: 30px;
-				cursor: pointer;
-			}
+            .page_button {
+                width: 50px;
+                height: 42px;
+                line-height: 42px;
+                text-align: center;
+                border-radius: 12px;
+                display: inline-block;
+                font-weight: 2000;
+                font-size: 14px;
+                color: royalblue;
+                background-color: #fffef9;
+                margin-left: 30px;
+                cursor: pointer;
+            }
 
-			.page_button_focus {
-				width: 50px;
-				height: 42px;
-				line-height: 42px;
-				text-align: center;
-				border-radius: 12px;
-				display: inline-block;
-				font-weight: 2000;
-				font-size: 14px;
-				color: #FFFFFF;
-				background-color: #22a2c3;
-				margin-left: 30px;
-			}
+            .page_button_focus {
+                width: 50px;
+                height: 42px;
+                line-height: 42px;
+                text-align: center;
+                border-radius: 12px;
+                display: inline-block;
+                font-weight: 2000;
+                font-size: 14px;
+                color: #FFFFFF;
+                background-color: #22a2c3;
+                margin-left: 30px;
+            }
 
-			header {
-				user-select: none;
-			}
+            header {
+                user-select: none;
+            }
 
-			footer {
-				height: 120px;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="mdui-container">
-			<!-- 顶部导航条 -->
-			<header class="mdui-container-fluid">
-				<div class="title-logo">Wabby Wabbo</div>
-				<!-- 搜索框 -->
-				<div class="serch mdui-row">
-					<input type="text" class="mdui-col-xs-10 serch-input" placeholder="搜索" />
-					<div class="iconfont mdui-col-xs-2">&#xe605;</div>
-				</div>
-			</header>
-			<div class="logo"></div>
-			<div class="mdui-row" id="tips-content">
-				<div class="content mdui-col-xs-9" id="tipsByType">
-					<!-- 分类 -->
-					<div class="type mdui-tab mdui-card mdui-tab-full-width" mdui-tab id="category_label">
-						<a class="mdui-ripple" v-on:click="get_tips">情感</a>
-						<a class="mdui-ripple" v-on:click="get_tips">学习</a>
-						<a class="mdui-ripple" v-on:click="get_tips">游戏</a>
-						<a class="mdui-ripple" v-on:click="get_tips">编程</a>
-						<a class="mdui-ripple" v-on:click="get_tips">娱乐</a>
-						<a class="mdui-ripple" v-on:click="get_tips">找工作</a>
-					</div>
-					<!-- 帖子 -->
-					<div class="tips">
-						<template v-for="tip in byTypeTips.data">
-							<div class="tips-content mdui-card" v-bind:tips_id="tip.id" v-on:click="toTipContent">
-								<div>{{tip.content}}</div>
-							</div>
-						</template>
-					</div>
-				</div>
-				<div class="right-label mdui-col-xs-2">
-					<!-- 右侧功能区 -->
-					<div class="func-area mdui-card">
-						<div class="mdui-row" id="func_option">
-							<div class="func-item mdui-col-xs-6" id="btn_post" v-on:click="openDialog">
-								<div class="post-tip icon iconfont">&#xe602;</div>
-								<div class="text">发贴</div>
-							</div>
-							<div class="func-item mdui-col-xs-6" id="btn_refresh" v-on:click="refresh">
-								<div class="icon refresh iconfont">&#xe600;</div>
-								<div class="text">刷新</div>
-							</div>
-						</div>
-					</div>
-					<!-- 热贴区 -->
-					<ul class="hot-tips mdui-card" id="hot_tips">
-						<template v-for="(item,id) in tip_object.data">
-							<li class="mdui-row" v-bind:tips_id="item.id">
-								<i class="iconfont mdui-col-xs-2">&#xe61a;</i>
-								<div class="mdui-col-xs-10" v-on:click="toContent">
-									{{item.content}}
-								</div>
-							</li>
-						</template>
-					</ul>
-				</div>
-			</div>
-			<!-- 换页栏 -->
-			<div id="page_control" class="page_inner">
-				<template v-for="(num,index) in pages">
-					<!-- current值为多少就渲染对应div -->
-					<div class="page_button" v-on:click="sw_page(index)"
-						v-bind:class="{page_button_focus:index==current}">
-						{{num}}
-						{{current}}
-					</div>
-				</template>
-				<div class="page_button" v-on:click="next_page">
-					下一页>
-				</div>
-			</div>
-			<!-- 友情链接 -->
-			<hr>
-			<h2>友情链接</h2>
-			<div class="link mdui-row">
-				<div class="swiper-container mdui-col-xs-8">
-					<div class="swiper-wrapper">
-						<div class="swiper-slide mdui-card">
-							<div class="mdui-card-media">
-								<svg class="icon" aria-hidden="true">
-									<use xlink:href="#icon-git"></use>
-								</svg>
-							</div>
-							<!-- <div class="mdui-card-content">和我们一起完善这个页面</div> -->
-						</div>
-						<div class="swiper-slide mdui-card">
-							<div class="mdui-card-media">
-								<svg class="icon" aria-hidden="true">
-									<use xlink:href="#icon-weixin"></use>
-								</svg>
-							</div>
-							<!-- <div class="mdui-card-content">关注我们的公众号获取更多信息</div> -->
-						</div>
-						<div class="swiper-slide mdui-card">
-							<div class="mdui-car-media">
-								<svg class="icon" aria-hidden="true">
-									<use xlink:href="#icon-dashang-copy"></use>
-								</svg>
-							</div>
-							<!-- <div class="mdui-card-content">你的捐赠将是对我们的最大激励</div> -->
-						</div>
-						<div class="swiper-slide mdui-card">
-							<div class="mdui-card-media">
-								<svg class="icon" aria-hidden="true">
-									<use xlink:href="#icon-lujingbeifen13"></use>
-								</svg>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="swiper-button-prev mdui-col-xs-2"></div>
-				<div class="swiper-button-next mdui-col-xs-2"></div>
-			</div>
+            footer {
+                height: 120px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="mdui-container">
+            <!-- 顶部导航条 -->
+            <header class="mdui-container-fluid">
+                <div class="title-logo">Wabby Wabbo</div>
+                <!-- 搜索框 -->
+                <div class="serch mdui-row">
+                    <input type="text" class="mdui-col-xs-10 serch-input" placeholder="搜索" />
+                    <div class="iconfont mdui-col-xs-2">&#xe605;</div>
+                </div>
+            </header>
+            <div class="logo"></div>
+            <div class="mdui-row" id="tips-content">
+                <div class="content mdui-col-xs-9">
+                    <!-- 分类 -->
+                    <div class="type mdui-tab mdui-card mdui-tab-full-width" mdui-tab id="category_label">
+                        <a class="mdui-ripple" v-on:click="get_tips">情感</a>
+                        <a class="mdui-ripple" v-on:click="get_tips">学习</a>
+                        <a class="mdui-ripple" v-on:click="get_tips">游戏</a>
+                        <a class="mdui-ripple" v-on:click="get_tips">编程</a>
+                        <a class="mdui-ripple" v-on:click="get_tips">娱乐</a>
+                        <a class="mdui-ripple" v-on:click="get_tips">找工作</a>
+                    </div>
+                    <!-- 帖子 -->
+                    <div class="tips" id="tips_content">
+                        <template v-for="tip in tips_data">
+                            <div class="tips-content mdui-card" v-bind:tips_id="tip.id" v-on:click="toTipContent">
+                                <div>{{tip.content}}</div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <div class="right-label mdui-col-xs-2">
+                    <!-- 右侧功能区 -->
+                    <div class="func-area mdui-card" id="func_area">
+                        <div class="mdui-row">
+                            <div class="func-item mdui-col-xs-6" v-on:click="openDialog">
+                                <div class="post-tip icon iconfont">&#xe602;</div>
+                                <div class="text">发贴</div>
+                            </div>
+                            <div class="func-item mdui-col-xs-6" v-on:click="refresh">
+                                <div class="icon refresh iconfont">&#xe600;</div>
+                                <div class="text">刷新</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 热贴区 -->
+                    <ul class="hot-tips mdui-card" id="hot_tips">
+                        <template v-for="item in tip_object">
+                            <li class="mdui-row" v-bind:tips_id="item.id">
+                                <i class="iconfont mdui-col-xs-2">&#xe61a;</i>
+                                <div class="mdui-col-xs-10" v-on:click="toContent">
+                                    {{item.content}}
+                                </div>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+            <!-- 换页栏 -->
+            <div id="page_control" class="page_inner">
+                <template v-for="(num,index) in pages">
+                    <!-- current值为多少就渲染对应div -->
+                    <div class="page_button" v-on:click="sw_page(index)"
+                        v-bind:class="{page_button_focus:index==current}">
+                        {{num}}
+                        {{current}}
+                    </div>
+                </template>
+                <div class="page_button" v-on:click="next_page">
+                    下一页>
+                </div>
+            </div>
+            <!-- 友情链接 -->
+            <hr>
+            <h2>友情链接</h2>
+            <div class="link mdui-row">
+                <div class="swiper-container mdui-col-xs-8">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide mdui-card">
+                            <div class="mdui-card-media">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-git"></use>
+                                </svg>
+                            </div>
+                            <!-- <div class="mdui-card-content">和我们一起完善这个页面</div> -->
+                        </div>
+                        <div class="swiper-slide mdui-card">
+                            <div class="mdui-card-media">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-weixin"></use>
+                                </svg>
+                            </div>
+                            <!-- <div class="mdui-card-content">关注我们的公众号获取更多信息</div> -->
+                        </div>
+                        <div class="swiper-slide mdui-card">
+                            <div class="mdui-car-media">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-dashang-copy"></use>
+                                </svg>
+                            </div>
+                            <!-- <div class="mdui-card-content">你的捐赠将是对我们的最大激励</div> -->
+                        </div>
+                        <div class="swiper-slide mdui-card">
+                            <div class="mdui-card-media">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-lujingbeifen13"></use>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-prev mdui-col-xs-2"></div>
+                <div class="swiper-button-next mdui-col-xs-2"></div>
+            </div>
 
-			<!-- 预留的底部区域 -->
-			<footer></footer>
-		</div>
-		<!-- 条件渲染(一块内容)控制发帖弹窗 -->
-		<div v-if="isVisible" id="postpage" class="shade">
-			<div class="Mydialog mdui-card">
-				<div class="mdui-dialog-title">发布</div>
-				<div class="mdui-dialog-content">
-					<div class="mdui-textfield mdui-textfield-floating-label">
-						<label class="mdui-textfield-label">请写下你的想法</label>
-						<textarea class="mdui-textfield-input" v-model="post_msg"></textarea>
-					</div>
-				</div>
-				<form>
+            <!-- 预留的底部区域 -->
+            <footer></footer>
+        </div>
+        <!-- 条件渲染(一块内容)控制发帖弹窗 -->
+        <div v-if="isVisible" id="postpage" class="shade">
+            <div class="Mydialog mdui-card">
+                <div class="mdui-dialog-title">发布</div>
+                <div class="mdui-dialog-content">
+                    <div class="mdui-textfield mdui-textfield-floating-label">
+                        <label class="mdui-textfield-label">请写下你的想法</label>
+                        <textarea class="mdui-textfield-input" v-model="post_msg"></textarea>
+                    </div>
+                </div>
+                <form>
 
-					<label class="mdui-radio">
-						<input type="radio" name="group1" v-model="picked" value="娱乐" />
-						<i class="mdui-radio-icon"></i>
-						娱乐
-					</label>
+                    <label class="mdui-radio">
+                        <input type="radio" name="group1" v-model="picked" value="娱乐" />
+                        <i class="mdui-radio-icon"></i>
+                        娱乐
+                    </label>
 
-					<label class="mdui-radio">
-						<input type="radio" name="group1" v-model="picked" value="知识" />
-						<i class="mdui-radio-icon"></i>
-						知识
-					</label>
+                    <label class="mdui-radio">
+                        <input type="radio" name="group1" v-model="picked" value="知识" />
+                        <i class="mdui-radio-icon"></i>
+                        知识
+                    </label>
 
-					<label class="mdui-radio">
-						<input type="radio" name="group1" v-model="picked" value="工作" />
-						<i class="mdui-radio-icon"></i>
-						工作
-					</label>
+                    <label class="mdui-radio">
+                        <input type="radio" name="group1" v-model="picked" value="工作" />
+                        <i class="mdui-radio-icon"></i>
+                        工作
+                    </label>
 
-				</form>
-				<div class="mdui-dialog-actions">
-					<button class="mdui-btn mdui-ripple" v-on:click="cancel">取消</button>
-					<button class="mdui-btn mdui-ripple" v-on:click="confirm">确认</button>
-				</div>
-			</div>
-		</div>
+                </form>
+                <div class="mdui-dialog-actions">
+                    <button class="mdui-btn mdui-ripple" v-on:click="cancel">取消</button>
+                    <button class="mdui-btn mdui-ripple" v-on:click="confirm">确认</button>
+                </div>
+            </div>
+        </div>
 
-		<script type="text/javascript">
-			let console_pic = " __      __       ___.  ___.            __      __       ___.  ___.           \n" +
-				"/  \\    /  \\_____ \\_ |__\\_ |__ ___.__. /  \\    /  \\_____ \\_ |__\\_ |__   ____  \n" +
-				"\\   \\/\\/   /\\__  \\ | __ \\| __ <   |  | \\   \\/\\/   /\\__  \\ | __ \\| __ \\ /  _ \\ \n" +
-				" \\        /  / __ \\| \\_\\ \\ \\_\\ \\___  |  \\        /  / __ \\| \\_\\ \\ \\_\\ (  <_> )\n" +
-				"  \\__/\\  /  (____  /___  /___  / ____|   \\__/\\  /  (____  /___  /___  /\\____/ \n" +
-				"       \\/        \\/    \\/    \\/\\/             \\/        \\/    \\/    \\/        \n\n" +
-				"                                                     Powered by awsl-core 5.2.0\n";
-			console.log('%c' + console_pic, 'color:#2376b7');
-			var mySwiper = new Swiper('.swiper-container', {
-				slidesPerView: 3, //默认页面显示个数
-				autoHeight: true, //页面高度自适应
-				spaceBetween: 50, //slide间距离
-				// 前进后退按钮
-				navigation: {
-					nextEl: '.swiper-button-next',
-					prevEl: '.swiper-button-prev',
-				}
-			})
+        <script type="text/javascript">
+            let console_pic = " __      __       ___.  ___.            __      __       ___.  ___.           \n" +
+                "/  \\    /  \\_____ \\_ |__\\_ |__ ___.__. /  \\    /  \\_____ \\_ |__\\_ |__   ____  \n" +
+                "\\   \\/\\/   /\\__  \\ | __ \\| __ <   |  | \\   \\/\\/   /\\__  \\ | __ \\| __ \\ /  _ \\ \n" +
+                " \\        /  / __ \\| \\_\\ \\ \\_\\ \\___  |  \\        /  / __ \\| \\_\\ \\ \\_\\ (  <_> )\n" +
+                "  \\__/\\  /  (____  /___  /___  / ____|   \\__/\\  /  (____  /___  /___  /\\____/ \n" +
+                "       \\/        \\/    \\/    \\/\\/             \\/        \\/    \\/    \\/        \n\n" +
+                "                                                     Powered by awsl-core 5.2.0\n";
+            console.log('%c' + console_pic, 'color:#2376b7');
+            var mySwiper = new Swiper('.swiper-container', {
+                slidesPerView: 3, //默认页面显示个数
+                autoHeight: true, //页面高度自适应
+                spaceBetween: 50, //slide间距离
+                // 前进后退按钮
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                }
+            })
+            /* vue 绑定 */
+            /* 分类栏 */
+            var category_label = new Vue({
+                el: "#category_label",
+                methods: {
+                    //点击不同分类时，获取对应的帖子
+                    get_tips: function(event) {
+                        var type = event.target.text;
+                        console.log(type);
+                        loadTips(type);
+                    }
+                }
+            })
+            /* 显示帖子的区域 */
+            let tips_content = new Vue({
+                el: "#tips_content",
+                data: {
+                    tips_data: [{
+                        id: 0,
+                        content: "未获取到数据，请检查网络是否正常!"
+                    }]
+                },
+                methods: {
+                    // 跳转到该帖子对应的content页面
+                    toTipContent: function(event) {
+                        console.log("click" + event.target);
+                    }
+                }
+            })
+            /* 发贴的弹窗*/
+            var postpage = new Vue({
+                el: "#postpage",
+                data: {
+                    isVisible: false, //遮罩不可见
+                    post_msg: "", //表单信息
+                    picked: "",
+                },
+                methods: {
+                    cancel: function() {
+                        this.isVisible = false;
+                    },
+                    //提交表单
+                    confirm: function() {
+                        this.isVisible = false;
+                        this.post_msg = "";
+                        this.picked = "";
+                    },
+                }
+            })
+            /* 右侧功能区，包含发贴和刷新功能*/
+            let func_area = new Vue({
+                el: "#func_area",
+                methods: {
+                    openDialog: function(event) {
+                        console.log(event.target)
+                        postpage.isVisible = true;
+                    },
+                    refresh: function() {
+                        
+                        alert("refresh");
+                    }
+                }
+            })
+            /* 热贴显示区域*/
+            var hot_tips = new Vue({
+                el: "#hot_tips",
+                data: {
+                    tip_object: []
+                },
+                methods: {
+                    toContent: function(event) {
+                        // console.log(event.target.parentNode.getAttribute("tips_id"));
+                        var id = event.target.parentNode.getAttribute("tips_id");
+                        window.location.href = "./content.html?tips_id=" + id;
+                    }
+                }
+            })
+            /* 换页栏 */
+            var page_control = new Vue({
+                el: "#page_control",
+                data: {
+                    pages: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                    current: 0,
+                },
+                methods: {
+                    sw_page: function(index) {
+                        this.current = index;
+                    },
+                    next_page: function() {
+                        if (this.current > 9) {
+                            this.current = 9;
+                            for (var i = 0; i < this.pages.length; i++) {
+                                this.pages[i] = this.pages[i] + 1;
+                            }
+                        } else {
+                            this.current = this.current + 1;
+                        }
+                    }
+                }
+            })
+            /* 根据type加载帖子*/
+            function loadTips(type, page) {
+                if (type == undefined) {
+                    type = "情感";
+                }
+                if (page == undefined) {
+                    page = 1;
+                }
+                getTips(type, 1, function(data) {
+                    //删除旧数据
+                    let size = tips_content.tips_data.length;
+                    tips_content.tips_data.splice(0, size);
+                    let errorTips = {
+                        id: 0,
+                        content: ""
+                    }
+                    if (data.code != 200) {
+                        /* 获取失败*/
+                        // alert(data.msg);
+                        errorTips.content = "获取失败，请检查网络设置！";
+                        tips_content.tips_data.push(errorTips);
+                        return;
+                    } else if (data.data == null) {
+                        /* 数据为空*/
+                        errorTips.content = "未获取到数据";
+                        tips_content.tips_data.content.push(errorTips);
+                        return;
+                    }
 
-			var postpage = new Vue({
-				el: "#postpage",
-				data: {
-					isVisible: false, //遮罩不可见
-					post_msg: "", //表单信息
-					picked: "",
-				},
-				methods: {
-					cancel: function() {
-						this.isVisible = false;
-					},
-					//提交表单
-					confirm: function() {
-						this.isVisible = false;
-						this.post_msg = "";
-						this.picked = "";
+                    let tips = data.data;
+                    for (let i = 0; i < tips.length; i++) {
+                        // console.log(tips[i]);
+                        tips_content.tips_data.push(tips[i]);
+                    }
+                })
+            }
+            /* 根据tipsId跳转到content.html页面*/
+            function toTipContent(tidsId) {
+                // var id = event.target.parentNode.getAttribute("tips_id");
+                window.location.href = "./content.html?tips_id=" + tidsId;
 
-					},
-				}
-			})
-
-			var btn_post = new Vue({
-				el: "#btn_post",
-				methods: {
-					openDialog: function() {
-						postpage.isVisible = true; //遮罩可见
-					}
-				}
-			})
-
-			var btn_refresh = new Vue({
-				el: "#btn_refresh",
-				methods: {
-					refresh: function() {
-						console.log("refresh");
-					}
-				}
-			})
-
-			var hot_tips = new Vue({
-				el: "#hot_tips",
-				data: {
-					tip_object: getHotTips()
-				},
-				methods: {
-					toContent: function(event) {
-						// console.log(event.target.parentNode.getAttribute("tips_id"));
-						var id = event.target.parentNode.getAttribute("tips_id");
-						window.location.href = "./content.html?tips_id=" + id;
-					}
-				}
-			})
-
-			var page_control = new Vue({
-				el: "#page_control",
-				data: {
-					pages: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-					current: 0,
-				},
-				methods: {
-					sw_page: function(index) {
-						this.current = index;
-					},
-					next_page: function() {
-						if (this.current > 9) {
-							this.current = 9;
-							for (var i = 0; i < this.pages.length; i++) {
-								this.pages[i] = this.pages[i] + 1;
-							}
-						} else {
-							this.current = this.current + 1;
-						}
-					}
-				}
-			})
-			
-			var category_label = new Vue({
-				el: "#tipsByType",
-				data: {
-					byTypeTips: getTips("情感"),
-				},
-				methods: {
-					get_tips: function(event) {
-						var type = event.target.text;
-						this.byTypeTips = getTips(type);
-					},
-					toTipContent: function(event) {
-						// console.log(event.target.parentNode.getAttribute("tips_id"));
-						var id = event.target.parentNode.getAttribute("tips_id");
-						window.location.href = "./content.html?tips_id=" + id;
-					}
-				}
-			})
-		</script>
-	</body>
+            }
+            loadTips();
+        </script>
+    </body>
 </html>

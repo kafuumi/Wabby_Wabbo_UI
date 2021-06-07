@@ -1,225 +1,225 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<link href="css/mdui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="css/navigation.css" />
-		<script src="js/mdui.min.js"></script>
-		<script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/communicate.js" type="text/javascript" charset="utf-8"></script>
-		<title>帖子详情</title>
-		<style>
-			* {
-				margin: 0;
-				padding: 0;
-			}
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link href="css/mdui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="css/navigation.css" />
+        <script src="js/mdui.min.js"></script>
+        <script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/communicate.js" type="text/javascript" charset="utf-8"></script>
+        <title>帖子详情</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
 
-			body {
-				background-color: #fffef9;
-			}
+            body {
+                background-color: #fffef9;
+            }
 
-			/* 点赞图标（svg格式） */
-			.icon {
-				width: 1em;
-				height: 1em;
-				vertical-align: -0.15em;
-				fill: currentColor;
-				overflow: hidden;
-			}
+            /* 点赞图标（svg格式） */
+            .icon {
+                width: 1em;
+                height: 1em;
+                vertical-align: -0.15em;
+                fill: currentColor;
+                overflow: hidden;
+            }
 
-			#zan:hover {
-				cursor: pointer;
-			}
+            #zan:hover {
+                cursor: pointer;
+            }
 
-			/* 帖子文本内容 */
-			.container {
-				width: 660px;
-				margin: 0 auto;
-			}
+            /* 帖子文本内容 */
+            .container {
+                width: 660px;
+                margin: 0 auto;
+            }
 
-			.page-container {
-				margin-top: 80px;
-				margin-bottom: 30px;
-				font-size: 18px;
-				line-height: 1.8;
-				width: 100%;
-				overflow-y: initial;
-				padding: 5%;
-			}
+            .page-container {
+                margin-top: 80px;
+                margin-bottom: 30px;
+                font-size: 18px;
+                line-height: 1.8;
+                width: 100%;
+                overflow-y: initial;
+                padding: 5%;
+            }
 
-			.page-action i {
-				border: 2px solid #000000;
-				border-radius: 12px;
-				padding: 5px;
-				font-size: 12px;
-				background-color: #ede3e7;
-			}
+            .page-action i {
+                border: 2px solid #000000;
+                border-radius: 12px;
+                padding: 5px;
+                font-size: 12px;
+                background-color: #ede3e7;
+            }
 
-			.page-action {
-				margin-bottom: 10px;
-				margin-top: 10px;
-				display: inline;
-				position: relative;
-				left: 78%;
-			}
+            .page-action {
+                margin-bottom: 10px;
+                margin-top: 10px;
+                display: inline;
+                position: relative;
+                left: 78%;
+            }
 
-			.type-label {
-				display: inline;
-				font-size: 12px;
-				border: 2px solid #000000;
-				border-radius: 12px;
-				padding: 5px;
-				font-weight: bold;
-				position: relative;
-				left: 2%;
-			}
+            .type-label {
+                display: inline;
+                font-size: 12px;
+                border: 2px solid #000000;
+                border-radius: 12px;
+                padding: 5px;
+                font-weight: bold;
+                position: relative;
+                left: 2%;
+            }
 
-			/* 分隔线 */
-			hr {
-				margin: 18px 0;
-				clear: both;
-			}
+            /* 分隔线 */
+            hr {
+                margin: 18px 0;
+                clear: both;
+            }
 
-			.time {
-				position: absolute;
-				left: 80%;
-			}
+            .time {
+                position: absolute;
+                left: 80%;
+            }
 
-			/* 热门评论 */
-			.hot-comments div {
-				float: left;
-				border: 2px solid #616161;
-				border-radius: 12px;
-				width: 180px;
-				padding: 4px 4px 20px 4px;
-				position: relative;
-				margin-bottom: 18px;
-				margin-right: 26px;
-				line-height: 20px;
-			}
+            /* 热门评论 */
+            .hot-comments div {
+                float: left;
+                border: 2px solid #616161;
+                border-radius: 12px;
+                width: 180px;
+                padding: 4px 4px 20px 4px;
+                position: relative;
+                margin-bottom: 18px;
+                margin-right: 26px;
+                line-height: 20px;
+            }
 
-			#hotCom1 {
-				margin-left: 34px;
-			}
+            #hotCom1 {
+                margin-left: 34px;
+            }
 
-			/* 普通评论 */
-			.comments {
-				clear: both;
-				border: 2px solid #616161;
-				border-radius: 12px;
-				padding: 4px 4px 10px 4px;
-				margin-bottom: 50px;
-			}
+            /* 普通评论 */
+            .comments {
+                clear: both;
+                border: 2px solid #616161;
+                border-radius: 12px;
+                padding: 4px 4px 10px 4px;
+                margin-bottom: 50px;
+            }
 
-			.comments i {
-				border: 0px solid #000000;
-				border-radius: 12px;
-				background-color: #ede3e7;
-				padding: 5px;
-				font-size: 12px;
-			}
+            .comments i {
+                border: 0px solid #000000;
+                border-radius: 12px;
+                background-color: #ede3e7;
+                padding: 5px;
+                font-size: 12px;
+            }
 
-			.comment {
-				position: relative;
-			}
+            .comment {
+                position: relative;
+            }
 
-			.comment-action {
-				position: relative;
-				left: 90%;
-				bottom: 10%;
-			}
+            .comment-action {
+                position: relative;
+                left: 90%;
+                bottom: 10%;
+            }
 
-			#com {
-				list-style: none;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="mdui-container">
-			<header class="mdui-container-fluid">
-				<div class="title-logo">Wabby Wabbo</div>
-				<!-- 搜索框 -->
-				<div class="serch mdui-row">
-					<input type="text" class="mdui-col-xs-10 serch-input" placeholder="搜索" />
-					<div class="iconfont mdui-col-xs-2">&#xe605;</div>
-				</div>
-			</header>
-			<div class="container">
-				<!-- 展示文本的区域 -->
-				<div id="message">
-					<div class="page-container mdui-card">
-						<p v-if="tip.code==200">{{tip.data.content}}</p>
-						<p v-else>tip.data.msg</p>
-					</div>
-					<div class="mdui-row">
-						<div class="type-label">
-							<span>{{tip.data.type}}</span>
-						</div>
-						<div class="page-action">
-							<svg class="icon" aria-hidden="true" id="zan">
-								<use xlink:href="#icon-dianzan"></use>
-							</svg>
-							<i>赞 {{tip.data.starNum}}</i>
-						</div>
-					</div>
-				</div>
-				<hr />
-				<div class="hot-comments" id="hot_comments">
-					<template v-for="comment in comments">
-						<div id="hotCom1" class="mdui-card">
-							<p>{{comment.content}}</p>
-							<i class="time">{{comment.date}}</i>
-						</div>
-					</template>
-				</div>
-				<hr />
-				<div class="comments mdui-card" id="">
-					<ul>
-						<li id="com">
-							<div class="comment">
-								<div class="comment-content">
-									<p>你好吗的睡觉哦大家iOS京东i叫司机都i佳松加哦京东i阿散井当代节省空间大绿卡就是
-										三对焦卡酵素都建瓯爱睡觉哦大家哦i啊是基督教哦i叫阿三的哦i加送京东i偶爱睡觉哦i就打死哦觉得i偶就阿松i就dij
-										爱神的箭哦案件送到家哦啊是就
-									</p>
-								</div>
-								<div class="time">
-									5-16
-								</div>
-								<div class="comment-action">
-									<svg class="icon" aria-hidden="true">
-										<use xlink:href="#icon-dianzan"></use>
-									</svg>
-									<i>赞 100</i>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</body>
-	<script type="text/javascript">
-		// 获取url参数
-		var url = window.location.search;
-		var str = url.split("=");
-		var tips_id = str[1];
-		
-		var message = new Vue({
-			el: "#message",
-			data: {
-				tip: getTipsById(tips_id),
-			},
-		})
-		
-		var hot_comments = new Vue({
-			el: "#hot_comments",
-			data: {
-				comments: getHotComments(tips_id),
-			},
-		})
-	</script>
+            #com {
+                list-style: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="mdui-container">
+            <header class="mdui-container-fluid">
+                <div class="title-logo">Wabby Wabbo</div>
+                <!-- 搜索框 -->
+                <div class="serch mdui-row">
+                    <input type="text" class="mdui-col-xs-10 serch-input" placeholder="搜索" />
+                    <div class="iconfont mdui-col-xs-2">&#xe605;</div>
+                </div>
+            </header>
+            <div class="container">
+                <!-- 展示文本的区域 -->
+                <div id="message">
+                    <div class="page-container mdui-card">
+                        <p v-if="tip.code==200">{{tip.data.content}}</p>
+                        <p v-else>{{tip.data.msg}}</p>
+                    </div>
+                    <div class="mdui-row">
+                        <div class="type-label">
+                            <span>{{tip.data.type}}</span>
+                        </div>
+                        <div class="page-action">
+                            <svg class="icon" aria-hidden="true" id="zan">
+                                <use xlink:href="#icon-dianzan"></use>
+                            </svg>
+                            <i>赞 {{tip.data.starNum}}</i>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="hot-comments" id="hot_comments">
+                    <template v-for="comment in comments.data">
+                        <div id="hotCom1" class="mdui-card">
+                            <p>{{comment.content}}</p>
+                            <i class="time">{{comment.date}}</i>
+                        </div>
+                    </template>
+                </div>
+                <hr />
+                <div class="comments mdui-card" id="">
+                    <ul>
+                        <li id="com">
+                            <div class="comment">
+                                <div class="comment-content">
+                                    <p>你好吗的睡觉哦大家iOS京东i叫司机都i佳松加哦京东i阿散井当代节省空间大绿卡就是
+                                        三对焦卡酵素都建瓯爱睡觉哦大家哦i啊是基督教哦i叫阿三的哦i加送京东i偶爱睡觉哦i就打死哦觉得i偶就阿松i就dij
+                                        爱神的箭哦案件送到家哦啊是就
+                                    </p>
+                                </div>
+                                <div class="time">
+                                    5-16
+                                </div>
+                                <div class="comment-action">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-dianzan"></use>
+                                    </svg>
+                                    <i>赞 100</i>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        // 获取url参数
+        var url = window.location.search;
+        var str = url.split("=");
+        var tips_id = str[1];
+
+        var message = new Vue({
+            el: "#message",
+            data: {
+                tip: getTipsById(tips_id),
+            },
+        })
+
+        var hot_comments = new Vue({
+            el: "#hot_comments",
+            data: {
+                comments: getHotComments(tips_id),
+            }
+        })
+    </script>
 </html>

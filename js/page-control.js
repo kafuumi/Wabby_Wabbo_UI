@@ -20,7 +20,7 @@ let pageControl = new Vue({
     data: {
         maxPageNum: 1,
         pages: [1],
-        current: 0,
+        current: 0
     },
     computed: {
         /* 是否还有上一页*/
@@ -64,9 +64,8 @@ let pageControl = new Vue({
                 return;
             }
             // 将current置为当前点击的位置
-            // 如果没有发生移动，则page[current]为当前选择的页数
+            // 对当前而言page[current]为当前选择的页数
             this.current = index;
-
             //|---左1/3---|---不移动---|---右1/3---|
             //点击位置为右侧1/3时，发生移动
             if (index > pageSize / 3 * 2) {
@@ -74,23 +73,24 @@ let pageControl = new Vue({
                 if (this.pages[pageSize - 1] == this.maxPageNum) {
                     return;
                 }
-                //每个元素向左移动一个距离
+                //每个元素向右移动两个距离
                 for (let i = 0; i < pageSize; i++) {
-                    this.pages[i] = this.pages[i] + 1;
+                    this.pages[i] = this.pages[i] + 2;
                 }
                 //调整当前选择的页数的索引
-                this.current = index - 1;
+                this.current = index - 2;
             } else if (index < pageSize / 3) {
                 if (this.pages[0] == 1) {
                     return;
                 }
                 for (let i = 0; i < pageSize; i++) {
-                    this.pages[i] = this.pages[i] - 1;
+                    this.pages[i] = this.pages[i] - 2;
                 }
-                this.current = index + 1;
+                this.current = index + 2;
             }
             //page[current]即为当前选择的页数
-            console.log(this.pages[this.current]);
+            // console.log(this.pages[this.current]);
         }
     }
 });
+

@@ -16,7 +16,7 @@
         <script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="js/communicate.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/util.js"></script>
+		<script src="js/util.js" type="text/javascript" charset="utf-8"></script>
         <title>歪比巴卜论坛</title>
         <style>
             * {
@@ -407,22 +407,40 @@
                 </div>
                 <form>
                     <label class="mdui-radio">
-                        <input type="radio" name="group1" v-model="picked" value="娱乐" />
+                        <input type="radio" name="group1" v-model="picked" value="情感" />
                         <i class="mdui-radio-icon"></i>
-                        娱乐
+                        情感
                     </label>
 
                     <label class="mdui-radio">
-                        <input type="radio" name="group1" v-model="picked" value="知识" />
+                        <input type="radio" name="group1" v-model="picked" value="学习" />
                         <i class="mdui-radio-icon"></i>
-                        知识
+                        学习
                     </label>
 
                     <label class="mdui-radio">
-                        <input type="radio" name="group1" v-model="picked" value="工作" />
+                        <input type="radio" name="group1" v-model="picked" value="游戏" />
                         <i class="mdui-radio-icon"></i>
-                        工作
+                        游戏
                     </label>
+					
+					<label class="mdui-radio">
+					    <input type="radio" name="group1" v-model="picked" value="编程" />
+					    <i class="mdui-radio-icon"></i>
+					    编程
+					</label>
+					
+					<label class="mdui-radio">
+					    <input type="radio" name="group1" v-model="picked" value="娱乐" />
+					    <i class="mdui-radio-icon"></i>
+					    娱乐
+					</label>
+					
+					<label class="mdui-radio">
+					    <input type="radio" name="group1" v-model="picked" value="找工作" />
+					    <i class="mdui-radio-icon"></i>
+					    找工作
+					</label>
 
                 </form>
                 <div class="mdui-dialog-actions">
@@ -530,6 +548,7 @@
         <!-- 函数定义 -->
         <script>
             /* 根据type加载帖子*/
+			// console.log(pageControl.currentPage);
             function loadTips(type, page) {
                 if (type == undefined) {
                     type = "情感";
@@ -537,7 +556,7 @@
                 if (page == undefined) {
                     page = 1;
                 }
-                getTips(type, 1, function(data) {
+                getTips(type, page, function(data) {
                     //删除旧数据
                     let size = tips_content.tips_data.length;
                     tips_content.tips_data.splice(0, size);

@@ -452,17 +452,26 @@
                 data: {
                     tips_data: [{
                         id: 0,
-                        content: "未获取到数据，请检查网络是否正常!"
+                        content: "未获取到数据，请检查网络是否正常"
                     }]
                 },
                 methods: {
                     // 跳转到该帖子对应的content页面
                     toTipContent: function(event) {
-                        console.log("click" + event.target);
+                        var id = event.target.parentNode.getAttribute("tips_id");
+						toTipContent(id);
                     }
                 }
             })
+
             /* 发贴的弹窗*/
+			var userTip = {
+				date: "",
+				type: "",
+				content: "",
+				starNum: 0
+			};
+			console.log(userTip);
             var postpage = new Vue({
                 el: "#postpage",
                 data: {
@@ -476,6 +485,13 @@
                     },
                     //提交表单
                     confirm: function() {
+						userTip.type = this.picked;
+						userTip.content = this.post_msg;
+						postTips(userTip, function(data) {
+							if (data.code != 200) {
+								alert("上传失败，请检查网络连接");
+							}
+						})
                         this.isVisible = false;
                         this.post_msg = "";
                         this.picked = "";
@@ -506,7 +522,7 @@
                     toContent: function(event) {
                         // console.log(event.target.parentNode.getAttribute("tips_id"));
                         var id = event.target.parentNode.getAttribute("tips_id");
-                        window.location.href = "./content.html?tips_id=" + id;
+                        toTipContent(id);
                     }
                 }
             })
@@ -532,7 +548,7 @@
                     if (data.code != 200) {
                         /* 获取失败*/
                         // alert(data.msg);
-                        errorTips.content = "获取失败，请检查网络设置！";
+                        errorTips.content = "获取失败，请检查网络设置";
                         tips_content.tips_data.push(errorTips);
                         return;
                     } else if (data.data == null) {
@@ -550,11 +566,32 @@
                     }
                 })
             }
+			
+			/*加载热帖*/
+			function loadHotTips() {
+				getHotTips(function(data) {
+					let errorTips = {
+					    id: 0,
+					    content: ""
+					}
+					if (data.code != 200) {
+						errorTips.content = "获取失败，请检查网络设置";
+						hot_tips.tip_object.push(errorTips);
+					} else if(data.data == null) {
+						errorTips.content = "未获取到数据";
+						hot_tips.tip_object.push(errorTips);
+					}
+					
+					let hotTips = data.data;
+					for (let i=0; i < hotTips.length; i++) {
+						hot_tips.tip_object.push(hotTips[i]);
+					}
+				})
+			}
+			
             /* 根据tipsId跳转到content.html页面*/
-            function toTipContent(tidsId) {
-                // var id = event.target.parentNode.getAttribute("tips_id");
-                window.location.href = "./content.html?tips_id=" + tidsId;
-
+            function toTipContent(tipsId) {
+                window.location.href = "./content.html?tips_id=" + tipsId;
             }
         </script>
         <!-- 内容初始化 -->

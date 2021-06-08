@@ -10,6 +10,7 @@
 		<script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/communicate.js" type="text/javascript" charset="utf-8"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<title>帖子详情</title>
 		<style>
 			* {
@@ -63,7 +64,7 @@
 				margin-top: 10px;
 				display: inline;
 				position: relative;
-				left: 78%;
+				left: 82%;
 			}
 
 			.type-label {
@@ -154,24 +155,23 @@
 				<!-- 展示文本的区域 -->
 				<div id="message">
 					<div class="page-container mdui-card">
-						<p v-if="tip.code==200">{{tip.data.content}}</p>
-						<p v-else>{{tip.msg}}</p>
+						<p>{{tip.content}}</p>
 					</div>
 					<div class="mdui-row">
 						<div class="type-label">
-							<span>{{tip.data.type}}</span>
+							<span>{{tip.type}}</span>
 						</div>
 						<div class="page-action">
 							<svg class="icon" aria-hidden="true" id="zan">
 								<use xlink:href="#icon-dianzan"></use>
 							</svg>
-							<i>赞 {{tip.data.starNum}}</i>
+							<i>赞 {{tip.starNum}}</i>
 						</div>
 					</div>
 				</div>
 				<hr />
 				<div class="hot-comments" id="hot_comments">
-					<template v-for="hotcomment in hotcomments.data">
+					<template v-for="hotcomment in hotcomments">
 						<div class="mdui-card">
 							<p>{{hotcomment.content}}</p>
 							<i class="time">{{hotcomment.date}}</i>
@@ -181,7 +181,7 @@
 				<hr />
 				<div class="comments" id="comments">
 					<ul>
-						<li id="com" v-for="comment in comments.data">
+						<li id="com" v-for="comment in comments">
 							<div class="comment mdui-card">
 								<div class="comment-content">
 									<p>{{comment.content}}</p>
@@ -201,30 +201,118 @@
 		</div>
 	</body>
 	<script type="text/javascript">
-		// 获取url参数
+		/*获取url参数*/
 		var url = window.location.search;
 		var str = url.split("=");
 		var tips_id = str[1];
-
+		/*根据id获取帖子详细内容*/
 		var message = new Vue({
 			el: "#message",
 			data: {
-				tip: getTipsById(tips_id),
+				tip: {
+					id: 0,
+					content: "未获取到数据，请检查网络是否正常"
+				},
 			},
-		})
+			methods: {
+				getTipById: function() {
+					getTipsById(tips_id, function(data) {
+						let errorTips = {
+							id: 0,
+							content: ""
+						}
+						if (data.code != 200) {
+							/* 获取失败*/
+							// alert(data.msg);
+							errorTips.content = "获取失败，请检查网络设置";
+							message.tip = errorTips;
+							return;
+						} else if (data.data == null) {
+							/* 数据为空*/
+							errorTips.content = "未获取到数据";
+							message.tip = errorTips;
+							return;
+						}
 
+						var Mytip = data.data[0];
+						message.tip = Mytip;
+					})
+				}
+			}
+		})
+		message.getTipById();
+		/*获取热评*/
 		var hot_comments = new Vue({
 			el: "#hot_comments",
 			data: {
-				hotcomments: getHotComments(tips_id),
+				hotcomments: [{
+					id: 0,
+					content: "未获取到数据，请检查网络是否正常"
+				}]
+			},
+			methods: {
+				getHotComments: function() {
+					getHotComments(tips_id, function(data) {
+						let errorTips = {
+							id: 0,
+							content: ""
+						}
+						if (data.code != 200) {
+							/* 获取失败*/
+							// alert(data.msg);
+							errorTips.content = "获取失败，请检查网络设置";
+							hot_comments.hotcomments.push(errorTips);
+							return;
+						} else if (data.data == null) {
+							/* 数据为空*/
+							errorTips.content = "未获取到数据";
+							hot_comments.hotcomments.push(errorTips);
+							return;
+						}
+						
+						var hotComments = data.data;
+						hot_comments.hotcomments.push(hotComments);
+					})
+				}
 			}
 		})
-
+		hot_comments.getHotComments();
+		/*获取评论*/
 		var comments = new Vue({
 			el: "#comments",
 			data: {
-				comments: getComments(tips_id),
+				comments: [{
+					id: 0,
+					content: "未获取到数据，请检查网络是否正常"
+				}]
+			},
+			methods: {
+				getComments: function() {
+					getComments(tips_id,1,function(data) {
+						console.log(data);
+						let errorTips = {
+							id: 0,
+							content: ""
+						}
+						if (data.code != 200) {
+							/* 获取失败*/
+							// alert(data.msg);
+							errorTips.content = "获取失败，请检查网络设置";
+							comments.comments.push(errorTips);
+							return;
+						} else if (data.data == null) {
+							/* 数据为空*/
+							errorTips.content = "未获取到数据";
+							comments.comments.push(errorTips);
+							return;
+						}
+						
+						var coms = data.data;
+						comments.comments.push(coms);
+					})
+				}
 			}
 		})
+		comments.getComments();
 	</script>
 </html>

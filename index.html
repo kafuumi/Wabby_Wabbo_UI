@@ -16,6 +16,7 @@
         <script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="js/communicate.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/util.js"></script>
         <title>歪比巴卜论坛</title>
         <style>
             * {
@@ -440,12 +441,12 @@
                 methods: {
                     //点击不同分类时，获取对应的帖子
                     get_tips: function(event) {
-                        var type = event.target.text;
-                        console.log(type);
+                        var type = event.target.innerText;
+                        // console.log(type);
                         loadTips(type);
                     }
                 }
-            })
+            });
             /* 显示帖子的区域 */
             let tips_content = new Vue({
                 el: "#tips_content",
@@ -459,19 +460,12 @@
                     // 跳转到该帖子对应的content页面
                     toTipContent: function(event) {
                         var id = event.target.parentNode.getAttribute("tips_id");
-						toTipContent(id);
+                        toTipContent(id);
                     }
                 }
-            })
+            });
 
             /* 发贴的弹窗*/
-			var userTip = {
-				date: "",
-				type: "",
-				content: "",
-				starNum: 0
-			};
-			console.log(userTip);
             var postpage = new Vue({
                 el: "#postpage",
                 data: {
@@ -485,13 +479,20 @@
                     },
                     //提交表单
                     confirm: function() {
-						userTip.type = this.picked;
-						userTip.content = this.post_msg;
-						postTips(userTip, function(data) {
-							if (data.code != 200) {
-								alert("上传失败，请检查网络连接");
-							}
-						})
+                        var userTip = {
+                            date: new Date().format("yyyy-MM-dd HH:mm:ss"),
+                            type: "",
+                            content: "",
+                            starNum: 0
+                        };
+                        userTip.type = this.picked;
+                        userTip.content = this.post_msg;
+                        postTips(userTip, function(data) {
+                            if (data.code != 200) {
+                                alert(data.msg);
+                                return;
+                            }
+                        })
                         this.isVisible = false;
                         this.post_msg = "";
                         this.picked = "";
@@ -503,12 +504,11 @@
                 el: "#func_area",
                 methods: {
                     openDialog: function(event) {
-                        console.log(event.target)
+                        // console.log(event.target)
                         postpage.isVisible = true;
                     },
                     refresh: function() {
-
-                        alert("refresh");
+                        refresh();
                     }
                 }
             })
@@ -545,50 +545,52 @@
                         id: 0,
                         content: ""
                     }
-                    if (data.code != 200) {
-                        /* 获取失败*/
-                        // alert(data.msg);
-                        errorTips.content = "获取失败，请检查网络设置";
-                        tips_content.tips_data.push(errorTips);
-                        return;
-                    } else if (data.data == null) {
-                        /* 数据为空*/
-                        errorTips.content = "未获取到数据";
-                        tips_content.tips_data.content.push(errorTips);
-                        return;
-                    }
+                    concatTipsArray(tips_content.tips_data, data);
+                })
+            }
+            /* 刷新帖子内容*/
+            function refresh() {
+                // 获取当前被选择的分类
+                let type = category_label.$el
+                    .querySelector(".mdui-tab-active")
+                    .innerText;
+                if (type == "") {
+                    type = "情感";
+                }
+                loadTips(type, 1);
+            }
 
+            /*加载热帖*/
+            function loadHotTips() {
+                getHotTips(function(data) {
+                    concatTipsArray(hot_tips.tip_object,data);
+                })
+            }
+
+            function concatTipsArray(tipsArray, data) {
+                let errorTips = {
+                    id: 0,
+                    content: ""
+                }
+                if (data.code != 200) {
+                    /* 获取失败*/
+                    // alert(data.msg);
+                    errorTips.content = "获取失败，请检查网络设置";
+                    tipsArray.push(errorTips);
+                } else if (data.data == null || data.data.length == 0) {
+                    /* 数据为空*/
+                    errorTips.content = "未获取到数据";
+                    tipsArray.push(errorTips);
+                }else{
                     let tips = data.data;
                     // console.log(tips);
                     for (let i = 0; i < tips.length; i++) {
                         // console.log(tips[i]);
-                        tips_content.tips_data.push(tips[i]);
+                        tipsArray.push(tips[i]);
                     }
-                })
+                }
             }
-			
-			/*加载热帖*/
-			function loadHotTips() {
-				getHotTips(function(data) {
-					let errorTips = {
-					    id: 0,
-					    content: ""
-					}
-					if (data.code != 200) {
-						errorTips.content = "获取失败，请检查网络设置";
-						hot_tips.tip_object.push(errorTips);
-					} else if(data.data == null) {
-						errorTips.content = "未获取到数据";
-						hot_tips.tip_object.push(errorTips);
-					}
-					
-					let hotTips = data.data;
-					for (let i=0; i < hotTips.length; i++) {
-						hot_tips.tip_object.push(hotTips[i]);
-					}
-				})
-			}
-			
+
             /* 根据tipsId跳转到content.html页面*/
             function toTipContent(tipsId) {
                 window.location.href = "./content.html?tips_id=" + tipsId;
@@ -616,9 +618,11 @@
                 }
             })
             //初始化帖子内容
-            // loadTips();
+            loadTips();
             //初始化换页栏
             pageControl.initPage();
+            // 初始化热贴内容
+            loadHotTips();
         </script>
     </body>
 </html>

@@ -16,7 +16,7 @@
         <script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="js/communicate.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/util.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/util.js" type="text/javascript" charset="utf-8"></script>
         <title>歪比巴卜论坛</title>
         <style>
             * {
@@ -423,24 +423,24 @@
                         <i class="mdui-radio-icon"></i>
                         游戏
                     </label>
-					
-					<label class="mdui-radio">
-					    <input type="radio" name="group1" v-model="picked" value="编程" />
-					    <i class="mdui-radio-icon"></i>
-					    编程
-					</label>
-					
-					<label class="mdui-radio">
-					    <input type="radio" name="group1" v-model="picked" value="娱乐" />
-					    <i class="mdui-radio-icon"></i>
-					    娱乐
-					</label>
-					
-					<label class="mdui-radio">
-					    <input type="radio" name="group1" v-model="picked" value="找工作" />
-					    <i class="mdui-radio-icon"></i>
-					    找工作
-					</label>
+
+                    <label class="mdui-radio">
+                        <input type="radio" name="group1" v-model="picked" value="编程" />
+                        <i class="mdui-radio-icon"></i>
+                        编程
+                    </label>
+
+                    <label class="mdui-radio">
+                        <input type="radio" name="group1" v-model="picked" value="娱乐" />
+                        <i class="mdui-radio-icon"></i>
+                        娱乐
+                    </label>
+
+                    <label class="mdui-radio">
+                        <input type="radio" name="group1" v-model="picked" value="找工作" />
+                        <i class="mdui-radio-icon"></i>
+                        找工作
+                    </label>
 
                 </form>
                 <div class="mdui-dialog-actions">
@@ -462,6 +462,7 @@
                         var type = event.target.innerText;
                         // console.log(type);
                         loadTips(type);
+                        pageControl.initPage(type);
                     }
                 }
             });
@@ -548,7 +549,7 @@
         <!-- 函数定义 -->
         <script>
             /* 根据type加载帖子*/
-			// console.log(pageControl.currentPage);
+            // console.log(pageControl.currentPage);
             function loadTips(type, page) {
                 if (type == undefined) {
                     type = "情感";
@@ -569,20 +570,25 @@
             }
             /* 刷新帖子内容*/
             function refresh() {
-                // 获取当前被选择的分类
+                let type = getCurrentType();
+                loadTips(type, 1);
+            }
+            // 获取当前被选择的分类
+            function getCurrentType() {
                 let type = category_label.$el
                     .querySelector(".mdui-tab-active")
                     .innerText;
-                if (type == "") {
+                // 默认为"情感"
+                if (type == "" || type == undefined) {
                     type = "情感";
                 }
-                loadTips(type, 1);
+                return type;
             }
 
             /*加载热帖*/
             function loadHotTips() {
                 getHotTips(function(data) {
-                    concatTipsArray(hot_tips.tip_object,data);
+                    concatTipsArray(hot_tips.tip_object, data);
                 })
             }
 
@@ -600,7 +606,7 @@
                     /* 数据为空*/
                     errorTips.content = "未获取到数据";
                     tipsArray.push(errorTips);
-                }else{
+                } else {
                     let tips = data.data;
                     // console.log(tips);
                     for (let i = 0; i < tips.length; i++) {

@@ -11,6 +11,7 @@
 		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/communicate.js" type="text/javascript" charset="utf-8"></script>
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="js/util.js" type="text/javascript" charset="utf-8"></script>
 		<title>帖子详情</title>
 		<style>
 			* {
@@ -21,17 +22,16 @@
 			body {
 				background-color: #fffef9;
 			}
-
-			/* 点赞图标（svg格式） */
-			.icon {
-				width: 1em;
-				height: 1em;
-				vertical-align: -0.15em;
-				fill: currentColor;
-				overflow: hidden;
+			
+			@font-face {
+			  font-family: 'iconfont';  /* Project id 2587192 */
+			  src: url('//at.alicdn.com/t/font_2587192_uoxi0jknpje.woff2?t=1623124177987') format('woff2'),
+			       url('//at.alicdn.com/t/font_2587192_uoxi0jknpje.woff?t=1623124177987') format('woff'),
+			       url('//at.alicdn.com/t/font_2587192_uoxi0jknpje.ttf?t=1623124177987') format('truetype');
 			}
 
-			#zan:hover {
+			/* 点赞图标（svg格式） */
+			.zan:hover {
 				cursor: pointer;
 			}
 
@@ -76,6 +76,17 @@
 				font-weight: bold;
 				position: relative;
 				left: 2%;
+			}
+			
+			button {
+				position: relative;
+				padding: 8px;
+				left: 88%;
+				cursor: pointer;
+				background-color: #5698c3;
+				color: #FFFEF9;
+				border: none;
+				border-radius: 12px;
 			}
 
 			/* 分隔线 */
@@ -159,15 +170,20 @@
 					</div>
 					<div class="mdui-row">
 						<div class="type-label">
-							<span>{{tip.type}}</span>
+							<span>#{{tip.type}}</span>
 						</div>
-						<div class="page-action">
-							<svg class="icon" aria-hidden="true" id="zan">
-								<use xlink:href="#icon-dianzan"></use>
-							</svg>
+						<div class="page-action iconfont">
+							<span class="zan">&#xe60c;</span> 
 							<i>赞 {{tip.starNum}}</i>
 						</div>
 					</div>
+				</div>
+				<div id="compage">
+					<div class="mdui-textfield mdui-textfield-floating-label">
+					  <label class="mdui-textfield-label">发一条友善的评论</label>
+					  <textarea class="mdui-textfield-input" v-model="com_msg"></textarea>
+					</div>
+					<button type="button" v-on:click="post_com">发表评论</button>
 				</div>
 				<hr />
 				<div class="hot-comments" id="hot_comments">
@@ -187,10 +203,8 @@
 									<p>{{comment.content}}</p>
 								</div>
 								<div class="time">{{comment.date}}</div>
-								<div class="comment-action">
-									<svg class="icon" aria-hidden="true">
-										<use xlink:href="#icon-dianzan"></use>
-									</svg>
+								<div class="comment-action iconfont">
+									<span class="zan">&#xe60c;</span> 
 									<i>赞 {{comment.starNum}}</i>
 								</div>
 							</div>
@@ -314,5 +328,30 @@
 			}
 		})
 		comments.getComments();
+		/*评论功能区*/
+		var com = {
+			date: new Date().format("yy-MM-dd HH:mm:ss"),
+			tips_id: tips_id,
+			content: "",
+			starNum: 0
+		};
+		let compage = new Vue({
+			el: "#compage",
+			data: {
+				com_msg: "", //表单信息
+			},
+			methods: {
+				post_com: function() {
+					com.content = this.com_msg;
+					postComments(com, function(data) {
+						console.log(data);
+						if (data.code != 200) {
+							alert("发送失败，请检查网络设置");
+						}
+					})
+					this.com_msg = "";
+				}
+			}
+		})
 	</script>
 </html>

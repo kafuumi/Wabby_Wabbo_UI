@@ -1,0 +1,38 @@
+/* 换页栏样式 */
+.page_control {
+    /* height: 42.8px; */
+    padding: 6px 12px;
+    border-radius: 10px;
+    margin-top: 60px;
+    background-color: #c4d7d6;
+    user-select: none;
+}
+
+.page_item {
+    width: 50px;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    border-radius: 12px;
+    display: inline-block;
+    font-size: 14px;
+    color: royalblue;
+    background-color: #fffef9;
+    margin-left: 30px;
+    cursor: pointer;
+}
+
+.page_item:first-of-type,
+.page_item:last-of-type {
+    width: 60px;
+}
+
+
+.page_item_current {
+    color: #FFFFFF;
+    background-color: #22a2c3;
+}
+
+.page_item_disabled {
+    background-color: blue;
+}

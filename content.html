@@ -1,371 +1,413 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<link href="css/mdui.min.css" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="css/navigation.css" />
-		<script src="js/mdui.min.js"></script>
-		<script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/communicate.js" type="text/javascript" charset="utf-8"></script>
-		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-		<script src="js/util.js" type="text/javascript" charset="utf-8"></script>
-		<title>帖子详情</title>
-		<style>
-			* {
-				margin: 0;
-				padding: 0;
-			}
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link href="css/mdui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="css/navigation.css" />
+        <script src="js/mdui.min.js"></script>
+        <script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/communicate.js" type="text/javascript" charset="utf-8"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="js/util.js" type="text/javascript" charset="utf-8"></script>
+        <title>帖子详情</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
 
-			body {
-				background-color: #fffef9;
-			}
-			
-			@font-face {
-			  font-family: 'iconfont';  /* Project id 2587192 */
-			  src: url('//at.alicdn.com/t/font_2587192_kjbv9t34sfk.woff2?t=1623228620098') format('woff2'),
-			       url('//at.alicdn.com/t/font_2587192_kjbv9t34sfk.woff?t=1623228620098') format('woff'),
-			       url('//at.alicdn.com/t/font_2587192_kjbv9t34sfk.ttf?t=1623228620098') format('truetype');
-			}
+            body {
+                background-color: #fffef9;
+            }
 
-			/* 点赞图标（svg格式） */
-			.zan {
-				cursor: pointer;
-				color: #eea2a4;
-				font-size: 25px;
-			}
+            @font-face {
+                font-family: 'iconfont';
+                /* Project id 2587192 */
+                src: url('//at.alicdn.com/t/font_2587192_kjbv9t34sfk.woff2?t=1623228620098') format('woff2'),
+                    url('//at.alicdn.com/t/font_2587192_kjbv9t34sfk.woff?t=1623228620098') format('woff'),
+                    url('//at.alicdn.com/t/font_2587192_kjbv9t34sfk.ttf?t=1623228620098') format('truetype');
+            }
 
-			/* 帖子文本内容 */
-			.container {
-				width: 660px;
-				margin: 0 auto;
-			}
+            /* 点赞图标（svg格式） */
+            .zan {
+                cursor: pointer;
+                color: #eea2a4;
+                font-size: 25px;
+            }
 
-			.page-container {
-				margin-top: 80px;
-				margin-bottom: 30px;
-				font-size: 18px;
-				line-height: 1.8;
-				width: 100%;
-				overflow-y: initial;
-				padding: 5%;
-			}
+            /* 帖子文本内容 */
+            .container {
+                width: 660px;
+                margin: 0 auto;
+            }
 
-			.page-action i {
-				border: 2px solid #000000;
-				border-radius: 12px;
-				padding: 5px;
-				font-size: 12px;
-				background-color: #ede3e7;
-			}
+            .page-container {
+                margin-top: 80px;
+                margin-bottom: 30px;
+                font-size: 18px;
+                line-height: 1.8;
+                width: 100%;
+                overflow-y: initial;
+                padding: 5%;
+            }
 
-			.page-action {
-				margin-bottom: 10px;
-				margin-top: 10px;
-				display: inline;
-				position: relative;
-				left: 82%;
-			}
+            .page-action .star {
+                border: 2px solid #000000;
+                border-radius: 12px;
+                padding: 5px;
+                font-size: 12px;
+                background-color: #ede3e7;
+            }
 
-			.type-label {
-				display: inline;
-				font-size: 12px;
-				border: 2px solid #000000;
-				border-radius: 12px;
-				padding: 5px;
-				font-weight: bold;
-				position: relative;
-				left: 2%;
-			}
-			
-			button {
-				position: relative;
-				padding: 8px;
-				left: 88%;
-				cursor: pointer;
-				background-color: #5698c3;
-				color: #FFFEF9;
-				border: none;
-				border-radius: 12px;
-			}
+            .page-action {
+                margin-bottom: 10px;
+                margin-top: 10px;
+                display: inline;
+                position: relative;
+                user-select: none;
+                left: 82%;
+            }
 
-			/* 分隔线 */
-			hr {
-				margin: 18px 0;
-				clear: both;
-			}
+            @keyframes slide-top {
+                0% {
+                    top: 20px;
+                }
 
-			#hot_comments .time {
-				position: absolute;
-				left: 36%;
-				font-size: 8px;
-			}
+                100% {
+                    top: -20px;
+                }
+            }
 
-			#comments .time {
-				position: absolute;
-				left: 66%;
-				top: 60%;
-				font-size: 8px;
-			}
+            .plusEffect {
+                position: absolute;
+                color: red;
+                animation: slide-top .5s;
+            }
 
-			/* 热门评论 */
-			.hot-comments div {
-				float: left;
-				border: 2px solid #616161;
-				border-radius: 12px;
-				width: 180px;
-				padding: 4px 4px 20px 4px;
-				position: relative;
-				margin-bottom: 18px;
-				/* margin-right: 0px; */
-				line-height: 20px;
-				margin-left: 30px;
-				background-color: #e6d2d5;
-			}
+            .type-label {
+                display: inline;
+                font-size: 12px;
+                border: 2px solid #000000;
+                border-radius: 12px;
+                padding: 5px;
+                font-weight: bold;
+                position: relative;
+                left: 2%;
+            }
 
-			/* 普通评论 */
-			.comment {
-				clear: both;
-				border: 2px solid #616161;
-				border-radius: 12px;
-				padding: 4px 4px 10px 4px;
-				margin-bottom: 28px;
-				position: relative;
-			}
+            button {
+                position: relative;
+                padding: 8px;
+                left: 88%;
+                cursor: pointer;
+                background-color: #5698c3;
+                color: #FFFEF9;
+                border: none;
+                border-radius: 12px;
+            }
 
-			.comments i {
-				border: 0px solid #000000;
-				border-radius: 12px;
-				background-color: #ede3e7;
-				padding: 5px;
-				font-size: 12px;
-			}
+            /* 分隔线 */
+            hr {
+                margin: 18px 0;
+                clear: both;
+            }
 
-			.comment-action {
-				position: relative;
-				left: 90%;
-				bottom: 10%;
-			}
+            #hot_comments .time {
+                position: absolute;
+                left: 36%;
+                font-size: 8px;
+            }
 
-			#com {
-				list-style: none;
-			}
-		</style>
-	</head>
-	<body>
-		<div class="mdui-container">
-			<header class="mdui-container-fluid">
-				<div class="title-logo">Wabby Wabbo</div>
-				<!-- 搜索框 -->
-				<div class="serch mdui-row">
-					<input type="text" class="mdui-col-xs-10 serch-input" placeholder="搜索" />
-					<div class="iconfont mdui-col-xs-2">&#xe605;</div>
-				</div>
-			</header>
-			<div class="container">
-				<!-- 展示文本的区域 -->
-				<div id="message">
-					<div class="page-container mdui-card">
-						<p>{{tip.content}}</p>
-					</div>
-					<div class="mdui-row">
-						<div class="type-label">
-							<span>#{{tip.type}}</span>
-						</div>
-						<div class="page-action iconfont">
-							<span class="zan" v-on:click="starNumPlus(tips_id)">&#xe615;</span> 
-							<i>赞 {{tip.starNum}}</i>
-						</div>
-					</div>
-				</div>
-				<div id="compage">
-					<div class="mdui-textfield mdui-textfield-floating-label">
-					  <label class="mdui-textfield-label">发一条友善的评论</label>
-					  <textarea class="mdui-textfield-input" v-model="com_msg"></textarea>
-					</div>
-					<button type="button" v-on:click="post_com">发表评论</button>
-				</div>
-				<hr />
-				<div class="hot-comments" id="hot_comments">
-					<template v-for="hotcomment in hotcomments">
-						<div class="mdui-card">
-							<p>{{hotcomment.content}}</p>
-							<i class="time">{{hotcomment.date}}</i>
-						</div>
-					</template>
-				</div>
-				<hr />
-				<div class="comments" id="comments">
-					<ul>
-						<li id="com" v-for="comment in comments">
-							<div class="comment mdui-card">
-								<div class="comment-content">
-									<p>{{comment.content}}</p>
-								</div>
-								<div class="time">{{comment.date}}</div>
-								<div class="comment-action iconfont">
-									<span class="zan" v-on:click="starNumPlus(comment.id)">&#xe615;</span> 
-									<i>赞 {{comment.starNum}}</i>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</body>
-	<script type="text/javascript">
-		/*获取url参数*/
-		var url = window.location.search;
-		var str = url.split("=");
-		var tips_id = Number(str[1]);
-		/*根据id获取帖子详细内容*/
-		var message = new Vue({
-			el: "#message",
-			data: {
-				tip: {
-					id: 0,
-					content: "未获取到数据，请检查网络是否正常"
-				},
-				isActive: false
-			},
-			methods: {
-				getTipById: function() {
-					getTipsById(tips_id, function(data) {
-						let errorTips = {
-							id: 0,
-							content: ""
-						}
-						if (data.code != 200) {
-							/* 获取失败*/
-							// alert(data.msg);
-							errorTips.content = "获取失败，请检查网络设置";
-							message.tip = errorTips;
-							return;
-						} else if (data.data == null) {
-							/* 数据为空*/
-							errorTips.content = "未获取到数据";
-							message.tip = errorTips;
-							return;
-						}
+            #comments .time {
+                position: absolute;
+                left: 66%;
+                top: 60%;
+                font-size: 8px;
+            }
 
-						message.tip = data.data;
-					})
-				},
-				starNumPlus: function(tipID) {
-					
-				}
-			}
-		})
-		message.getTipById();
-		/*获取热评*/
-		var hot_comments = new Vue({
-			el: "#hot_comments",
-			data: {
-				hotcomments: [{
-					id: 0,
-					content: "未获取到数据，请检查网络是否正常"
-				}]
-			},
-			methods: {
-				getHotComments: function() {
-					getHotComments(tips_id, function(data) {
-						hot_comments.hotcomments.shift();
-						let errorTips = {
-							id: 0,
-							content: ""
-						}
-						if (data.code != 200) {
-							/* 获取失败*/
-							// alert(data.msg);
-							errorTips.content = "获取失败，请检查网络设置";
-							hot_comments.hotcomments.push(errorTips);
-							return;
-						} else if (data.data == null) {
-							/* 数据为空*/
-							errorTips.content = "未获取到数据";
-							hot_comments.hotcomments.push(errorTips);
-							return;
-						}
-						var hotComments = data.data;
-						for (var i=0; i < hotComments.length; i++) {
-							hot_comments.hotcomments.push(hotComments[i]);
-						}
-					})
-				}
-			}
-		})
-		hot_comments.getHotComments();
-		/*获取评论*/
-		var comments = new Vue({
-			el: "#comments",
-			data: {
-				comments: [{
-					id: 0,
-					content: "未获取到数据，请检查网络是否正常"
-				}],
-				isActive: true
-			},
-			methods: {
-				getComments: function() {
-					getComments(tips_id,1,function(data) {
-						comments.comments.shift();
-						let errorTips = {
-							id: 0,
-							content: ""
-						}
-						if (data.code != 200) {
-							/* 获取失败*/
-							// alert(data.msg);
-							errorTips.content = "获取失败，请检查网络设置";
-							comments.comments.push(errorTips);
-							return;
-						} else if (data.data == null) {
-							/* 数据为空*/
-							errorTips.content = "未获取到数据";
-							comments.comments.push(errorTips);
-							return;
-						}
-						
-						var coms = data.data;
-						for (var i=0; i < coms.length; i++) {
-							comments.comments.push(coms[i]);
-						}	
-					})
-				},
-				starNumPlus: function(comID) {
-					
-				}
-			},
-		})
-		comments.getComments();
-		/*评论功能区*/
-		let compage = new Vue({
-			el: "#compage",
-			data: {
-				com_msg: "", //表单信息
-			},
-			methods: {
-				post_com: function() {
+            /* 热门评论 */
+            .hot-comments div {
+                float: left;
+                border: 2px solid #616161;
+                border-radius: 12px;
+                width: 180px;
+                padding: 4px 4px 20px 4px;
+                position: relative;
+                margin-bottom: 18px;
+                /* margin-right: 0px; */
+                line-height: 20px;
+                margin-left: 30px;
+                background-color: #e6d2d5;
+            }
+
+            /* 普通评论 */
+            .comment {
+                clear: both;
+                border: 2px solid #616161;
+                border-radius: 12px;
+                padding: 4px 4px 10px 4px;
+                margin-bottom: 28px;
+                position: relative;
+            }
+
+            .comments .star {
+                border: 0px solid #000000;
+                border-radius: 12px;
+                background-color: #ede3e7;
+                padding: 5px;
+                font-size: 12px;
+            }
+
+            .comment-action {
+                position: relative;
+                left: 85%;
+                user-select: none;
+            }
+
+            #com {
+                list-style: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="mdui-container">
+            <header class="mdui-container-fluid">
+                <div class="title-logo">Wabby Wabbo</div>
+                <!-- 搜索框 -->
+                <div class="serch mdui-row">
+                    <input type="text" class="mdui-col-xs-10 serch-input" placeholder="搜索" />
+                    <div class="iconfont mdui-col-xs-2">&#xe605;</div>
+                </div>
+            </header>
+            <div class="container">
+                <!-- 展示文本的区域 -->
+                <div id="message">
+                    <div class="page-container mdui-card">
+                        <p>{{tip.content}}</p>
+                    </div>
+                    <div class="mdui-row">
+                        <div class="type-label">
+                            <span>#{{tip.type}}</span>
+                        </div>
+                        <div class="page-action iconfont">
+                            <span class="zan" v-on:click="starNumPlus">&#xe615;</span>
+                            <span class="star">赞 <i>{{tip.starNum}}</i></span>
+                        </div>
+                    </div>
+                </div>
+                <div id="compage">
+                    <div class="mdui-textfield mdui-textfield-floating-label">
+                        <label class="mdui-textfield-label">发一条友善的评论</label>
+                        <textarea class="mdui-textfield-input" v-model="com_msg"></textarea>
+                    </div>
+                    <button type="button" v-on:click="post_com">发表评论</button>
+                </div>
+                <hr />
+                <div class="hot-comments" id="hot_comments">
+                    <template v-for="hotcomment in hotcomments">
+                        <div class="mdui-card">
+                            <p>{{hotcomment.content}}</p>
+                            <i class="time">{{hotcomment.date}}</i>
+                        </div>
+                    </template>
+                </div>
+                <hr />
+                <div class="comments" id="comments">
+                    <ul id="com">
+                        <li v-for="(comment,index) in comments">
+                            <div class="comment mdui-card">
+                                <div class="comment-content">
+                                    <p>{{comment.content}}</p>
+                                </div>
+                                <div class="time">{{comment.date}}</div>
+                                <div class="comment-action iconfont">
+                                    <span class="zan" v-bind:com_id="comment.id"
+                                        v-on:click="starNumPlus">&#xe615;</span>
+                                    <span class="star">赞 <i>{{comment.starNum}}</i></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+    <!-- vue绑定 -->
+    <script type="text/javascript">
+        /*获取url参数*/
+        var url = window.location.search;
+        var str = url.split("=");
+        var tips_id = Number(str[1]);
+        /*根据id获取帖子详细内容*/
+        var message = new Vue({
+            el: "#message",
+            data: {
+                tip: {
+                    id: 0,
+                    content: "未获取到数据，请检查网络是否正常"
+                }
+            },
+            methods: {
+                getTipById: function() {
+                    getTipsById(tips_id, function(data) {
+                        let errorTips = {
+                            id: 0,
+                            content: ""
+                        }
+                        if (data.code != 200) {
+                            /* 获取失败*/
+                            // alert(data.msg);
+                            errorTips.content = "获取失败，请检查网络设置";
+                            message.tip = errorTips;
+                            return;
+                        } else if (data.data == null) {
+                            /* 数据为空*/
+                            errorTips.content = "未获取到数据";
+                            message.tip = errorTips;
+                            return;
+                        }
+
+                        message.tip = data.data;
+                    })
+                },
+                starNumPlus: function(event) {
+                    starPlusEffect(event.target);
+                    // console.log(event.target.nextElementSibling);
+                }
+            }
+        })
+        /*获取热评*/
+        var hot_comments = new Vue({
+            el: "#hot_comments",
+            data: {
+                hotcomments: [{
+                    id: 0,
+                    content: "未获取到数据，请检查网络是否正常"
+                }]
+            },
+            methods: {
+                getHotComments: function() {
+                    getHotComments(tips_id, function(data) {
+                        hot_comments.hotcomments.shift();
+                        let errorTips = {
+                            id: 0,
+                            content: ""
+                        }
+                        if (data.code != 200) {
+                            /* 获取失败*/
+                            // alert(data.msg);
+                            errorTips.content = "获取失败，请检查网络设置";
+                            hot_comments.hotcomments.push(errorTips);
+                            return;
+                        } else if (data.data == null) {
+                            /* 数据为空*/
+                            errorTips.content = "未获取到数据";
+                            hot_comments.hotcomments.push(errorTips);
+                            return;
+                        }
+                        var hotComments = data.data;
+                        for (var i = 0; i < hotComments.length; i++) {
+                            hot_comments.hotcomments.push(hotComments[i]);
+                        }
+                    })
+                }
+            }
+        })
+        /*获取评论*/
+        var comments = new Vue({
+            el: "#comments",
+            data: {
+                comments: [{
+                    id: 0,
+                    content: "未获取到数据，请检查网络是否正常"
+                }]
+            },
+            methods: {
+                getComments: function() {
+                    getComments(tips_id, 1, function(data) {
+                        comments.comments.shift();
+                        let errorTips = {
+                            id: 0,
+                            content: ""
+                        }
+                        if (data.code != 200) {
+                            /* 获取失败*/
+                            // alert(data.msg);
+                            errorTips.content = "获取失败，请检查网络设置";
+                            comments.comments.push(errorTips);
+                            return;
+                        } else if (data.data == null) {
+                            /* 数据为空*/
+                            errorTips.content = "未获取到数据";
+                            comments.comments.push(errorTips);
+                            return;
+                        }
+
+                        var coms = data.data;
+                        for (var i = 0; i < coms.length; i++) {
+                            comments.comments.push(coms[i]);
+                        }
+                    })
+                },
+                starNumPlus: function(event) {
+                    starPlusEffect(event.target);
+                }
+            },
+        })
+        /*评论功能区*/
+        let compage = new Vue({
+            el: "#compage",
+            data: {
+                com_msg: "", //表单信息
+            },
+            methods: {
+                post_com: function() {
                     var com = {
                         id: 0,
-                    	date: new Date().format("yy-MM-dd HH:mm:ss"),
-                    	tipsId: tips_id,
-                    	content: "",
-                    	starNum: 0
+                        date: new Date().format("yy-MM-dd HH:mm:ss"),
+                        tipsId: tips_id,
+                        content: "",
+                        starNum: 0
                     };
-					com.content = this.com_msg;
+                    com.content = this.com_msg;
                     console.log(com)
-					postComments(com, function(data) {
-						if (data.code != 200) {
-							alert("发送失败，请检查网络设置");
-						}
-					})
-					this.com_msg = "";
-				}
-			}
-		})
-	</script>
+                    postComments(com, function(data) {
+                        if (data.code != 200) {
+                            alert("发送失败，请检查网络设置");
+                        }
+                    })
+                    this.com_msg = "";
+                }
+            }
+        })
+    </script>
+    <!-- 函数定义-->
+    <script>
+        function starPlusEffect(obj) {
+            let hotObj = obj.nextElementSibling
+                .children[0];
+            let hotNum = Number(hotObj.innerText);
+            hotNum++;
+
+            let plusEffect = document.createElement('i');
+            plusEffect.innerText = '+1';
+            plusEffect.classList.add("plusEffect");
+
+            let objParent = obj.parentNode;
+            objParent.appendChild(plusEffect);
+            setTimeout(() => {
+                objParent.removeChild(plusEffect);
+            }, 500);
+            hotObj.innerText = hotNum;
+        }
+    </script>
+    <!-- 初始化-->
+    <script>
+        message.getTipById();
+        hot_comments.getHotComments();
+        comments.getComments();
+    </script>
 </html>

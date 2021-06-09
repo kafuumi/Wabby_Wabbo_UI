@@ -1,5 +1,6 @@
 /* 与后端通信 */
 let host = "http://39.107.39.204:8080/Wabby_Wabbo";
+// let host = "http://localhost:8080/Wabby_Wabbo";
 
 /* 发布帖子
 @param data: 发布的帖子数据
@@ -44,7 +45,7 @@ function getTipsById(id, callBack) {
 }
 /* 发布评论 */
 function postComments(comments, callBack) {
-    let url = host + "/postcomment";
+    let url = host + "/postcomments";
     axios.post(url, comments)
         .then(function(response) {
             callBack(response.data);
@@ -56,7 +57,7 @@ function postComments(comments, callBack) {
 }
 /* 获取评论 */
 function getComments(tipsId, page, callBack) {
-    let url = host + "/getcomment";
+    let url = host + "/getcomments";
     axios.get(url, {
             params: {
                 tid: tipsId,
@@ -77,7 +78,7 @@ function getHotTips(callBack) {
 }
 /* 获取热评 */
 function getHotComments(tipsId, callBack) {
-    let url = host + "/gethotcom";
+    let url = host + "/gethotcomments";
     axios.get(url, {
             params: {
                 tid: tipsId

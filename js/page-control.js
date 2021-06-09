@@ -20,7 +20,7 @@ let pageControl = new Vue({
     data: {
         maxPageNum: 1,
         pages: [1],
-        current: 0
+        current: 0,
     },
     computed: {
         /* 是否还有上一页*/
@@ -36,27 +36,19 @@ let pageControl = new Vue({
         /**
          * 初始化page
          */
-        initPage: function(type) {
-            if (type == undefined) {
-                type = "情感";
-            }
-            console.log(type);
+        initPage: function() {
             //获取到最大页数
             let max = 20;
             this.maxPageNum = max;
-
-            // 清空数组
-            this.pages.splice(0, this.pages.length);
-            this.current = 0;
-
             // 最多显示10个换页的格子
             let size = 10;
+
             //总页数比10还小
             if (max <= size) {
                 size = max;
             }
             //开始顺序赋值
-            for (let i = 0; i < size; i++) {
+            for (let i = 1; i < size; i++) {
                 this.pages.push(i + 1);
             }
         },
@@ -72,31 +64,36 @@ let pageControl = new Vue({
                 return;
             }
             // 将current置为当前点击的位置
-            // 对当前而言page[current]为当前选择的页数
+            // 如果没有发生移动，则page[current]为当前选择的页数
             this.current = index;
-            loadTips(getCurrentType(), this.pages[index]);
+			this.currentPage = this.pages[this.current];
+			loadTips(, this.currentPage);
+			// console.log(this.currentPage);
             //|---左1/3---|---不移动---|---右1/3---|
             //点击位置为右侧1/3时，发生移动
             if (index > pageSize / 3 * 2) {
                 //右侧最后一元素已达到最大值
-                if (this.pages[pageSize - 1] != this.maxPageNum) {
-                    //每个元素向右移动两个距离
-                    for (let i = 0; i < pageSize; i++) {
-                        this.pages[i] = this.pages[i] + 2;
-                    }
-                    //调整当前选择的页数的索引
-                    this.current = index - 2;
+                if (this.pages[pageSize - 1] == this.maxPageNum) {
+                    return;
                 }
+                //每个元素向右移动两个距离
+                for (let i = 0; i < pageSize; i++) {
+                    this.pages[i] = this.pages[i] + 2;
+                }
+                //调整当前选择的页数的索引
+                this.current = index - 2;
             } else if (index < pageSize / 3) {
-                if (this.pages[0] != 1) {
-                    for (let i = 0; i < pageSize; i++) {
-                        this.pages[i] = this.pages[i] - 2;
-                    }
-                    this.current = index + 2;
+                if (this.pages[0] == 1) {
+                    return;
                 }
+                for (let i = 0; i < pageSize; i++) {
+                    this.pages[i] = this.pages[i] - 2;
+                }
+                this.current = index + 2;
             }
             //page[current]即为当前选择的页数
             // console.log(this.pages[this.current]);
         }
     }
 });
+

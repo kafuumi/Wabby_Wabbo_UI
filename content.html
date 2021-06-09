@@ -218,7 +218,7 @@
 		/*获取url参数*/
 		var url = window.location.search;
 		var str = url.split("=");
-		var tips_id = str[1];
+		var tips_id = Number(str[1]);
 		/*根据id获取帖子详细内容*/
 		var message = new Vue({
 			el: "#message",
@@ -284,7 +284,6 @@
 							hot_comments.hotcomments.push(errorTips);
 							return;
 						}
-						
 						var hotComments = data.data;
 						for (var i=0; i < hotComments.length; i++) {
 							hot_comments.hotcomments.push(hotComments[i]);
@@ -334,12 +333,7 @@
 		})
 		comments.getComments();
 		/*评论功能区*/
-		var com = {
-			date: new Date().format("yy-MM-dd HH:mm:ss"),
-			tipsId: tips_id,
-			content: "",
-			starNum: 0
-		};
+		
 		let compage = new Vue({
 			el: "#compage",
 			data: {
@@ -347,7 +341,15 @@
 			},
 			methods: {
 				post_com: function() {
+                    var com = {
+                        id: 0,
+                    	date: new Date().format("yy-MM-dd HH:mm:ss"),
+                    	tipsId: tips_id,
+                    	content: "",
+                    	starNum: 0
+                    };
 					com.content = this.com_msg;
+                    console.log(com)
 					postComments(com, function(data) {
 						if (data.code != 200) {
 							alert("发送失败，请检查网络设置");

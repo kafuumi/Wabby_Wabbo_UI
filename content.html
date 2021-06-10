@@ -170,6 +170,12 @@
             #com {
                 list-style: none;
             }
+			/*加载条*/
+			.loading {
+				position: absolute;
+				left: 50%;
+				margin-left: -14px;
+			}
         </style>
     </head>
     <body>
@@ -217,7 +223,7 @@
                 <hr />
                 <div class="comments" id="comments">
                     <ul id="com">
-                        <li v-for="(comment,index) in comments">
+                        <li v-for="comment in comments">
                             <div class="comment mdui-card">
                                 <div class="comment-content">
                                     <p>{{comment.content}}</p>
@@ -230,6 +236,7 @@
                                 </div>
                             </div>
                         </li>
+						<div class="mdui-spinner loading" v-if="isActive"></div>
                     </ul>
                 </div>
             </div>
@@ -241,6 +248,7 @@
         var url = window.location.search;
         var str = url.split("=");
         var tips_id = Number(str[1]);
+		var page;
         /*根据id获取帖子详细内容*/
         var message = new Vue({
             el: "#message",
@@ -323,12 +331,18 @@
                 comments: [{
                     id: 0,
                     content: "未获取到数据，请检查网络是否正常"
-                }]
+                }],
+				isActive: false,
+				flag: 0
             },
-            methods: {
+            methods: {	
                 getComments: function() {
-                    getComments(tips_id, 1, function(data) {
-                        comments.comments.shift();
+					this.isActive = true;
+					if (page == undefined) {
+						page = 1;
+						this.comments.shift();
+					}
+                    getComments(tips_id, page, function(data) {
                         let errorTips = {
                             id: 0,
                             content: ""
@@ -339,10 +353,11 @@
                             errorTips.content = "获取失败，请检查网络设置";
                             comments.comments.push(errorTips);
                             return;
-                        } else if (data.data == null) {
+                        } else if (data.data.length == 0) {
                             /* 数据为空*/
                             errorTips.content = "未获取到数据";
                             comments.comments.push(errorTips);
+							comments.flag = 1;
                             return;
                         }
 
@@ -351,6 +366,8 @@
                             comments.comments.push(coms[i]);
                         }
                     })
+					page++; //下拉加载下一页
+					
                 },
                 starNumPlus: function(event) {
                     starPlusEffect(event.target);
@@ -403,6 +420,35 @@
             }, 500);
             hotObj.innerText = hotNum;
         }
+		//获取滚动条当前位置
+		function getScrollTop() {
+			let scrollTop = document.documentElement.scrollTop;
+			console.log(scrollTop);
+			return scrollTop;
+		}
+		//获取可视范围高度
+		function getClientHeight() {
+			let clienHeight = document.documentElement.clientHeight;
+			console.log(clienHeight);
+			return clienHeight;
+		}
+		//获取文档完整高度
+		function getScrollHeight() {
+			let scrollHeight = document.documentElement.scrollHeight;
+			console.log(scrollHeight);
+			return scrollHeight; 
+		}
+		//下拉加载
+		window.onscroll = function() {
+			if (getScrollTop() + getClientHeight() >= getScrollHeight() - 1) {
+				if (comments.flag == 0) {
+					comments.getComments();
+				} else {
+					comments.isActive = false;
+				}
+				// console.log(page);
+			}
+		}
     </script>
     <!-- 初始化-->
     <script>

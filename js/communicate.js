@@ -88,3 +88,28 @@ function getHotComments(tipsId, callBack) {
             callBack(response.data);
         });
 }
+
+function addTipsStarNum(id, addNum) {
+    let url = host + "/addtipsstarnum";
+    addStarNum(url, id, addNum)
+}
+
+function addCommentsStarNum(id, addNum) {
+    let url = host + "/addcommentsstarnum";
+    addStarNum(url, id, addNum);
+}
+
+function addStarNum(url, id, addNum) {
+    if (addNum == undefined) {
+        addNum = 1;
+    }
+    axios.get(url, {
+            params: {
+                id: id,
+                addNum: addNum
+            }
+        })
+        .then(function(response) {
+            console.log(response.data)
+        });
+}

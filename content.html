@@ -274,6 +274,8 @@
                     })
                 },
                 starNumPlus: function(event) {
+                    addTipsStarNum(this.tip.id)
+                   
                     starPlusEffect(event.target);
                     // console.log(event.target.nextElementSibling);
                 }
@@ -353,6 +355,7 @@
                     })
                 },
                 starNumPlus: function(event) {
+                    
                     starPlusEffect(event.target);
                 }
             },
@@ -391,6 +394,7 @@
                 .children[0];
             let hotNum = Number(hotObj.innerText);
             hotNum++;
+            hotObj.innerText = hotNum;
 
             let plusEffect = document.createElement('i');
             plusEffect.innerText = '+1';
@@ -401,7 +405,6 @@
             setTimeout(() => {
                 objParent.removeChild(plusEffect);
             }, 500);
-            hotObj.innerText = hotNum;
         }
     </script>
     <!-- 初始化-->

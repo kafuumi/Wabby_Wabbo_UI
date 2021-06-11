@@ -6,6 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link href="css/mdui.min.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="css/navigation.css" />
+        <link rel="icon" href="./images/icon.png" />
         <script src="js/mdui.min.js"></script>
         <script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
@@ -182,7 +183,7 @@
                 <!-- 搜索框 -->
                 <div class="search mdui-row" id="search">
                     <input type="text" class="mdui-col-xs-10 search-input" v-model="s_msg" placeholder="搜索" />
-                    <div class="iconfont mdui-col-xs-2">&#xe605;</div>
+                    <div class="iconfont mdui-col-xs-2" v-on:click="getSearchTips">&#xe605;</div>
                 </div>
             </header>
             <div class="container">
@@ -244,6 +245,7 @@
             </div>
         </div>
     </body>
+    <script src="./js/search.js"></script>
     <!-- vue绑定 -->
     <script type="text/javascript">
         /* 记录页数*/

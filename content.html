@@ -170,12 +170,13 @@
             #com {
                 list-style: none;
             }
-			/*加载条*/
-			.loading {
-				position: absolute;
-				left: 50%;
-				margin-left: -14px;
-			}
+
+            /*加载条*/
+            .loading {
+                position: absolute;
+                left: 50%;
+                margin-left: -14px;
+            }
         </style>
     </head>
     <body>
@@ -236,19 +237,23 @@
                                 </div>
                             </div>
                         </li>
-						<div class="mdui-spinner loading" v-if="isActive"></div>
                     </ul>
+                </div>
+                <!-- 加载的动画条 -->
+                <div id="loading">
+                    <div class="mdui-spinner loading" v-bind:style="{visibility: visible}"></div>
                 </div>
             </div>
         </div>
     </body>
     <!-- vue绑定 -->
     <script type="text/javascript">
+        /* 记录页数*/
+        let currentPage = 1;
         /*获取url参数*/
         var url = window.location.search;
         var str = url.split("=");
         var tips_id = Number(str[1]);
-		var page;
         /*根据id获取帖子详细内容*/
         var message = new Vue({
             el: "#message",
@@ -259,7 +264,7 @@
                 }
             },
             methods: {
-                getTipById: function() {
+                loadTips: function() {
                     getTipsById(tips_id, function(data) {
                         let errorTips = {
                             id: 0,
@@ -283,7 +288,7 @@
                 },
                 starNumPlus: function(event) {
                     addTipsStarNum(this.tip.id)
-                   
+
                     starPlusEffect(event.target);
                     // console.log(event.target.nextElementSibling);
                 }
@@ -299,7 +304,7 @@
                 }]
             },
             methods: {
-                getHotComments: function() {
+                loadHotComments: function() {
                     getHotComments(tips_id, function(data) {
                         hot_comments.hotcomments.shift();
                         let errorTips = {
@@ -326,6 +331,13 @@
                 }
             }
         })
+        /* 加载的动画条*/
+        let loading = new Vue({
+            el: "#loading",
+            data: {
+                visible: "hidden"
+            }
+        });
         /*获取评论*/
         var comments = new Vue({
             el: "#comments",
@@ -333,18 +345,15 @@
                 comments: [{
                     id: 0,
                     content: "未获取到数据，请检查网络是否正常"
-                }],
-				isActive: false,
-				flag: 0
+                }]
             },
-            methods: {	
-                getComments: function() {
-					this.isActive = true;
-					if (page == undefined) {
-						page = 1;
-						this.comments.shift();
-					}
-                    getComments(tips_id, page, function(data) {
+            methods: {
+                loadComments: function() {
+                    /* 删除默认的数据*/
+                    this.comments.shift();
+                    /* 加载第一页的评论数据*/
+                    getComments(tips_id, 1, function(data) {
+
                         let errorTips = {
                             id: 0,
                             content: ""
@@ -359,7 +368,6 @@
                             /* 数据为空*/
                             errorTips.content = "未获取到数据";
                             comments.comments.push(errorTips);
-							comments.flag = 1;
                             return;
                         }
 
@@ -368,14 +376,43 @@
                             comments.comments.push(coms[i]);
                         }
                     })
-					page++; //下拉加载下一页
-					
                 },
                 starNumPlus: function(event) {
-                    
                     starPlusEffect(event.target);
+                },
+                loadMoreComments: function() {
+                    /* currentPage为0时表示没有更多评论，不再继续加载*/
+                    if (currentPage <= 0) {
+                        return;
+                    }
+                    currentPage++;
+                    // 显示加载条
+                    loading.visible = "visible";
+                    // mdui.updateSpinners(".mdui-spinner");
+
+                    getComments(tips_id, currentPage, function(data) {
+
+                        if (data.code != 200) {
+                            console.log("获取失败 tips_id:" + tips_id + " page:" + currentPage);
+                        } else if (data.data.length == 0) {
+                            currentPage = 0;
+                            console.log("无更多");
+                        } else {
+                            let dataLength = data.data.length;
+                            for (let i = 0; i < dataLength; i++) {
+                                comments.comments.push(data.data[i]);
+                            }
+                            if (dataLength < 10) {
+                                currentPage == 0;
+                            }
+                        }
+                        // loading.visible = "hidden";
+                        setTimeout(() => {
+                            loading.visible = "hidden";
+                        }, 1000);
+                    });
                 }
-            },
+            }
         })
         /*评论功能区*/
         let compage = new Vue({
@@ -423,40 +460,33 @@
                 objParent.removeChild(plusEffect);
             }, 500);
         }
-		//获取滚动条当前位置
-		function getScrollTop() {
-			let scrollTop = document.documentElement.scrollTop;
-			console.log(scrollTop);
-			return scrollTop;
-		}
-		//获取可视范围高度
-		function getClientHeight() {
-			let clienHeight = document.documentElement.clientHeight;
-			console.log(clienHeight);
-			return clienHeight;
-		}
-		//获取文档完整高度
-		function getScrollHeight() {
-			let scrollHeight = document.documentElement.scrollHeight;
-			console.log(scrollHeight);
-			return scrollHeight; 
-		}
-		//下拉加载
-		window.onscroll = function() {
-			if (getScrollTop() + getClientHeight() >= getScrollHeight() - 1) {
-				if (comments.flag == 0) {
-					comments.getComments();
-				} else {
-					comments.isActive = false;
-				}
-				// console.log(page);
-			}
-		}
+        //获取滚动条当前位置
+        function getScrollTop() {
+            let scrollTop = document.documentElement.scrollTop;
+            return scrollTop;
+        }
+        //获取可视范围高度
+        function getClientHeight() {
+            let clienHeight = document.documentElement.clientHeight;
+            return clienHeight;
+        }
+        //获取文档完整高度
+        function getScrollHeight() {
+            let scrollHeight = document.documentElement.scrollHeight;
+            return scrollHeight;
+        }
+        //下拉加载
+        window.onscroll = function() {
+            let offset = 10;
+            if (getScrollTop() + getClientHeight() + offset >= getScrollHeight()) {
+                comments.loadMoreComments();
+            }
+        }
     </script>
     <!-- 初始化-->
     <script>
-        message.getTipById();
-        hot_comments.getHotComments();
-        comments.getComments();
+        message.loadTips();
+        hot_comments.loadHotComments();
+        comments.loadComments();
     </script>
 </html>

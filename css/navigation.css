@@ -1,17 +1,17 @@
 /* 导航栏 */
-/* @font-face {
+@font-face {
 	font-family: 'iconfont';
 	src: url('../iconfont/iconfont.woff2?t=1622784814432') format('woff2'),
 		url('../iconfont/iconfont.woff?t=1622784814432') format('woff'),
 		url('../iconfont/iconfont.ttf?t=1622784814432') format('truetype');
-} */
-@font-face {
+}
+/* @font-face {
     font-family: 'iconfont';
     /* Project id 2587192 */
     src: url('//at.alicdn.com/t/font_2587192_kjbv9t34sfk.woff2?t=1623228620098') format('woff2'),
         url('//at.alicdn.com/t/font_2587192_kjbv9t34sfk.woff?t=1623228620098') format('woff'),
         url('//at.alicdn.com/t/font_2587192_kjbv9t34sfk.ttf?t=1623228620098') format('truetype');
-}
+} */
 
 @font-face {
     font-family: BROADW;

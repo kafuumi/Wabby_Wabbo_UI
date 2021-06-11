@@ -4,19 +4,23 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link href="css/mdui.min.css" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css" href="css/swiper-bundle.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/navigation.css" />
-        <link rel="stylesheet" type="text/css" href="css/page-control.css">
-        </link>
+        <link rel="stylesheet" href="css/mdui.min.css" />
+        <link rel="stylesheet" href="css/swiper-bundle.min.css" />
+        <link rel="stylesheet" href="css/navigation.css" />
+        <link rel="stylesheet" href="css/page-control.css" />
+        <link rel="icon" href="./images/icon.png" />
+        <link rel="stylesheet"
+            href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" />
         <script src="js/mdui.min.js"></script>
-        <!-- <script src="//at.alicdn.com/t/font_2587192_2chnea6m04h.js"></script> -->
-        <script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/swiper-bundle.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js">
+        </script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="js/communicate.js" type="text/javascript" charset="utf-8"></script>
-        <script src="js/util.js" type="text/javascript" charset="utf-8"></script>
+        <!-- <script src="//at.alicdn.com/t/font_2587192_2chnea6m04h.js"></script> -->
+        <script src="js/iconfont.js"></script>
+        <script src="js/swiper-bundle.min.js"></script>
+        <script src="js/vue.min.js"></script>
+        <script src="js/communicate.js"></script>
+        <script src="js/util.js"></script>
         <title>歪比巴卜论坛</title>
         <style>
             * {
@@ -162,11 +166,6 @@
             }
 
             /* 友情链接区域 */
-            .link {
-                width: 730px;
-                margin: 0 auto;
-            }
-
             hr {
                 clear: both;
                 margin: 30px 0;
@@ -178,39 +177,57 @@
                 user-select: none;
             }
 
-            .swiper-slide:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 0 8px #999;
-                transition: all .5s ease-out;
+            .link {
+                position: relative;
+                width: 700px;
+                margin: 100px auto;
             }
 
             .swiper-container {
+                align-content: center;
                 width: 700px;
-                height: auto;
-            }
-
-            .swiper-slide svg {
-                width: 100px;
-                height: 200px;
-            }
-
-            .swiper-button-next {
-                right: 10%;
-            }
-
-            .swiper-button-prev {
-                left: 10%;
             }
 
             .swiper-slide {
+                display: inline-block;
+                height: 200px;
+                width: 200px;
+            }
+
+            .swiper-slide:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 4px 4px #999;
+                transition: all .3s ease-out;
+            }
+
+            .mdc-card {
+                padding: 12px;
+            }
+
+            .mdc-card__media {
                 text-align: center;
             }
 
-            .swiper-button-next,
+            .mdc-card__media .icon {
+                width: 100px;
+                height: 176px;
+            }
+
+            .mdc-card__content {
+                margin-top: .5em;
+                color: grey;
+                font-size: 14px;
+                text-align: center;
+            }
+
             .swiper-button-prev {
-                top: unset;
-                margin: 0;
-                height: 200px;
+                margin-top: -22px;
+                left: -80px;
+            }
+
+            .swiper-button-next {
+                margin-top: -22px;
+                right: -130px;
             }
 
             /* 发布遮罩 */
@@ -247,8 +264,13 @@
                 padding-left: 24px;
                 margin-left: 20px;
             }
-
-
+            .mdui-dialog{
+                border-radius: 12px;
+            }
+            .mdui-dialog .mdc-card__content{
+                font-size: 18px;
+                padding: 24px 0;
+            }
             header {
                 user-select: none;
             }
@@ -265,8 +287,8 @@
                 <div class="title-logo">Wabby Wabbo</div>
                 <!-- 搜索框 -->
                 <div class="search mdui-row" id="search">
-                    <input type="text" class="mdui-col-xs-10 search-input" placeholder="搜索" />
-                    <div class="iconfont mdui-col-xs-2">&#xe605;</div>
+                    <input type="text" class="mdui-col-xs-10 search-input" v-model="s_msg" placeholder="搜索" />
+                    <div class="iconfont mdui-col-xs-2" v-on:click="search">&#xe605;</div>
                 </div>
             </header>
             <div class="logo"></div>
@@ -285,7 +307,7 @@
                     <div class="tips" id="tips_content">
                         <template v-for="tip in tips_data">
                             <div class="tips-content mdui-card" v-bind:tips_id="tip.id" v-on:click="toTipContent">
-                                <div>{{tip.content}}</div>
+                                <div v-bind:tips_id="tip.id">{{tip.content}}</div>
                             </div>
                         </template>
                     </div>
@@ -338,46 +360,48 @@
             <!-- 友情链接 -->
             <hr>
             <h2>友情链接</h2>
-            <div class="link mdui-row">
-                <div class="swiper-container mdui-col-xs-8">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide mdui-card">
-                            <div class="mdui-card-media">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#icon-git"></use>
-                                </svg>
+
+            <div class="link mdc-layout-grid">
+                <div class="mdc-layout-grid__inner">
+                    <div class="mdc-layout-grid__cell swiper-button-prev"></div>
+                    <div class="swiper-container mdc-layout-grid__cell" style="padding: 1px;">
+                        <div class="swiper-wrapper">
+                            <div class="mdc-card swiper-slide" id="link-github">
+                                <div class="mdc-card__media">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-git"></use>
+                                    </svg>
+                                </div>
+
                             </div>
-                            <!-- <div class="mdui-card-content">和我们一起完善这个页面</div> -->
-                        </div>
-                        <div class="swiper-slide mdui-card">
-                            <div class="mdui-card-media">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#icon-weixin"></use>
-                                </svg>
+                            <div class="mdc-card swiper-slide" mdui-dialog="{target: '.dialog-wechat'}">
+                                <div class="mdc-card__media">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-weixin"></use>
+                                    </svg>
+                                </div>
                             </div>
-                            <!-- <div class="mdui-card-content">关注我们的公众号获取更多信息</div> -->
-                        </div>
-                        <div class="swiper-slide mdui-card">
-                            <div class="mdui-car-media">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#icon-dashang-copy"></use>
-                                </svg>
+                            <div class="mdc-card swiper-slide" mdui-dialog="{target: '.dialog-donate'}">
+                                <div class="mdc-card__media">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-dashang-copy"></use>
+                                    </svg>
+                                </div>
+
                             </div>
-                            <!-- <div class="mdui-card-content">你的捐赠将是对我们的最大激励</div> -->
-                        </div>
-                        <div class="swiper-slide mdui-card">
-                            <div class="mdui-card-media">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#icon-lujingbeifen13"></use>
-                                </svg>
+                            <div class="mdc-card swiper-slide" mdui-dialog="{target: '.dialog-more'}">
+                                <div class="mdc-card__media">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-lujingbeifen13"></use>
+                                    </svg>
+                                </div>
+
                             </div>
                         </div>
                     </div>
+                    <div class="swiper-button-next mdc-layout-grid__cell"></div>
                 </div>
-                <div class="swiper-button-prev mdui-col-xs-2"></div>
-                <div class="swiper-button-next mdui-col-xs-2"></div>
             </div>
-
             <!-- 预留的底部区域 -->
             <footer></footer>
         </div>
@@ -435,10 +459,56 @@
                 </div>
             </div>
         </div>
+        <!-- dialog-wechat -->
+        <div class="mdui-dialog dialog-wechat">
+            <div class="mdc-card">
+                <div class="mdc-card__media">
+                    <img src="images/background02.png" height="360px">
+                </div>
+                <div class="mdc-card__content">
+                    关注我们的公众号，获取更多有趣内容
+                </div>
+            </div>
+        </div>
+        <!-- dialog-donate-->
+        <div class="mdui-dialog dialog-donate">
+            <div class="mdc-card">
+                <div class="mdc-card__media">
+                    <img src="images/donate.png" height="360px" style="margin-top: 30px;">
+                </div>
+                <div class="mdc-card__content">
+                    我们将开发更多优质内容
+                </div>
+            </div>
+        </div>
+        <!-- dialog-more-->
+        <div class="mdui-dialog dialog-more">
+            <div class="mdc-card">
+                <div class="mdc-card__media">
+                    <img src="images/more.png" height="300px">
+                </div>
+                <div class="mdc-card__content">
+                    更多内容正在开发中，敬请期待
+                </div>
+            </div>
+        </div>
+
         <!-- 换页栏-->
         <script src="js/page-control.js"></script>
         <!-- vue 绑定 -->
         <script type="text/javascript">
+            /* 搜索栏*/
+            let search = new Vue({
+                el: "#search",
+                data: {
+                    s_msg: ''
+                },
+                methods: {
+                    search: function() {
+                        // location.href = 
+                    }
+                }
+            })
             /* 分类栏 */
             var category_label = new Vue({
                 el: "#category_label",
@@ -464,7 +534,7 @@
                 methods: {
                     // 跳转到该帖子对应的content页面
                     toTipContent: function(event) {
-                        var id = event.target.parentNode.getAttribute("tips_id");
+                        var id = event.target.getAttribute("tips_id");
                         toTipContent(id);
                     }
                 }
@@ -476,7 +546,7 @@
                 data: {
                     isVisible: false, //遮罩不可见
                     post_msg: "", //表单信息
-                    picked: "",
+                    picked: "情感",
                 },
                 methods: {
                     cancel: function() {
@@ -496,11 +566,14 @@
                             if (data.code != 200) {
                                 alert(data.msg);
                                 return;
+                            } else {
+                                refresh()
+                                postpage.isVisible = false;
+                                postpage.post_msg = "";
+                                postpage.picked = "情感";
                             }
                         })
-                        this.isVisible = false;
-                        this.post_msg = "";
-                        this.picked = "";
+
                     },
                 }
             })
@@ -604,7 +677,9 @@
 
             /* 根据tipsId跳转到content.html页面*/
             function toTipContent(tipsId) {
-                window.location.href = "./content.html?tips_id=" + tipsId;
+                let url = "./content.html?tips_id=" + tipsId;
+                // window.location.href = "./content.html?tips_id=" + tipsId;
+                open(url);
             }
         </script>
         <!-- 内容初始化 -->
@@ -617,15 +692,15 @@
                 "       \\/        \\/    \\/    \\/\\/             \\/        \\/    \\/    \\/        \n\n" +
                 "                                                     Powered by awsl-core 5.2.0\n";
             console.log('%c' + console_pic, 'color:#2376b7');
-            //底部友情链接滑动框
+            /* 友情链接*/
             var mySwiper = new Swiper('.swiper-container', {
                 slidesPerView: 3, //默认页面显示个数
-                autoHeight: true, //页面高度自适应
+                autoHeight: false, //页面高度自适应
                 spaceBetween: 50, //slide间距离
                 // 前进后退按钮
                 navigation: {
-                    nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev',
+                    nextEl: '.swiper-button-next'
                 }
             })
             //初始化帖子内容
@@ -634,6 +709,12 @@
             pageControl.initPage();
             // 初始化热贴内容
             loadHotTips();
+
+            let linkGithub = document.querySelector("#link-github")
+            linkGithub.addEventListener("click", () => {
+                open("https://github.com/")
+            })
         </script>
+
     </body>
 </html>

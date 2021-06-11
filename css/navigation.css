@@ -1,68 +1,77 @@
 /* 导航栏 */
-@font-face {
+/* @font-face {
 	font-family: 'iconfont';
 	src: url('../iconfont/iconfont.woff2?t=1622784814432') format('woff2'),
 		url('../iconfont/iconfont.woff?t=1622784814432') format('woff'),
 		url('../iconfont/iconfont.ttf?t=1622784814432') format('truetype');
-}
+} */
 @font-face {
-	font-family: BROADW;
-	src: url(../fonts/BROADW.TTF);
+    font-family: 'iconfont';
+    /* Project id 2587192 */
+    src: url('//at.alicdn.com/t/font_2587192_kjbv9t34sfk.woff2?t=1623228620098') format('woff2'),
+        url('//at.alicdn.com/t/font_2587192_kjbv9t34sfk.woff?t=1623228620098') format('woff'),
+        url('//at.alicdn.com/t/font_2587192_kjbv9t34sfk.ttf?t=1623228620098') format('truetype');
 }
+
+@font-face {
+    font-family: BROADW;
+    src: url(../fonts/BROADW.TTF);
+}
+
 header {
-	background-color: #c3d7df;
-	height: 56px;
-	border-bottom-left-radius: 16px;
-	border-bottom-right-radius: 16px;
-	box-shadow: 0 0 8px #bbb;
+    background-color: #c3d7df;
+    height: 56px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    box-shadow: 0 0 8px #bbb;
 }
 
 .title-logo {
-	width: 310px;
-	line-height: 56px;
-	cursor: pointer;
-	display: inline-block;
-	padding-left: 35px;
-	font-family: BROADW;
-	font-size: 26px;
+    width: 310px;
+    line-height: 56px;
+    cursor: pointer;
+    display: inline-block;
+    padding-left: 35px;
+    font-family: BROADW;
+    font-size: 26px;
 }
 
-header .serch {
-	float: right;
-	height: 36px;
-	font-size: 18px;
-	margin: 10px 35px;
+header .search {
+    float: right;
+    height: 36px;
+    font-size: 18px;
+    margin: 10px 35px;
 }
 
-.serch input {
-	font-size: 16px;
-	outline: none;
-	border: none;
-	height: 100%;
-	width: 280px;
-	border-radius: 4px 0 0 4px;
+.search input {
+    font-size: 16px;
+    outline: none;
+    border: none;
+    height: 100%;
+    width: 280px;
+    border-radius: 4px 0 0 4px;
 }
 
-.serch div {
-	line-height: 36px;
-	width: 36px;
-	text-indent: 0;
-	text-align: center;
-	background-color: #eee;
-	border-radius: 0 4px 4px 0;
-	font-size: 18px;
-	font-weight: bold;
-	cursor: pointer;
+.search div {
+    line-height: 36px;
+    width: 36px;
+    text-indent: 0;
+    text-align: center;
+    background-color: #eee;
+    border-radius: 0 4px 4px 0;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.serch div:hover {
-	color: #007AFF
+.search div:hover {
+    color: #007AFF
 }
 
 .iconfont {
-	font-family: "iconfont" !important;
-	font-size: 16px;
-	font-style: normal;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }

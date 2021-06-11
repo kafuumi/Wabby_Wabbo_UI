@@ -88,12 +88,13 @@ function getHotComments(tipsId, callBack) {
             callBack(response.data);
         });
 }
-
+/* 加热帖子 */
 function addTipsStarNum(id, addNum) {
     let url = host + "/addtipsstarnum";
     addStarNum(url, id, addNum)
 }
 
+/* 加热评论 */
 function addCommentsStarNum(id, addNum) {
     let url = host + "/addcommentsstarnum";
     addStarNum(url, id, addNum);
@@ -113,16 +114,16 @@ function addStarNum(url, id, addNum) {
             console.log(response.data)
         });
 }
-/*网页内搜索*/
-function keyWordSearch(page, strMsg, callBack) {
-	let url = host + "/searchtips";
-	axios.get(url, {
-		params: {
-			page: page,
-			content: strMsg
-		}
-	})
-	.then(function(response)) {
-		callBack(response.data);
-	}
+/*搜索帖子*/
+function keyWordSearch(strMsg, page, callBack) {
+    let url = host + "/searchtips";
+    axios.get(url, {
+            params: {
+                content: strMsg,
+                page: page
+            }
+        })
+        .then(function(response) {
+            callBack(response.data);
+        })
 }

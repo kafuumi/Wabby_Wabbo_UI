@@ -23,14 +23,6 @@
                 background-color: #fffef9;
             }
 
-            @font-face {
-                font-family: 'iconfont';
-                /* Project id 2587192 */
-                src: url('//at.alicdn.com/t/font_2587192_kjbv9t34sfk.woff2?t=1623228620098') format('woff2'),
-                    url('//at.alicdn.com/t/font_2587192_kjbv9t34sfk.woff?t=1623228620098') format('woff'),
-                    url('//at.alicdn.com/t/font_2587192_kjbv9t34sfk.ttf?t=1623228620098') format('truetype');
-            }
-
             /* 点赞图标（svg格式） */
             .zan {
                 cursor: pointer;
@@ -177,6 +169,10 @@
                 left: 50%;
                 margin-left: -14px;
             }
+
+            footer {
+                height: 100px;
+            }
         </style>
     </head>
     <body>
@@ -243,6 +239,8 @@
                 <div id="loading">
                     <div class="mdui-spinner loading" v-bind:style="{visibility: visible}"></div>
                 </div>
+                <!-- 占位的footer-->
+                <footer></footer>
             </div>
         </div>
     </body>
@@ -335,7 +333,8 @@
         let loading = new Vue({
             el: "#loading",
             data: {
-                visible: "hidden"
+                visible: "hidden",
+                load: false
             }
         });
         /*获取评论*/
@@ -378,20 +377,29 @@
                     })
                 },
                 starNumPlus: function(event) {
-                    starPlusEffect(event.target);
+                    let obj = event.target;
+                    let comId = Number(obj.getAttribute("com_id"));
+                    addCommentsStarNum(comId);
+                    starPlusEffect(obj);
                 },
+                /* 加载更多评论*/
                 loadMoreComments: function() {
+                    /* 正在加载中*/
+                    if (loading.load) {
+                        return;
+                    }
                     /* currentPage为0时表示没有更多评论，不再继续加载*/
                     if (currentPage <= 0) {
                         return;
                     }
+
+                    loading.load = true;
                     currentPage++;
                     // 显示加载条
                     loading.visible = "visible";
                     // mdui.updateSpinners(".mdui-spinner");
 
                     getComments(tips_id, currentPage, function(data) {
-
                         if (data.code != 200) {
                             console.log("获取失败 tips_id:" + tips_id + " page:" + currentPage);
                         } else if (data.data.length == 0) {
@@ -399,14 +407,18 @@
                             console.log("无更多");
                         } else {
                             let dataLength = data.data.length;
+                            if (dataLength < 10) {
+                                currentPage = 0;
+                            }
                             for (let i = 0; i < dataLength; i++) {
                                 comments.comments.push(data.data[i]);
                             }
-                            if (dataLength < 10) {
-                                currentPage == 0;
-                            }
+
                         }
+                        /* 加载完成*/
+                        loading.load = false;
                         // loading.visible = "hidden";
+                        /* 一秒后再清除，显得有加载的效果*/
                         setTimeout(() => {
                             loading.visible = "hidden";
                         }, 1000);

@@ -113,3 +113,16 @@ function addStarNum(url, id, addNum) {
             console.log(response.data)
         });
 }
+/*网页内搜索*/
+function keyWordSearch(page, strMsg, callBack) {
+	let url = host + "/searchtips";
+	axios.get(url, {
+		params: {
+			page: page,
+			content: strMsg
+		}
+	})
+	.then(function(response)) {
+		callBack(response.data);
+	}
+}

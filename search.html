@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="css/mdui.min.css" />
+        <link rel="stylesheet" href="css/navigation.css" />
+        <link rel="icon" href="./images/icon.png" />
+        <link rel="stylesheet"
+            href="https://unpkg.zhimg.com/material-components-web@latest/dist/material-components-web.min.css" />
+        <script src="js/mdui.min.js"></script>
+        <script src="https://unpkg.zhimg.com/material-components-web@latest/dist/material-components-web.min.js">
+        </script>
+        <script src="https://unpkg.zhimg.com/axios/dist/axios.min.js"></script>
+        <!-- <script src="//at.alicdn.com/t/font_2587192_2chnea6m04h.js"></script> -->
+        <script src="js/iconfont.js"></script>
+        <script src="js/vue.min.js"></script>
+        <script src="js/communicate.js"></script>
+        <script src="js/util.js"></script>
+        <title>搜索</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                background-color: #fffef9;
+            }
+
+            .icon {
+                width: 2.5em;
+                height: 2em;
+                vertical-align: -0.15em;
+                fill: currentColor;
+                overflow: hidden;
+            }
+
+            @font-face {
+                font-family: SONG;
+                src: url(./fonts/STZHONGS.TTF);
+            }
+
+            /* logo */
+            .logo {
+                height: 180px;
+                width: 580px;
+                background-image: url(images/background01.png);
+                background-repeat: no-repeat;
+                margin: 30px auto;
+            }
+
+            /* 帖子区域 */
+            #tips-content {
+                margin-left: 38px;
+            }
+
+            .tips-content {
+                cursor: pointer;
+                border-radius: 1rem;
+                height: 130px;
+                margin-bottom: 8px;
+                padding: 16px 20px;
+            }
+
+            .tips-content div {
+                text-indent: 2em;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                font-size: 16px;
+                -webkit-line-clamp: 5;
+                -webkit-box-orient: vertical;
+            }
+
+            /* 帖子的右侧区域 */
+            .right-label {
+                float: right;
+                margin-right: 38px;
+            }
+
+            /* 热贴 */
+            .hot-tips {
+                border-radius: 8px;
+                user-select: none;
+            }
+
+            .hot-tips li {
+                cursor: default;
+                font-size: 16px;
+                height: 36px;
+                line-height: 36px;
+                text-indent: 1em;
+                border-bottom: 1px solid #eee;
+                padding-top: 6px;
+                list-style-type: none;
+            }
+
+            .hot-tips li div {
+                cursor: pointer;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .hot-tips i {
+                color: #f00;
+                font-size: 18px;
+            }
+
+            .hot-tips li:nth-child(1),
+            .hot-tips li:nth-child(2),
+            .hot-tips li:nth-child(3) {
+                color: #ef3473;
+            }
+
+            .hot-tips li:last-of-type {
+                border: none;
+            }
+
+            .hot-tips li div:hover {
+                text-decoration: underline;
+            }
+
+            /*加载条*/
+            .loading {
+                position: absolute;
+                left: 40%;
+            }
+
+            footer {
+                height: 120px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 加载的进度条-->
+        <div role="progressbar"
+            class="mdc-linear-progress mdc-linear-progress--indeterminate mdc-linear-progress--closed"
+            style="height: 2px;">
+            <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+                <span class="mdc-linear-progress__bar-inner"></span>
+            </div>
+            <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+                <span class="mdc-linear-progress__bar-inner"></span>
+            </div>
+        </div>
+        <div class="mdui-container">
+            <!-- 顶部导航条 -->
+            <header class="mdui-container-fluid">
+                <div class="title-logo">Wabby Wabbo</div>
+                <!-- 搜索框 -->
+                <div class="search mdui-row" id="search">
+                    <input type="text" class="mdui-col-xs-10 search-input" v-model="s_msg" placeholder="搜索" />
+                    <div class="iconfont mdui-col-xs-2" v-on:click="search">&#xe605;</div>
+                </div>
+            </header>
+            <div class="logo"></div>
+            <div class="mdui-row" id="tips-content">
+                <div class="content mdui-col-xs-9">
+                    <!-- 帖子 -->
+                    <div class="tips" id="tips_content">
+                        <template v-for="tip in tips_data">
+                            <div class="tips-content mdui-card" v-bind:tips_id="tip.id" v-on:click="toTipContent">
+                                <div v-bind:tips_id="tip.id">{{tip.content}}</div>
+                            </div>
+                        </template>
+
+                    </div>
+                </div>
+                <div class="right-label mdui-col-xs-2">
+                    <!-- 热贴区 -->
+                    <ul class="hot-tips mdui-card" id="hot_tips">
+                        <template v-for="item in tip_object">
+                            <li class="mdui-row" v-bind:tips_id="item.id">
+                                <i class="iconfont mdui-col-xs-2">&#xe61a;</i>
+                                <div class="mdui-col-xs-10" v-on:click="toContent">
+                                    {{item.content}}
+                                </div>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+            <!-- 加载的动画条 -->
+            <div id="loading">
+                <div class="mdui-spinner loading" v-bind:style="{visibility: visible}"></div>
+            </div>
+            <!-- 预留的底部区域 -->
+            <footer></footer>
+        </div>
+
+        <!-- vue 绑定 -->
+        <script type="text/javascript">
+            /* 加载的动画条*/
+            let loading = new Vue({
+                el: "#loading",
+                data: {
+                    visible: "hidden",
+                    load: false,
+                }
+            });
+            /* 搜索栏*/
+            let search = new Vue({
+                el: "#search",
+                data: {
+                    s_msg: ''
+                },
+                methods: {
+                    search: function() {
+                        // location.href = 
+                        let msg = encodeURI(this.s_msg);
+                        let url = "search.html?content=" + msg;
+                        location.href = url;
+                    }
+                }
+            })
+
+            /* 显示帖子的区域 */
+            let tips_content = new Vue({
+                el: "#tips_content",
+                data: {
+                    tips_data: [{
+                        id: 0,
+                        content: "未获取到数据，请检查网络是否正常"
+                    }]
+                },
+                methods: {
+                    // 跳转到该帖子对应的content页面
+                    toTipContent: function(event) {
+                        var id = event.target.getAttribute("tips_id");
+                        toTipContent(id);
+                    }
+                }
+            });
+
+            /* 热贴显示区域*/
+            var hot_tips = new Vue({
+                el: "#hot_tips",
+                data: {
+                    tip_object: []
+                },
+                methods: {
+                    toContent: function(event) {
+                        // console.log(event.target.parentNode.getAttribute("tips_id"));
+                        var id = event.target.parentNode.getAttribute("tips_id");
+                        toTipContent(id);
+                    }
+                }
+            })
+        </script>
+        <!-- 函数定义 -->
+        <script>
+            /* 根据type加载帖子*/
+            // console.log(pageControl.currentPage);
+            function loadTips() {
+                if (content == undefined) {
+                    return;
+                }
+                progress.open();
+                keyWordSearch(content, 1, function(data) {
+                    //删除旧数据
+                    let size = tips_content.tips_data.length;
+                    tips_content.tips_data.splice(0, size);
+                    progress.close();
+                    if (data.data.length < 10) {
+                        currentPage = 0;
+                    }
+                    concatTipsArray(tips_content.tips_data, data);
+                })
+            }
+
+            /*加载热帖*/
+            function loadHotTips() {
+                getHotTips(function(data) {
+                    concatTipsArray(hot_tips.tip_object, data);
+                })
+            }
+
+            function concatTipsArray(tipsArray, data) {
+                let errorTips = {
+                    id: 0,
+                    content: ""
+                }
+                if (data.code != 200) {
+                    /* 获取失败*/
+                    mdui.snackbar(data.msg, {
+                        position: "right-top"
+                    })
+                    errorTips.content = "获取失败";
+                    tipsArray.push(errorTips);
+                } else if (data.data == null || data.data.length == 0) {
+                    /* 数据为空*/
+                    errorTips.content = "暂无相关内容";
+                    mdui.snackbar("暂无相关内容", {
+                        position: 'right-top',
+                        timeout: 1000
+                    })
+                    tipsArray.push(errorTips);
+                } else {
+                    let tips = data.data;
+                    // console.log(tips);
+                    for (let i = 0; i < tips.length; i++) {
+                        // console.log(tips[i]);
+                        tipsArray.push(tips[i]);
+                    }
+                }
+            }
+
+            function loadMoreTips() {
+                if (currentPage == 0) {
+                    mdui.snackbar("无更多数据", {
+                        position: 'right-bottom'
+                    });
+                    /* 移除加载事件*/
+                    window.onscroll = undefined;
+                    return;
+                }
+                if (loading.load) {
+                    return;
+                }
+                loading.visible = "visible";
+                currentPage++;
+                loading.load = true;
+                keyWordSearch(content, currentPage, function(data) {
+                    if (data.code != 200) {
+                        console.log("获取失败 tips_id:" + tips_id + " page:" + currentPage);
+                    } else {
+                        let dataLength = data.data.length;
+                        if (dataLength < 10) {
+                            currentPage = 0;
+                        }
+                        if (dataLength != 0) {
+                            for (let i = 0; i < dataLength; i++) {
+                                tips_content.tips_data.push(data.data[i]);
+                            }
+
+                        }
+                    }
+                    /* 加载完成*/
+                    loading.load = false;
+                    // loading.visible = "hidden";
+                    /* 一秒后再清除，显得有加载的效果*/
+                    setTimeout(() => {
+                        loading.visible = "hidden";
+                    }, 1000);
+                });
+            }
+
+            /* 根据tipsId跳转到content.html页面*/
+            function toTipContent(tipsId) {
+                let url = "./content.html?tips_id=" + tipsId;
+                // window.location.href = "./content.html?tips_id=" + tipsId;
+                open(url);
+            }
+        </script>
+        <!-- 内容初始化 -->
+        <script>
+            let currentPage = 1;
+            let content = getQueryVariable("content");
+            if(content == undefined || content == ""){
+                content = "我不明白你要干什么诶";
+            }
+            document.title = content + "_搜索结果";
+            search.s_msg = content;
+
+            let progress = new mdc.linearProgress
+                .MDCLinearProgress(document.querySelector(".mdc-linear-progress"));
+            //初始化帖子内容
+            loadTips();
+            // 初始化热贴内容
+            loadHotTips();
+
+            window.onscroll = function() {
+                if (isScroll()) {
+                    loadMoreTips();
+                }
+            }
+        </script>
+
+    </body>
+</html>

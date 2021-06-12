@@ -23,6 +23,7 @@ header {
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
     box-shadow: 0 0 8px #bbb;
+    user-select: none;
 }
 
 .title-logo {

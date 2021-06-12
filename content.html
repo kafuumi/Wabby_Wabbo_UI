@@ -11,7 +11,7 @@
         <script src="js/iconfont.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/communicate.js" type="text/javascript" charset="utf-8"></script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.zhimg.com/axios/dist/axios.min.js"></script>
         <script src="js/util.js" type="text/javascript" charset="utf-8"></script>
         <title>帖子详情</title>
         <style>
@@ -33,7 +33,7 @@
 
             /* 帖子文本内容 */
             .container {
-                width: 660px;
+                width: 800px;
                 margin: 0 auto;
             }
 
@@ -117,7 +117,8 @@
             #comments .time {
                 position: absolute;
                 left: 66%;
-                top: 60%;
+                /* top: 60%; */
+                margin-top: 8px;
                 font-size: 8px;
             }
 
@@ -126,14 +127,23 @@
                 float: left;
                 border: 2px solid #616161;
                 border-radius: 12px;
-                width: 180px;
+                width: 200px;
                 padding: 4px 4px 20px 4px;
                 position: relative;
                 margin-bottom: 18px;
                 /* margin-right: 0px; */
                 line-height: 20px;
-                margin-left: 30px;
+                margin-left: 50px;
                 background-color: #e6d2d5;
+            }
+
+            .hot-comments p {
+                height: 80px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 5;
+                -webkit-box-orient: vertical;
             }
 
             /* 普通评论 */
@@ -160,6 +170,15 @@
                 user-select: none;
             }
 
+            .comment-content {
+                padding: 6px;
+                font-size: 14px;
+                /* height: 40px; */
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+
             #com {
                 list-style: none;
             }
@@ -183,7 +202,7 @@
                 <!-- 搜索框 -->
                 <div class="search mdui-row" id="search">
                     <input type="text" class="mdui-col-xs-10 search-input" v-model="s_msg" placeholder="搜索" />
-                    <div class="iconfont mdui-col-xs-2" v-on:click="getSearchTips">&#xe605;</div>
+                    <div class="iconfont mdui-col-xs-2" v-on:click="search">&#xe605;</div>
                 </div>
             </header>
             <div class="container">
@@ -245,7 +264,6 @@
             </div>
         </div>
     </body>
-    <script src="./js/search.js"></script>
     <!-- vue绑定 -->
     <script type="text/javascript">
         /* 记录页数*/
@@ -254,6 +272,21 @@
         var url = window.location.search;
         var str = url.split("=");
         var tips_id = Number(str[1]);
+        /* 搜索栏*/
+        let search = new Vue({
+            el: "#search",
+            data: {
+                s_msg: ''
+            },
+            methods: {
+                search: function() {
+                    // location.href = 
+                    let msg = encodeURI(this.s_msg);
+                    let url = "search.html?content=" + msg;
+                    open(url);
+                }
+            }
+        })
         /*根据id获取帖子详细内容*/
         var message = new Vue({
             el: "#message",
@@ -270,15 +303,10 @@
                             id: 0,
                             content: ""
                         }
-                        if (data.code != 200) {
+                        if (data.code != 200 || data.data == null) {
                             /* 获取失败*/
                             // alert(data.msg);
-                            errorTips.content = "获取失败，请检查网络设置";
-                            message.tip = errorTips;
-                            return;
-                        } else if (data.data == null) {
-                            /* 数据为空*/
-                            errorTips.content = "未获取到数据";
+                            errorTips.content = "获取失败，无相关内容";
                             message.tip = errorTips;
                             return;
                         }
@@ -317,9 +345,9 @@
                             errorTips.content = "获取失败，请检查网络设置";
                             hot_comments.hotcomments.push(errorTips);
                             return;
-                        } else if (data.data == null) {
+                        } else if (data.data.length == 0) {
                             /* 数据为空*/
-                            errorTips.content = "未获取到数据";
+                            errorTips.content = "暂无热贴";
                             hot_comments.hotcomments.push(errorTips);
                             return;
                         }
@@ -350,8 +378,8 @@
             },
             methods: {
                 loadComments: function() {
-                    /* 删除默认的数据*/
-                    this.comments.shift();
+                    /* 删除原来的数据*/
+                    this.comments.splice(0, this.comments.length);
                     /* 加载第一页的评论数据*/
                     getComments(tips_id, 1, function(data) {
 
@@ -367,12 +395,15 @@
                             return;
                         } else if (data.data.length == 0) {
                             /* 数据为空*/
-                            errorTips.content = "未获取到数据";
+                            errorTips.content = "暂无评论";
                             comments.comments.push(errorTips);
                             return;
                         }
 
                         var coms = data.data;
+                        if (coms.length < 10) {
+                            currentPage = 0;
+                        }
                         for (var i = 0; i < coms.length; i++) {
                             comments.comments.push(coms[i]);
                         }
@@ -386,12 +417,17 @@
                 },
                 /* 加载更多评论*/
                 loadMoreComments: function() {
-                    /* 正在加载中*/
-                    if (loading.load) {
+                    /* currentPage为0时表示没有更多评论，不再继续加载*/
+                    if (currentPage == 0) {
+                        mdui.snackbar("无更多数据", {
+                            position: 'right-bottom'
+                        });
+                        /* 移除加载事件*/
+                        window.onscroll = undefined;
                         return;
                     }
-                    /* currentPage为0时表示没有更多评论，不再继续加载*/
-                    if (currentPage <= 0) {
+                    /* 正在加载中*/
+                    if (loading.load) {
                         return;
                     }
 
@@ -404,18 +440,16 @@
                     getComments(tips_id, currentPage, function(data) {
                         if (data.code != 200) {
                             console.log("获取失败 tips_id:" + tips_id + " page:" + currentPage);
-                        } else if (data.data.length == 0) {
-                            currentPage = 0;
-                            console.log("无更多");
                         } else {
                             let dataLength = data.data.length;
                             if (dataLength < 10) {
                                 currentPage = 0;
                             }
-                            for (let i = 0; i < dataLength; i++) {
-                                comments.comments.push(data.data[i]);
+                            if (dataLength != 0) {
+                                for (let i = 0; i < dataLength; i++) {
+                                    comments.comments.push(data.data[i]);
+                                }
                             }
-
                         }
                         /* 加载完成*/
                         loading.load = false;
@@ -447,10 +481,14 @@
                     console.log(com)
                     postComments(com, function(data) {
                         if (data.code != 200) {
-                            alert("发送失败，请检查网络设置");
+                            mdui.snackbar(data.msg, {
+                                position: "right-bottom"
+                            })
+                        } else {
+                            comments.loadComments();
                         }
                     })
-                    this.com_msg = "";
+                    compage.com_msg = "";
                 }
             }
         })
@@ -474,25 +512,10 @@
                 objParent.removeChild(plusEffect);
             }, 500);
         }
-        //获取滚动条当前位置
-        function getScrollTop() {
-            let scrollTop = document.documentElement.scrollTop;
-            return scrollTop;
-        }
-        //获取可视范围高度
-        function getClientHeight() {
-            let clienHeight = document.documentElement.clientHeight;
-            return clienHeight;
-        }
-        //获取文档完整高度
-        function getScrollHeight() {
-            let scrollHeight = document.documentElement.scrollHeight;
-            return scrollHeight;
-        }
+
         //下拉加载
         window.onscroll = function() {
-            let offset = 10;
-            if (getScrollTop() + getClientHeight() + offset >= getScrollHeight()) {
+            if (isScroll()) {
                 comments.loadMoreComments();
             }
         }
@@ -502,5 +525,9 @@
         message.loadTips();
         hot_comments.loadHotComments();
         comments.loadComments();
+        let titleLogo = document.querySelector(".title-logo");
+        titleLogo.addEventListener("click", () => {
+            location.href = "index.html";
+        })
     </script>
 </html>

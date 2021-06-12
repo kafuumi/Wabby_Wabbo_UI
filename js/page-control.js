@@ -37,24 +37,33 @@ let pageControl = new Vue({
          * 初始化page
          */
         initPage: function(type) {
-            //获取到最大页数
-            let max = 20;
-            this.maxPageNum = max;
-            //清空
-            this.pages.splice(0, this.pages.length);
-            this.current = 0;
-            // 最多显示10个换页的格子
-            let size = 10;
-            //总页数比10还小
-            if (max <= size) {
-                size = max;
-            }
-            //开始顺序赋值
-            for (let i = 0; i < size; i++) {
-                this.pages.push(i + 1);
-            }
+            getPageNum(type, function(data) {
+                //获取到最大页数
+                let max = data.data;
+                if (max == undefined || max <= 0) {
+                    max = 1;
+                }
+                pageControl.maxPageNum = max;
+                //清空
+                pageControl.pages.splice(0, pageControl.pages.length);
+                pageControl.current = 0;
+                // 最多显示10个换页的格子
+                let size = 10;
+                //总页数比10还小
+                if (max <= size) {
+                    size = max;
+                }
+                //开始顺序赋值
+                for (let i = 0; i < size; i++) {
+                    pageControl.pages.push(i + 1);
+                }
+            })
         },
         switchPage: function(index) {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            })
             // 数据的容量
             let pageSize = this.pages.length;
             //超出边界
@@ -65,6 +74,7 @@ let pageControl = new Vue({
             if (index == this.current) {
                 return;
             }
+
             // 将current置为当前点击的位置
             // 如果没有发生移动，则page[current]为当前选择的页数
             this.current = index;

@@ -10,11 +10,11 @@
         <link rel="stylesheet" href="css/page-control.css" />
         <link rel="icon" href="./images/icon.png" />
         <link rel="stylesheet"
-            href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" />
+            href="https://unpkg.zhimg.com/material-components-web@latest/dist/material-components-web.min.css" />
         <script src="js/mdui.min.js"></script>
-        <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js">
+        <script src="https://unpkg.zhimg.com/material-components-web@latest/dist/material-components-web.min.js">
         </script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.zhimg.com/axios/dist/axios.min.js"></script>
         <!-- <script src="//at.alicdn.com/t/font_2587192_2chnea6m04h.js"></script> -->
         <script src="js/iconfont.js"></script>
         <script src="js/swiper-bundle.min.js"></script>
@@ -43,6 +43,10 @@
             @font-face {
                 font-family: SONG;
                 src: url(./fonts/STZHONGS.TTF);
+            }
+            .mdc-linear-progress{
+                position: fixed;
+                top: 0;
             }
 
             /* logo */
@@ -264,13 +268,16 @@
                 padding-left: 24px;
                 margin-left: 20px;
             }
-            .mdui-dialog{
+
+            .mdui-dialog {
                 border-radius: 12px;
             }
-            .mdui-dialog .mdc-card__content{
+
+            .mdui-dialog .mdc-card__content {
                 font-size: 18px;
                 padding: 24px 0;
             }
+
             header {
                 user-select: none;
             }
@@ -281,6 +288,17 @@
         </style>
     </head>
     <body>
+        <!-- 加载的进度条-->
+        <div role="progressbar"
+            class="mdc-linear-progress mdc-linear-progress--indeterminate mdc-linear-progress--closed"
+            style="height: 2px;">
+            <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+                <span class="mdc-linear-progress__bar-inner"></span>
+            </div>
+            <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+                <span class="mdc-linear-progress__bar-inner"></span>
+            </div>
+        </div>
         <div class="mdui-container">
             <!-- 顶部导航条 -->
             <header class="mdui-container-fluid">
@@ -333,11 +351,11 @@
                     <!-- 右侧功能区 -->
                     <div class="func-area mdui-card" id="func_area">
                         <div class="mdui-row">
-                            <div class="func-item mdui-col-xs-6" v-on:click="openDialog">
+                            <div class="func-item mdui-col-xs-6 mdui-ripple" v-on:click="openDialog">
                                 <div class="post-tip icon iconfont">&#xe602;</div>
                                 <div class="text">发贴</div>
                             </div>
-                            <div class="func-item mdui-col-xs-6" v-on:click="refresh">
+                            <div class="func-item mdui-col-xs-6 mdui-ripple" v-on:click="refresh">
                                 <div class="icon refresh iconfont">&#xe600;</div>
                                 <div class="text">刷新</div>
                             </div>
@@ -506,6 +524,9 @@
                 methods: {
                     search: function() {
                         // location.href = 
+                        let msg = encodeURI(this.s_msg);
+                        let url = "search.html?content=" + msg;
+                        open(url);
                     }
                 }
             })
@@ -562,19 +583,33 @@
                         };
                         userTip.type = this.picked;
                         userTip.content = this.post_msg;
+                        postpage.isVisible = false;
+
+                        progress.open();
                         postTips(userTip, function(data) {
+                            progress.close();
                             if (data.code != 200) {
-                                alert(data.msg);
+                                // alert(data.msg);
+                                mdui.snackbar(data.msg, {
+                                    position: 'right-bottom'
+                                })
                                 return;
                             } else {
-                                refresh()
-                                postpage.isVisible = false;
+                                mdui.snackbar("发布成功", {
+                                    position: 'right-bottom'
+                                })
                                 postpage.post_msg = "";
                                 postpage.picked = "情感";
+                                refresh()
                             }
+                        }, (error) => {
+                            progress.close();
+                            mdui.snackbar("网络错误", {
+                                position: "right-bottom"
+                            })
                         })
 
-                    },
+                    }
                 }
             })
             /* 右侧功能区，包含发贴和刷新功能*/
@@ -587,6 +622,10 @@
                     },
                     refresh: function() {
                         refresh();
+                        mdui.snackbar("刷新成功", {
+                            position: 'right-top',
+                            timeout: 500
+                        })
                     }
                 }
             })
@@ -616,14 +655,13 @@
                 if (page == undefined) {
                     page = 1;
                 }
+                progress.open();
                 getTips(type, page, function(data) {
                     //删除旧数据
                     let size = tips_content.tips_data.length;
                     tips_content.tips_data.splice(0, size);
-                    let errorTips = {
-                        id: 0,
-                        content: ""
-                    }
+                    
+                    progress.close();
                     concatTipsArray(tips_content.tips_data, data);
                 })
             }
@@ -658,12 +696,17 @@
                 }
                 if (data.code != 200) {
                     /* 获取失败*/
-                    // alert(data.msg);
-                    errorTips.content = "获取失败，请检查网络设置";
+                    mdui.snackbar(data.msg, {
+                        position: "right-bottom"
+                    })
+                    errorTips.content = "获取失败";
                     tipsArray.push(errorTips);
                 } else if (data.data == null || data.data.length == 0) {
                     /* 数据为空*/
-                    errorTips.content = "未获取到数据";
+                    errorTips.content = "暂无相关内容";
+                    mdui.snackbar("该分类下暂无内容", {
+                        position: 'right-top'
+                    })
                     tipsArray.push(errorTips);
                 } else {
                     let tips = data.data;
@@ -703,6 +746,8 @@
                     nextEl: '.swiper-button-next'
                 }
             })
+            let progress = new mdc.linearProgress
+                .MDCLinearProgress(document.querySelector(".mdc-linear-progress"));
             //初始化帖子内容
             loadTips();
             //初始化换页栏

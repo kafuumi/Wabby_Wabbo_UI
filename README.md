@@ -10,4 +10,10 @@
 
 ## 使用的开源库
 
-[mdui](https://github.com/zdhxiong/mdui)
+- [mdui](https://github.com/zdhxiong/mdui)
+- [vue](https://github.com/vuejs/vue)
+- [swiper](https://www.swiper.com.cn/)
+- [axios](http://www.axios-js.com/)
+- [material components web](https://material-components.github.io/material-components-web-catalog/#/)
+- [live2d-widget](https://github.com/stevenjoezhang/live2d-widget)
+

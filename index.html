@@ -249,12 +249,18 @@
 
             .shade .Mydialog {
                 border-radius: 12px;
-                width: 65%;
+                width: 900px;
                 max-height: 85%;
-                padding: 10px;
                 position: absolute;
-                top: 40%;
-                left: 10%;
+                top: 20%;
+                left: 50%;
+                padding: 24px;
+                margin-left: -450px;
+            }
+
+            .shade .dialog-content {
+                max-height: 380px;
+                overflow-y: auto;
             }
 
             .mdui-dialog-title {
@@ -305,7 +311,7 @@
             <header class="mdui-container-fluid">
                 <div class="title-logo">Wabby Wabbo</div>
                 <audio id="welcome">
-                    <source src="audio/3.mp3" type="audio/mp3"/>
+                    <source src="audio/1.mp3" type="audio/mp3" />
                 </audio>
                 <!-- 搜索框 -->
                 <div class="search mdui-row" id="search">
@@ -426,7 +432,7 @@
             </div>
             <!-- 预留的底部区域 -->
             <footer>
-                
+
             </footer>
         </div>
         <!-- 条件渲染(一块内容)控制发帖弹窗 -->
@@ -434,7 +440,7 @@
             <div class="Mydialog mdui-card">
                 <div class="mdui-dialog-title">发布</div>
                 <div class="mdui-dialog-content">
-                    <div class="mdui-textfield mdui-textfield-floating-label">
+                    <div class="mdui-textfield mdui-textfield-floating-label dialog-content">
                         <label class="mdui-textfield-label">请写下你的想法</label>
                         <textarea class="mdui-textfield-input" v-model="post_msg"></textarea>
                     </div>
@@ -764,18 +770,20 @@
             linkGithub.addEventListener("click", () => {
                 open("https://github.com/")
             })
-            
+
             let welcome = document.querySelector("#welcome");
             welcome.autoplay = false;
             welcome.controls = false;
             welcome.loop = false;
             let titleLogo = document.querySelector(".title-logo");
-            titleLogo.addEventListener("click",()=>{
-                if(welcome.paused){
+            titleLogo.addEventListener("click", () => {
+                if (welcome.paused) {
+                    let num = Math.floor(Math.random() * 10) % 4 + 1;
+                    welcome.src = "audio/" + num + ".mp3";
                     /* 每次从头开始播放*/
                     welcome.currentTime = 0;
                     welcome.play();
-                }else{
+                } else {
                     welcome.pause();
                 }
             })

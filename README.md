@@ -1,12 +1,24 @@
 # Wabby_Wabbo_UI
 
-歪比巴卜论坛网页端
+这是我们一个软件工程的实验作业，如果你有兴趣，可以来逛一逛 ：[歪比巴卜论坛](http://39.107.39.204)
+
+这是歪比巴卜论坛的前端（网页端）仓库
+
+后端仓库：[github](https://github.com/Hami-Lemon/Wabby_Wabbo_Server)
 
 ## 界面设计
 
-[主页面](https://v6.modao.cc/app/1b5fd11dce9d5713471b84b9b24a465964b5179a?simulator_type=device&sticky)
+1. 主界面（index.html)
 
-[发贴页面](https://modao.cc/app/6c20946fc7a36ff6d6afe44232135f5c24c68e3c?simulator_type=device&sticky)
+   ![image-20210705161055642](https://gitee.com/Hami-Lemon/image-repo/raw/master/images/2021/07/05/20210705161056.png)
+
+2. 帖子详情界面（content.html)
+
+   ![image-20210705161136026](https://gitee.com/Hami-Lemon/image-repo/raw/master/images/2021/07/05/20210705161136.png)
+
+3. 搜索结果界面（search.html)
+
+   ![image-20210705161156674](https://gitee.com/Hami-Lemon/image-repo/raw/master/images/2021/07/05/20210705161157.png)
 
 ## 使用的开源库
 

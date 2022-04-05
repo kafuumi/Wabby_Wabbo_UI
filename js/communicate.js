@@ -1,8 +1,5 @@
 /* 与后端通信 */
-// let host = "http://39.107.39.204:8080/Wabby_Wabbo";
-// let host = "http://localhost:8080/Wabby_Wabbo";
-// let host = "http://localhost/Wabby_Wabbo";
-let host = "http://39.107.39.204/Wabby_Wabbo";
+let host = "http://localhost:8080/Wabby_Wabbo";
 
 /* 发布帖子
 @param data: 发布的帖子数据
